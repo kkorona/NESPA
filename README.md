@@ -1,7 +1,8 @@
 # ESPA 2019 프론트엔드 개선 계획
 
 ## Specifications(Not confirmed)
-
+|대상|특징|
+|---|---|
 |Web Framework|Django|
 |DB|PostgreSQL|
 |Cache|Redis|
