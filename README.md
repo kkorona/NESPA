@@ -1,6 +1,6 @@
 # ESPA 2019 프론트엔드 개선 계획
 
-## Specifications(Not confirmed)
+## Specifications
 |대상|특징|
 |---|---|
 |Web Framework|Django|
@@ -16,6 +16,8 @@
 * Python 3 완전지원
 * Assembly 등 과제 내 비인가 라이브러리 배제
 * 동시에 수신되는 채점 요청에 대한 처리(Request Priority Management)
+* 채점 데이터 공개 조절 기능
+* 이전 제출 기록 조회 기능
 
 ## 추가 예정 기능
 
