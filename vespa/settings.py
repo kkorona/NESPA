@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'board.apps.BoardConfig',
-    'dev2020.apps,Dev2020Config',
+    'dev2020.apps.Dev2020Config',
 ]
 
 MIDDLEWARE = [

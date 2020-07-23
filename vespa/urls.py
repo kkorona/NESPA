@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import dev2020.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('board/', include('board.urls'),
+    path('dev2020/', dev2020.views.index, name='index'),
 ]
