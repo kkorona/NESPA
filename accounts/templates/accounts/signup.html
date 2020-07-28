@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block contents %}
+
+<div class = "container">
+    <h1>Sign Up</h1>
+    
+    <form action="">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="user_name">Name</label>
+                <input id="user_name" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-row">            
+            <div class="form-group">
+                <label for="student_number">Student Number</label>
+                <input id="student_number" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="user_id">ID</label>
+                <input id="user_id" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-row">           
+            <div class="form-group">
+                <label for="password1">Password</label>
+                <input id="password1" class="form-control" type="password">
+            </div>
+        </div>
+        <div class="form-row">            
+            <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input id="password2" class="form-control" type="password">
+            </div>
+        </div>
+        <div class="form-row">            
+            <div class="form-group">
+                <label for="grade">Grade</label>
+                <select class="form-control" class="form-control" id="grade">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="major">Major</label>
+                <input id="major" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-row">        
+            <div class="form-group">
+                <label for="email">e-mail</label>
+                <input id="email" class="form-control" type="e-mail">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input id="phone" class="form-control" type="text">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</body>
+
+{% endblock %}
