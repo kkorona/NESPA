@@ -21,5 +21,5 @@ import dev2020.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dev2020/', dev2020.views.index, name='index'),
-    # path('accounts/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls'))
 ]
