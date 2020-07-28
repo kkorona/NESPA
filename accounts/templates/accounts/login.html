@@ -5,7 +5,8 @@
 <div class = "container">
     <h1>login</h1>
     
-    <form action="">
+    <form method="POST" action="{% url 'login'%}">
+        {% csrf_token %}
         <div class="form-row">
             <div class="form-group">
                 <label for="user_id">ID</label>

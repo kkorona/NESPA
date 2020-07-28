@@ -4,7 +4,8 @@
 <div class = "container">
     <h1>Sign Up</h1>
     
-    <form action="">
+    <form method="POST" action="{%url 'signup'%}">
+        {% csrf_token %}
         <div class="form-row">
             <div class="form-group">
                 <label for="user_name">Name</label>
@@ -67,7 +68,5 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-
-</body>
 
 {% endblock %}
