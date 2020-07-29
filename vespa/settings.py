@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'board.apps.BoardConfig',
     'dev2020.apps.Dev2020Config',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -125,8 +126,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
 ]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 mimetypes.add_type('text/html','.html',True)
 mimetypes.add_type('text/html','.css',True)
