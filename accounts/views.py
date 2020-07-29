@@ -9,7 +9,7 @@ def signup(request):
                         username=request.POST["username"], password=request.POST["password1"])
                     auth.login(request, user)
                     return redirect('dev2020')
-    return render(request, 'signup.html')
+    return render(request, 'accounts/signup.html')
 
 def login(request):
     if request.method == "POST":
@@ -22,6 +22,10 @@ def login(request):
         else:
             return render(request, 'login.html', {'error' : 'username or password is incorrect.'})
     else:
-        return render(request,'login.html')
+        return render(request,'accounts/login.html')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('dev2020')
 
 # Create your views here.
