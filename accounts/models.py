@@ -18,6 +18,7 @@ def loadConfig():
     
 
 class Account(models.Model):
+    loadConfig()
     uid = models.CharField(max_length = LENGTH_CONFIG['ID_MAXLEN'])
     password = models.CharField(max_length = LENGTH_CONFIG['PW_MAXLEN'])
     studentNumber = models.CharField(max_length = LENGTH_CONFIG['SN_MAXLEN'])
