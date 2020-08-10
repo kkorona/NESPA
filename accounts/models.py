@@ -7,6 +7,7 @@ LENGTH_CONFIG = {
 def loadConfig():
     global LENGTH_CONFIG
     LENGTH_CONFIG = {
+        'UN_MAXLEN' : 200,
         'ID_MAXLEN' : 200,
         'PW_MAXLEN' : 200,
         'SN_MAXLEN' : 200,
@@ -19,9 +20,11 @@ def loadConfig():
 
 class Account(models.Model):
     loadConfig()
-    uid = models.CharField(max_length = LENGTH_CONFIG['ID_MAXLEN'])
-    password = models.CharField(max_length = LENGTH_CONFIG['PW_MAXLEN'])
+    username = models.CharField(max_length = LENGTH_CONFIG['UN_MAXLEN'])
     studentNumber = models.CharField(max_length = LENGTH_CONFIG['SN_MAXLEN'])
+    uid = models.CharField(max_length = LENGTH_CONFIG['ID_MAXLEN'])
+    password1 = models.CharField(max_length = LENGTH_CONFIG['PW_MAXLEN'])
+    password2 = models.CharField(max_length = LENGTH_CONFIG['PW_MAXLEN'])
     grade = models.CharField(max_length = LENGTH_CONFIG['GR_MAXLEN'])
     major = models.CharField(max_length = LENGTH_CONFIG['MJ_MAXLEN'])
     email = models.CharField(max_length = LENGTH_CONFIG['EM_MAXLEN'])
