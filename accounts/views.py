@@ -6,14 +6,14 @@ def signup(request):
     if request.method == "POST":
             if request.POST["password1"] == request.POST["password2"]:
                     user = User.objects.create_user(
-                        username=request.POST["username"], password=request.POST["password1"])
+                        user_name=request.POST["user_name"], password=request.POST["password1"])
                     auth.login(request, user)
                     return redirect('dev2020')
     return render(request, 'accounts/signup.html')
 
 def login(request):
     if request.method == "POST":
-        username = request.POST["username"]
+        username = request.POST["user_name"]
         password = request.POST["password"]
         user = auth.authenticate(request, username=username, password=password)
         if user is not None:
