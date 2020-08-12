@@ -18,20 +18,22 @@ def loadConfig():
     }
     
 
-class Account(models.Model):
+class vespaUser(models.Model):
     loadConfig()
     username = models.CharField(max_length = LENGTH_CONFIG['UN_MAXLEN'])
     studentNumber = models.CharField(max_length = LENGTH_CONFIG['SN_MAXLEN'])
-    uid = models.CharField(max_length = LENGTH_CONFIG['ID_MAXLEN'])
-    password1 = models.CharField(max_length = LENGTH_CONFIG['PW_MAXLEN'])
-    password2 = models.CharField(max_length = LENGTH_CONFIG['PW_MAXLEN'])
+    user_id = models.CharField(max_length = LENGTH_CONFIG['ID_MAXLEN'])
+    password = models.CharField(max_length = LENGTH_CONFIG['PW_MAXLEN'])
     grade = models.CharField(max_length = LENGTH_CONFIG['GR_MAXLEN'])
     major = models.CharField(max_length = LENGTH_CONFIG['MJ_MAXLEN'])
     email = models.CharField(max_length = LENGTH_CONFIG['EM_MAXLEN'])
     phone = models.CharField(max_length = LENGTH_CONFIG['PH_MAXLEN'])
     created_at = models.DateTimeField(auto_now_add = True)
 
+    def __str__(self):
+        return self.studentNumber
+        
     class Meta:
-        db_table = "accounts"
+        db_table = "users"
 
 # Create your models here.
