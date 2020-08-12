@@ -18,7 +18,7 @@ def loadConfig():
     }
     
 
-class User(models.Model):
+class vespaUser(models.Model):
     loadConfig()
     username = models.CharField(max_length = LENGTH_CONFIG['UN_MAXLEN'])
     studentNumber = models.CharField(max_length = LENGTH_CONFIG['SN_MAXLEN'])
