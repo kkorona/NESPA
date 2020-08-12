@@ -116,11 +116,11 @@
       </div>
     </nav>
 
-    <main role="main" class="row-md-9 col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-none">
             <h1 class="h2">Notices</h1>
         </div>
-        <div class="row">
+        <div class="container-fluid">
             <table class="table table-hover">
             <thead>
             <tr>
@@ -139,23 +139,34 @@
             <td>2020.08.01</td>
             <td>1</td>
             </tr>
+            <tr>
+            <td>2</td>
+            <td>Test</td>
+            <td>Admin</td>
+            <td>2020.08.01</td>
+            <td>2</td>
+            </tr>
+            <tr>
+            <td>3</td>
+            <td>Test</td>
+            <td>Admin</td>
+            <td>2020.08.01</td>
+            <td>3</td>
+            </tr>
             </tbody>
             </table>
-        </div>
-        <div class="row">
-        <hr/>
-        <button class="btn btn-default pull-right">글쓰기</a>
-        </div>  
-        <div class="row">
-            <div class="text-center">
-                <ul class="pagination">
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                </ul>
+            <div align="right">
+                <a class="btn btn-primary pull-right" href="#">글쓰기</a>
             </div>
+            <nav aria-label="page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                </ul>
+            </nav>
         </div>
-    </main>
+    </main>    
   </div>
 </div>
 {% endblock %}
