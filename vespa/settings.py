@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'board.apps.BoardConfig',
     'dev2020.apps.Dev2020Config',
     'accounts.apps.AccountsConfig',
+    'assignment.apps.AssignmentConfig',
 ]
 
 MIDDLEWARE = [

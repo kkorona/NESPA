@@ -23,4 +23,5 @@ urlpatterns = [
     path('dev2020/', dev2020.views.index, name='index'),
     path('', dev2020.views.index, name='index'),
     path('accounts/', include('accounts.urls')),
+    path('assignment/', include('assignment.urls')),
 ]
