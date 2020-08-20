@@ -149,15 +149,19 @@
             </div>
       </div>
       <div>
+      {{ object.content|linebreaks }}
+      </div>
+      <div>
       {% if page_obj.has_previous %}
-       <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
+       <a href="?page={{ object.get_previous.get_absolute_url}}" title="Prev">{{ object.get_previous</a>
       {% endif %}
-      
-      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
       
       {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}">Next</a>
+       <a href="?page={{ object.get_next.get_absolute_url }}" title="Next">{{ object.get_next }}</a>
       {% endif %}
+      </div>
+      <div>
+        <a href="{% url 'board:post_list %}">List</a>
       </div>
     </main>
   </div>
