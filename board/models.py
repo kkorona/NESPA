@@ -13,7 +13,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'post'
         verbose_name_plural = 'posts'
-        db_table = 'blog_posts'
+        db_table = 'board_posts'
         ordering = ('-mod_date',)
 
     def __str__(self):
@@ -23,7 +23,7 @@ class Post(models.Model):
         return self.id
 
     def get_absolute_url(self):
-        return reverse('blog:post_detail', args=(self.id,))
+        return reverse('board:post_detail', args=(self.id,))
 
     def get_previous(self):
         return self.get_previous_by_mod_date()

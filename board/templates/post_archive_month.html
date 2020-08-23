@@ -122,7 +122,7 @@
       <div>
           <ul>
           {% for date in date_list %}
-            <li><a href="{% url 'board:post_year_archive' %}">{{ date|date:'Y' }}</a><li>
+            <li><a href="{% url 'board:post_month_archive' year|date:'Y' date|date:'m' %}">{{ date|date:'F' }}</a><li>
           {% endfor %}
           </ul>
       </div>
