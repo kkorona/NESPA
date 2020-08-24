@@ -7,7 +7,7 @@
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link active" href="#">
               <span data-feather="home"></span>
               공지사항
             </a>
@@ -40,7 +40,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">
+            <a class="nav-link" href="#">
               <span data-feather="file-text"></span>
               과제물 제출
             </a>
@@ -122,32 +122,6 @@
       <span>
         <a href="{% url 'board:post_archive' %}">Archive</a>
       </span>
-      <div>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>작성자</th>
-            <th>날짜</th>
-            </tr>
-            </thead>
-            <tbody>
-            
-            {% for post in posts %}
-            <tr>
-            <td>1</td>
-            <td><a href="{{ post.get_absolute_url }}">{{ post.title }} </a></td>
-            <td>Admin</td>
-            <td>{{ post.mod_date|date:"N d, Y" }}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-            </table>
-            <div align="right">
-                <a class="btn btn-primary pull-right" href="#">글쓰기</a>
-            </div>
-      </div>
       <div>
       {{ object.content|linebreaks }}
       </div>
