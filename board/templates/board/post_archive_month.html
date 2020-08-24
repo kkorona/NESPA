@@ -117,50 +117,17 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Notices</h1>
-      </div>
-      <span>
-        <a href="{% url 'blog:post_archive' %}">Archive</a>
-      </span>
-      <div>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>작성자</th>
-            <th>날짜</th>
-            </tr>
-            </thead>
-            <tbody>
-            
-            {% for post in posts %}
-            <tr>
-            <td>1</td>
-            <td><a href="{{ post.get_absolute_url }}">{{ post.title }} </a></td>
-            <td>Admin</td>
-            <td>{{ post.mod_date|date:"N d, Y" }}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-            </table>
-            <div align="right">
-                <a class="btn btn-primary pull-right" href="#">글쓰기</a>
-            </div>
+        <h1 class="h2">Post Archives for {{ month|date:"N, Y" }}</h1>
       </div>
       <div>
-      {% if page_obj.has_previous %}
-       <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
-      {% endif %}
-      
-      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-      
-      {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}">Next</a>
-      {% endif %}
+          <ul>
+          {% for date in object_list %}
+            <li>{{ post.mod_date|date:"Y-m-d" }}&nbsp;<a href="{{ post.get_absolute_url }}">{{post.title}}</a><li>
+          {% endfor %}
+          </ul>
       </div>
     </main>
-</div>
+  </div>
 </div>
       
 {% endblock %}
