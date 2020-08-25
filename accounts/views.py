@@ -21,18 +21,23 @@ def signup(request):
         
         # validation zone
         
+        for char_u in user_id:
+            if not ((char_u >= 'A' and char_u <= 'Z') or (char_u <= 'a' and char_u >= 'z')):
+                return HttpResponseNotFound('Wrong user id')
+        
+        
         # all-fill validation
         if not (username and studentNumber and user_id and password1 and password2 and grade and major and email and phone):
-            res_data['error'] = 'Please fill all the blanks in registeration form.'
+            return HttpResponseNotFound('Please fill all the blanks in registeration form.')
             
         # validate passwords
         elif password1 != password2:
-            res_data['error'] = 'Please fill all the blanks in registeration form.'
+            return HttpResponseNotFound('Please fill all the blanks in registeration form.')
         else:
             user = vespaUser(username=username, studentNumber=studentNumber, password=make_password(password1), user_id=user_id, grade=grade, major=major, email=email, phone=phone)
             user.save()
-            return redirect('/accounts/login')
-    return render(request, 'accounts/signup.html', res_data)
+            return redirect('accounts/login')
+        return render(request, 'accounts/signup.html')
 
 def login(request):
     response_data = {}
