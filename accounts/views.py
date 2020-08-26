@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 from .models import vespaUser
+import re
 
 def signup(request):
     if request.method == "GET":
@@ -21,10 +22,25 @@ def signup(request):
         
         # validation zone
         
-        for char_u in user_id:
-            if not ((char_u >= 'A' and char_u <= 'Z') or (char_u <= 'a' and char_u >= 'z')):
-                return HttpResponseNotFound('Wrong user id')
+        # user ID
         
+        p = re.compile('[a-zA-Z0-9]+')
+        
+        if p.match(username) == None:
+            return HttpResponseNotFound('Wrong user id.')
+        
+        if len(user_id) < 4 or len(user)id) > 10:
+            return HttpResponseNotFound('user id is too long or too short.')
+            
+        # student number
+        if not len(studentNumber) == 9:
+            return HttpResponseNotFound('Wrong Student Number.')
+        
+        # email match
+        
+        p = re.compile('^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
+        if p.match(email) == None:
+            return HttpResponseNotFound('Wrong Email.')
         
         # all-fill validation
         if not (username and studentNumber and user_id and password1 and password2 and grade and major and email and phone):
