@@ -29,7 +29,7 @@ def signup(request):
         if p.match(username) == None:
             return HttpResponseNotFound('Wrong user id.')
         
-        if len(user_id) < 4 or len(user)id) > 10:
+        if len(user_id) < 4 or len(user_id) > 10:
             return HttpResponseNotFound('user id is too long or too short.')
             
         # student number
