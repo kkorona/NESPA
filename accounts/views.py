@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponseNotFound
 from django.contrib.auth.hashers import make_password, check_password
 from .models import vespaUser
 import re
