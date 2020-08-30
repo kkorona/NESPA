@@ -20,8 +20,19 @@ import dev2020.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dev2020/', dev2020.views.index, name='index'),
+    path('', dev2020.views.index, name='index'),
+    
     path('ds2020/', include('board.urls')),
+    path('syllabus/', dev2020.views.index, name='index'),
+    path('lecture/', dev2020.views.index, name='index'),
     path('accounts/', include('accounts.urls')),
     path('assignment/', include('assignment.urls')),
+    path('exam/', dev2020.views.index, name='index'),
+    path('forum/', dev2020.views.index, name='index'),
+    path('qna/', dev2020.views.index, name='index'),
+    path('reports/', dev2020.views.index, name='index'),
+    path('about/', dev2020.views.index, name='index'),
+    path('devs/', dev2020.views.index, name='index'),
+    path('nespa_qna/', dev2020.views.index, name='index'),
+    
 ]

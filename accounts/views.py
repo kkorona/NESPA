@@ -26,8 +26,8 @@ def signup(request):
         
         p = re.compile('[a-zA-Z0-9]+')
         
-        if p.match(username) == None:
-            return HttpResponseNotFound('Wrong user id.')
+        if p.match(user_id) == None:
+            return HttpResponseNotFound('Wrong user id: '+ user_id)
         
         if len(user_id) < 4 or len(user_id) > 10:
             return HttpResponseNotFound('user id is too long or too short.')
@@ -52,8 +52,8 @@ def signup(request):
         else:
             user = vespaUser(username=username, studentNumber=studentNumber, password=make_password(password1), user_id=user_id, grade=grade, major=major, email=email, phone=phone)
             user.save()
-            return redirect('accounts/login')
-        return render(request, 'accounts/signup.html')
+            return redirect('/accounts/login')
+        return render(request, '/accounts/signup')
 
 def login(request):
     response_data = {}
@@ -65,15 +65,17 @@ def login(request):
         login_password = request.POST["password"]
         
         if not (login_userid and login_password):
-            response_data['error'] = 'ID or password cannot be empty.'
+            return HttpResponseNotFound('ID or password cannot be empty.')
         else:
             myuser = vespaUser.objects.get(user_id=login_userid)
+            if myuser == None:
+                return HttpResponseNotFound('User ' + login_userid + 'is not registered in NESPA.')
             if check_password(login_password, myuser.password):
                 request.session['user'] = myuser.id
-                return redirect('/')
+                return redirect('/ds2020')
             else:
                 response_data['error']="Invalid password."
-    return render(request,'accounts/login.html', response_data)
+    return render(request,'accounts/login')
 
 def logout(request):
     request.session.pop('user')

@@ -35,13 +35,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/syllabus">
               <span data-feather="compass"></span>
               교수계획표 / Syllabus
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/lecture">
               <span data-feather="archive"></span>
               강의자료 / Lecture Notes
             </a>
@@ -61,8 +61,8 @@
               과제물 목록 / Assignment List
             </a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="/assignment/submission">
+          <li class="nav-item">
+            <a class="nav-link active" href="/assignment/submission">
               <span data-feather="terminal"></span>
               과제물 제출 / Submission
             </a>
@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/exam">
               <span data-feather="edit"></span>
               온라인 시험 / Online Exam
             </a>
@@ -89,19 +89,19 @@
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/forum">
               <span data-feather="file-text"></span>
-              자유 게시판 / Freeboard
+              자유 게시판 / Forum
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/qna">
               <span data-feather="alert-circle"></span>
               질문 게시판 / Q&amp;A
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/reports">
               <span data-feather="edit-3"></span>
               실습 보고서 / Exp. Reports
             </a>
@@ -116,19 +116,19 @@
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/about">
               <span data-feather="code"></span>
               NESPA 소개 / About NESPA
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/devs">
               <span data-feather="slack"></span>
               NESPA 개발팀 / NESPA Devs.
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/nespa_qna">
               <span data-feather="check-circle"></span>
               NESPA Q/A
             </a>
@@ -139,25 +139,41 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Submission</h1>
+        <h1 class="h2">과제물 제출 / Submission</h1>
       </div>
       <div>
         <form method="POST" action="">
             {% csrf_token %}
-            <div class="form-row">
+            
+            <div class="form-row">            
                 <div class="form-group">
-                    <label for="problem_id">Problem ID</label>
-                    <input id="problem_id" name="problem_id" class="form-control" type="text">
+                    <label for="language">언어 / Language</label>
+                    <select id="language" name="language" class="form-control">
+                        <option>C++</option>
+                        <option>Python</option>
+                    </select>
                 </div>
             </div>
             
             <div class="form-row">
                 <div class="form-group">
-                    <label for="source_code">Example textarea</label>
-                    <textarea class="form-control" id="source_code" rows="20"></textarea>
+                    <label for="problem_id">문제 번호 / Problem No.</label>
+                    <select id="problem_id" name="problem_id" class="form-control">
+                        <option>1. example</option>
+                    </select>
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary" value="Submit">
+            
+            <span>소스 코드 / Source Code</span>
+            <div class="form-row">
+                <div class="form-group mb-3">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="source_code" name="source_code">
+                    <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                  </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="제출 / Submit">
         </form>
       </div>
     </main>
