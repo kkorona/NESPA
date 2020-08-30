@@ -5,56 +5,78 @@
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="sidebar-sticky pt-3">
-        <ul class="nav flex-column">
+      
+      <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="/accounts/login">
+              <span data-feather="log-in"></span>
+              로그인 / Login
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/accounts/signup">
+              <span data-feather="user-plus"></span>
+              회원가입 / Sign Up
+            </a>
+          </li>
+        </ul>
+      
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>강의 정보 / Lecture Info.</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="chevrons-left"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
           <li class="nav-item">
             <a class="nav-link active" href="/ds2020">
-              <span data-feather="home"></span>
-              공지사항
+              <span data-feather="aperture"></span>
+              공지사항 / Notices
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file"></span>
-              교수계획표
+              <span data-feather="compass"></span>
+              교수계획표 / Syllabus
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-              강의자료
+              <span data-feather="archive"></span>
+              강의자료 / Lecture Notes
             </a>
           </li>
         </ul>
         
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>과제</span>
+          <span>과제 / Assignment</span>
           <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle"></span>
+            <span data-feather="chevrons-left"></span>
           </a>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              과제물 목록
+              <span data-feather="list"></span>
+              과제물 목록 / Assignment List
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/assignment/submission">
-              <span data-feather="file-text"></span>
-              과제물 제출
+              <span data-feather="terminal"></span>
+              과제물 제출 / Submission
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              과제 제출 현황
+              <span data-feather="pie-chart"></span>
+              과제 제출 현황 / Results
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              온라인 시험
+              <span data-feather="edit"></span>
+              온라인 시험 / Online Exam
             </a>
           </li>
         </ul>
@@ -62,26 +84,26 @@
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>게시판</span>
           <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle"></span>
+            <span data-feather="chevrons-left"></span>
           </a>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="file-text"></span>
-              자유 게시판
+              자유 게시판 / Freeboard
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              질문 게시판
+              <span data-feather="alert-circle"></span>
+              질문 게시판 / Q&amp;A
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              실습 보고서 제출
+              <span data-feather="edit-3"></span>
+              실습 보고서 / Exp. Reports
             </a>
           </li>
         </ul>
@@ -89,26 +111,26 @@
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>About</span>
           <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle"></span>
+            <span data-feather="chevrons-left"></span>
           </a>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              VESPA 소개
+              <span data-feather="code"></span>
+              NESPA 소개 / About NESPA
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              VESPA 개발팀
+              <span data-feather="slack"></span>
+              NESPA 개발팀 / NESPA Devs.
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              VESPA Q/A
+              <span data-feather="check-circle"></span>
+              NESPA Q/A
             </a>
           </li>
         </ul>
@@ -119,9 +141,6 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Notices</h1>
       </div>
-      <span>
-        <a href="{% url 'board:post_archive' %}">Archive</a>
-      </span>
       <div>
       {{ object.content|linebreaks }}
       </div>
