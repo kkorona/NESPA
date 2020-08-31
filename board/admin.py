@@ -7,6 +7,6 @@ from board.models import Post
 @admin.register(Post)
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'mod_date')
+    list_display = ('id', 'title', 'author', 'pub_date', 'mod_date')
     list_filter = ('mod_date',)
-    search_fields = ('title', 'content')
+    search_fields = ('title', 'author', 'content')

@@ -163,9 +163,10 @@
             <thead>
             <tr>
             <th>#</th>
-            <th>Title</th>
+            <th>제목</th>
             <th>작성자</th>
-            <th>날짜</th>
+            <th>게시날짜</th>
+            <th>수정날짜</th>
             </tr>
             </thead>
             <tbody>
@@ -174,7 +175,8 @@
             <tr>
             <td>1</td>
             <td><a href="{{ post.get_absolute_url }}">{{ post.title }} </a></td>
-            <td>Admin</td>
+            <td>{{ post.author }}</td>
+            <td>{{ post.pub_date|date:"N d, Y" }}</td>
             <td>{{ post.mod_date|date:"N d, Y" }}</td>
             </tr>
             {% endfor %}
