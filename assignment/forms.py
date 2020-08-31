@@ -1,7 +1,11 @@
 from django import forms
+from .models import UploadFileModel
 
-class DocumentForm(form.Form):
-    docfile = forms.FileField(
-        label = 'Select a file',
-        help_text = 'max. 42 megabytes'
-        )
+class UploadFileForm(forms.ModelForm):
+    class Meta:
+        model = UploadFileModel
+        fields=('title','file')
+
+    def __init(self, *args, *kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        self.fields['file'].required = False

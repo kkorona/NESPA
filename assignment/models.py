@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Document(models.Model):
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
+class UploadFileModel(models.Model):
+    title = models.TextField(default='')
+    file = models.FileField(null=True)
     
