@@ -9,12 +9,12 @@ from board.models import Post
 class PostLV(ListView):
     model = Post
     context_object_name = 'posts'
-    paginate_by = 2
+    paginate_by = 15
 
 class PostDV(DetailView):
     model = Post
 
-
+'''
 class PostAV(ArchiveIndexView):
     model = Post
     date_field = 'mod_date'
@@ -38,3 +38,4 @@ class PostTAV(TodayArchiveView):
     model = Post
     date_field = 'mod_date'
 
+'''

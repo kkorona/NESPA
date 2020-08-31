@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'dev2020.apps.Dev2020Config',
     'accounts.apps.AccountsConfig',
     'assignment.apps.AssignmentConfig',
+    'QnA.apps.QnAConfig',
 ]
 
 MIDDLEWARE = [

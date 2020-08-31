@@ -7,14 +7,15 @@ LENGTH_CONFIG = {
 def loadConfig():
     global LENGTH_CONFIG
     LENGTH_CONFIG = {
-        'UN_MAXLEN' : 200,
-        'ID_MAXLEN' : 200,
-        'PW_MAXLEN' : 200,
-        'SN_MAXLEN' : 200,
-        'GR_MAXLEN' : 200,
-        'MJ_MAXLEN' : 200,
-        'EM_MAXLEN' : 200,
-        'PH_MAXLEN' : 200,
+        'UN_MAXLEN' : 20,
+        'ID_MAXLEN' : 20,
+        'PW_MAXLEN' : 20,
+        'SN_MAXLEN' : 20,
+        'GR_MAXLEN' : 20,
+        'MJ_MAXLEN' : 40,
+        'EM_MAXLEN' : 20,
+        'PH_MAXLEN' : 20,
+        'TY_MAXLEN' : 20,
     }
     
 

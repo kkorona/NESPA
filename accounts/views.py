@@ -77,6 +77,7 @@ def login(request):
                 if check_password(login_password, myuser.password):
                     request.session['userid'] = myuser.user_id
                     request.session['username'] = myuser.username
+                    request.session['usertype'] = myuser.usertype
                     return redirect('/ds2020')
                 else:
                     return HttpResponse('ID 또는 비밀번호가 잘못되었습니다.<br>ID or password is invalid.')
