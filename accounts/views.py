@@ -58,7 +58,7 @@ def signup(request):
                 return HttpResponse('이미 등록된 사용자입니다.<br>Already registerd user.')
             except vespaUser.DoesNotExist:
                 user.save()
-                return redirect('accounts/login')
+                return redirect('login')
         return render(request, 'accounts/signup.html')
 
 def login(request):
