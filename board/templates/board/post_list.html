@@ -111,7 +111,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/QnA">
+            <a class="nav-link" href="/qna">
               <span data-feather="alert-circle"></span>
               질문 게시판
             </a>
@@ -182,7 +182,7 @@
             {% endfor %}
             </tbody>
             </table>
-            {% if not request.session.usertype == 'normal' %}
+            {% if request.session.logged_in == 'YES' and not request.session.usertype == 'normal' %}
             <div align="right">
                 <a class="btn btn-primary pull-right" href="/ds2020/write">글쓰기</a>
             </div>

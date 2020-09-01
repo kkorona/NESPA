@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearArchiveView, MonthArchiveView, DayArchiveView
 from django.core.exceptions import ObjectDoesNotExist
@@ -19,6 +19,23 @@ class PostDV(DetailView):
         comments = Comment.objects.filter(parent=model.get_id)
     except Comment.DoesNotExist:
         pass
+        
+def write(request):
+    if request.method == "GET":
+        return render(request, 'qna/write.html')
+    if request.method == "POST":
+        username = request.session['username']
+        usertype = request.session['usertype']
+        if usertype == "normal":
+            return HttpResponse('접근할 수 없는 기능입니다.')
+            
+        title = request.POST.get('post_title',None)
+        content = request.POST.get('post_contents',None)
+        author = username
+        article = Post(title = title, author = author, content=content)
+        article.save()
+        return redirect('qna:post_list')
+        
 
 '''
 class PostAV(ArchiveIndexView):

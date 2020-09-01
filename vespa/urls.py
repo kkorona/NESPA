@@ -30,7 +30,7 @@ urlpatterns = [
     path('assignment/', include('assignment.urls')),
     path('exam/', dev2020.views.index, name='index'),
     path('forum/', dev2020.views.index, name='index'),
-    path('QnA/', include('QnA.urls')),
+    path('qna/', include('QnA.urls')),
     path('reports/', dev2020.views.index, name='index'),
     path('about/', dev2020.views.index, name='index'),
     path('devs/', dev2020.views.index, name='index'),

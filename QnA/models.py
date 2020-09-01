@@ -24,7 +24,7 @@ class Post(models.Model):
         return self.id
 
     def get_absolute_url(self):
-        return reverse('QnA:post_detail', args=(self.id,))
+        return reverse('qna:post_detail', args=(self.id,))
 
     def get_previous(self):
         return self.get_previous_by_mod_date()

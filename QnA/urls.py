@@ -1,12 +1,13 @@
 from django.urls import path
 from QnA import views
 
-app_name = 'QnA'
+app_name = 'qna'
 
 urlpatterns =[
     path('',views.PostLV.as_view(), name='index'),
     path('post/',views.PostLV.as_view(), name='post_list'),
     path('post/<int:pk>/',views.PostDV.as_view(), name='post_detail'),
+    path('write/',views.write, name='write'),
 ]
 
 '''
