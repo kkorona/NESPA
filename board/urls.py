@@ -6,6 +6,7 @@ app_name = 'board'
 urlpatterns =[
     path('',views.PostLV.as_view(), name='index'),
     path('post/',views.PostLV.as_view(), name='post_list'),
+    path('write/',views.write, name='write'),
     path('post/<int:pk>/',views.PostDV.as_view(), name='post_detail'),
 ]
 '''

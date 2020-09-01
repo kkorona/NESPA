@@ -19,6 +19,7 @@ def signup(request):
         major = request.POST.get('major',None)
         email = request.POST.get('email',None)
         phone = request.POST.get('phone',None)
+        usertype = 'normal'
         res_data = {}
         
         # validation zone
@@ -31,17 +32,17 @@ def signup(request):
             return HttpResponse('잘못된 아이디입니다: '+user_id + '<br>Wrong user id: '+ user_id)
         
         if len(user_id) < 4 or len(user_id) > 10:
-            return HttpResponse('user id is too long or too short.')
+            return HttpResponse('아이디가 너무 길거나 짧습니다.<br>user id is too long or too short.')
             
         # student number
         if not len(studentNumber) == 9:
-            return HttpResponse('Wrong Student Number.')
+            return HttpResponse('학번이 잘못되었습니다.<br>Wrong Student Number.')
         
         # email match
         
         p = re.compile('^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
         if p.match(email) == None:
-            return HttpResponse('Wrong Email.')
+            return HttpResponse('이메일이 잘못되었습니다.<br>Wrong Email.')
         
         # all-fill validation
         if not (username and studentNumber and user_id and password1 and password2 and grade and major and email and phone):
@@ -51,13 +52,13 @@ def signup(request):
         elif password1 != password2:
             return HttpResponse('Please fill all the blanks in registeration form.')
         else:
-            user = vespaUser(username=username, studentNumber=studentNumber, password=make_password(password1), user_id=user_id, grade=grade, major=major, email=email, phone=phone)
+            user = vespaUser(username=username, studentNumber=studentNumber, password=make_password(password1), user_id=user_id, grade=grade, major=major, email=email, phone=phone, usertype=usertype)
             try:
                 c_user = vespaUser.objects.get(user_id=user_id)
                 return HttpResponse('이미 등록된 사용자입니다.<br>Already registerd user.')
             except vespaUser.DoesNotExist:
                 user.save()
-                return redirect('/login')
+                return redirect('accounts/login')
         return render(request, 'accounts/signup.html')
 
 def login(request):

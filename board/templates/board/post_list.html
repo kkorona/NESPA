@@ -173,7 +173,7 @@
             
             {% for post in posts %}
             <tr>
-            <td>1</td>
+            <td>{{ post.id }}</td>
             <td><a href="{{ post.get_absolute_url }}">{{ post.title }} </a></td>
             <td>{{ post.author }}</td>
             <td>{{ post.pub_date|date:"N d, Y" }}</td>
@@ -182,9 +182,11 @@
             {% endfor %}
             </tbody>
             </table>
+            {% if not request.session.usertype == 'normal' %}
             <div align="right">
-                <a class="btn btn-primary pull-right" href="#">글쓰기</a>
+                <a class="btn btn-primary pull-right" href="/ds2020/write">글쓰기</a>
             </div>
+            {% endif %}
       </div>
       <div>
       {% if page_obj.has_previous %}
