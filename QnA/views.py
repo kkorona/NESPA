@@ -22,7 +22,7 @@ class PostDV(DetailView):
         
 def write(request):
     if request.method == "GET":
-        return render(request, 'qna/write.html')
+        return render(request, 'QnA/write.html')
     if request.method == "POST":
         username = request.session['username']
         usertype = request.session['usertype']
