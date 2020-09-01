@@ -32,8 +32,14 @@ def signup(request):
             return HttpResponse('잘못된 아이디입니다: '+user_id + '<br>Wrong user id: '+ user_id)
         
         if len(user_id) < 4 or len(user_id) > 10:
-            return HttpResponse('아이디가 너무 길거나 짧습니다.<br>user id is too long or too short.')
+            return HttpResponse('아이디가 너무 길거나 짧습니다.<br>ID is too long or too short.')
             
+        if len(password1) < 8:
+            return HttpResponse('비밀번호가 너무 짧습니다.<br> Password is too short.')
+
+        if password1 == user_id:
+            return HttpResponse('비밀번호가 아이디와 같습니다.<br> Password is same with ID.')
+        
         # student number
         if not len(studentNumber) == 9:
             return HttpResponse('학번이 잘못되었습니다.<br>Wrong Student Number.')
@@ -46,11 +52,11 @@ def signup(request):
         
         # all-fill validation
         if not (username and studentNumber and user_id and password1 and password2 and grade and major and email and phone):
-            return HttpResponse('Please fill all the blanks in registeration form.')
+            return HttpResponse('모든 칸을 빠짐없이 채워주세요.<br> Please fill all the blanks in registeration form.')
             
         # validate passwords
         elif password1 != password2:
-            return HttpResponse('Please fill all the blanks in registeration form.')
+            return HttpResponse('비밀번호 확인이 잘못되었습니다.<br>Wrong password confirmation.')
         else:
             user = vespaUser(username=username, studentNumber=studentNumber, password=make_password(password1), user_id=user_id, grade=grade, major=major, email=email, phone=phone, usertype=usertype)
             try:
@@ -84,7 +90,7 @@ def login(request):
                 else:
                     return HttpResponse('ID 또는 비밀번호가 잘못되었습니다.<br>ID or password is invalid.')
             except vespaUser.DoesNotExist:
-                return HttpResponse('ID 또는 비밀번호가 잘못되었습니다.<br>ID or password is invalid.')
+                return HttpResponse('등록되지 않은 사용자입니다.')
     return render(request,'accounts/login.html')
 
 def logout(request):
