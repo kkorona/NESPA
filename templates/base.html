@@ -36,21 +36,174 @@
     </head>
     <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-          <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/ds2020">NESPA 0.8 (beta)</a>
+          <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/ds2020">NESPA 0.55a (beta)</a>
           <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
         </nav>
-        {% block contents %}
+    <div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+      
+      <ul class="nav flex-column mb-2">
+         {% if request.session.userid %}
+          <li class="nav-item"> 
+            <span class="nav-link" id="sidebar_username" href="#">
+                <span data-feather="user"></span>
+                사용자 : {{ request.session.username }}
+            </a>
+          </li>
+          <li class="nav-item"> 
+            <a class="nav-link" id="sidebar_logout" href="/accounts/logout">
+                  <span data-feather="log-out"></span>
+                  로그아웃
+            </a>
+          </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" id="sidebar_login" href="/accounts/login">
+                  <span data-feather="log-in"></span>
+                  로그인
+                </a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_signup" href="/accounts/signup">
+              <span data-feather="user-plus"></span>
+              회원가입
+            </a>
+          </li>
+            {% endif %}
+          
+        </ul>
+      
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>강의 정보</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="chevrons-left"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_notice" href="/ds2020">
+              <span data-feather="aperture"></span>
+              공지사항
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_syllabus" href="/syllabus">
+              <span data-feather="compass"></span>
+              교수계획표
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_lecture" href="/lecture">
+              <span data-feather="archive"></span>
+              강의자료
+            </a>
+          </li>
+        </ul>
         
-        
-        {% endblock %}
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>과제</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="chevrons-left"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_list" href="#">
+              <span data-feather="list"></span>
+              과제물 목록
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_submission" href="/assignment/submission">
+              <span data-feather="terminal"></span>
+              과제물 제출
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_result" href="#">
+              <span data-feather="pie-chart"></span>
+              과제 제출 현황
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_exam" href="/exam">
+              <span data-feather="edit"></span>
+              온라인 시험
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>게시판</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="chevrons-left"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_forum" href="/forum">
+              <span data-feather="file-text"></span>
+              자유 게시판
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_qna" href="/qna">
+              <span data-feather="alert-circle"></span>
+              질문 게시판
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_reports" href="/reports">
+              <span data-feather="edit-3"></span>
+              실습 보고서
+            </a>
+          </li>
+        </ul>
+    
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>About</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="chevrons-left"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_nespa_about" href="/about">
+              <span data-feather="code"></span>
+              NESPA 소개
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_nespa_devs" href="/devs">
+              <span data-feather="slack"></span>
+              NESPA 개발팀
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_nespa_qna" href="/nespa_qna">
+              <span data-feather="check-circle"></span>
+              NESPA Q&amp;A
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% block contents %}
+    
+    
+    {% endblock %}
     </body>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="/static/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/static/js/bootstrap.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="/static/js/dashboard.js"></script>
     {% block scripts %}
+    
+    
     {% endblock %}
 </html>
 

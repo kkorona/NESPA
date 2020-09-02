@@ -19,7 +19,7 @@ def signup(request):
         major = request.POST.get('major',None)
         email = request.POST.get('email',None)
         phone = request.POST.get('phone',None)
-        usertype = 'normal'
+        usertype = 'unapproved'
         res_data = {}
         
         # validation zone
