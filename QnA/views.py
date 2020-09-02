@@ -14,11 +14,13 @@ class PostLV(ListView):
 
 class PostDV(DetailView):
     model = Post
+    '''
     comments = None
     try:
         comments = Comment.objects.filter(parent=model.get_id)
     except Comment.DoesNotExist:
         pass
+    '''
         
 def write(request):
     if request.method == "GET":

@@ -33,7 +33,7 @@ urlpatterns = [
     path('qna/', include('QnA.urls')),
     path('reports/', dev2020.views.index, name='index'),
     path('about/', dev2020.views.index, name='index'),
-    path('devs/', dev2020.views.index, name='index'),
+    path('devs/', dev2020.views.nespa_dev, name='nespa_dev'),
     path('nespa_qna/', dev2020.views.index, name='index'),
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

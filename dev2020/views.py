@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, 'dev2020/index.html')
+    
+def nespa_dev(request):
+    return render(request, 'dev2020/nespa_dev.html')
