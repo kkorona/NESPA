@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.0.1">
-    <title>{% block title %}{% endblock%}</title>
+    <title>NESPA - advaNced ESPA</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
 
@@ -36,11 +36,20 @@
     </head>
     <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-          <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/ds2020">NESPA 0.55a (beta)</a>
-          <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </nav>
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/ds2020">NESPA 0.55a (beta)</a>
+      <ul class="navbar-nav ml-auto px-3 flex">
+        <li>
+          <button class="btn-secondary mr-3" onclick="location.href='/ds2020'">공지사항</button>
+          <button class="btn-secondary mr-3" onclick="location.href='/forum'">자유게시판</button>
+          <button class="btn-secondary mr-3" onclick="location.href='/qna'">질문게시판</button>          
+          {% if request.session.userid %}
+            <button class="btn-secondary" onclick="location.href='/accounts/logout'">로그아웃</button>
+            {% else %}
+            <button class="btn-secondary" onclick="location.href='/accounts/login'">로그인</button>
+            {% endif %}
+        </li>
+      </ul>
+    </nav>
     <div class="container-fluid">
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -112,7 +121,7 @@
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" id="sidebar_list" href="#">
+            <a class="nav-link" id="sidebar_list" href="/assignment/assignment_list">
               <span data-feather="list"></span>
               과제물 목록
             </a>

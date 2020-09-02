@@ -10,3 +10,6 @@ def submission(request):
     if request.method == "POST":
         prob_ID = request.POST.get('',None)
         
+def assignment_list(request):
+    if request.method == "GET":
+        return render(request, 'assignment_list.html')

@@ -1,0 +1,62 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <img src="/static/miscs/banner.png">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">자유 게시판 / Forum</h1>
+      </div>
+      <div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+            <th>#</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>게시날짜</th>
+            <th>수정날짜</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+            {% for post in posts %}
+            <tr>
+            <td>{{ post.id }}</td>
+            <td><a href="{{ post.get_absolute_url }}">{{ post.title }} </a></td>
+            <td>{{ post.author }}</td>
+            <td>{{ post.pub_date|date:"N d, Y" }}</td>
+            <td>{{ post.mod_date|date:"N d, Y" }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+            {% if request.session.logged_in == 'YES' and request.session.usertype != 'unapproved' %}
+            <div align="right">
+                <a class="btn btn-primary pull-right" href="/forum/write">글쓰기</a>
+            </div>
+            {% endif %}
+      </div>
+      <div>
+      {% if page_obj.has_previous %}
+       <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
+      {% endif %}
+      
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      
+      {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">Next</a>
+      {% endif %}
+      </div>
+    </main>
+</div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_forum").attr('class','nav-link active'); 
+</script>
+{% endblock %}

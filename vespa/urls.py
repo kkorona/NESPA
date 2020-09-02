@@ -29,7 +29,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('assignment/', include('assignment.urls')),
     path('exam/', dev2020.views.index, name='index'),
-    path('forum/', dev2020.views.index, name='index'),
+    path('forum/', include('forum.urls')),
     path('qna/', include('QnA.urls')),
     path('reports/', dev2020.views.index, name='index'),
     path('about/', dev2020.views.index, name='index'),
