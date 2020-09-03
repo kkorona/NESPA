@@ -8,9 +8,8 @@
         <h1 class="h2">과제물 제출 / Submission</h1>
       </div>
       <div>
-        <form method="POST" action="">
+        <form method="POST" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            
             <div class="form-row">
                 <div class="form-group">
                     <label for="problem_id">문제 번호 / Problem No.</label>

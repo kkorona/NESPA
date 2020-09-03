@@ -9,6 +9,7 @@ def submission(request):
         
     if request.method == "POST":
         prob_ID = request.POST.get('',None)
+        # https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
         
 def assignment_list(request):
     if request.method == "GET":
