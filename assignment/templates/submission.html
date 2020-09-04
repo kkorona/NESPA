@@ -8,6 +8,7 @@
         <h1 class="h2">과제물 제출 / Submission</h1>
       </div>
       <div>
+        {% if request.session.logged_in and request.session.usertype == "admin" %}
         <form method="POST" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             <div class="form-row">
@@ -43,8 +44,11 @@
             </div>
             <input type="submit" class="btn btn-primary" value="제출 / Submit">
         </form>
-        <div>
-        </div>
+        {% elif not request.session.logged_in  %}
+        <span>로그인이 필요한 기능입니다.</span>
+        {% elif request.session.usertype != "admin" %}
+        <span>점검중인 기능입니다.</span>
+        {% endif %}
       </div>
     </main>
   </div>
