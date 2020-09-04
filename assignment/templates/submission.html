@@ -43,6 +43,8 @@
             </div>
             <input type="submit" class="btn btn-primary" value="제출 / Submit">
         </form>
+        <div>
+        </div>
       </div>
     </main>
   </div>
@@ -53,6 +55,10 @@
 {% block scripts %}
 <script>
     $("#sidebar_submission").attr('class','nav-link active'); 
+    $("#source_code").on('change',function(e){
+        var fileName = e.target.files[0].name;
+        $(this).next('.custom-file-label').html(fileName);
+    })
 </script>
 {% endblock %}
 
