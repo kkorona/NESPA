@@ -50,14 +50,14 @@ def submission(request):
 def submission_check(request):
     if not request.session['submission_id']:
         return HttpResponse('잘못된 접근입니다.')
-        
-    uploaded_file_url = request.session['uploaded_file_url']
-    prob_ID = request.session['problem_id']
-    client = vespaUser.objects.get(user_id = request.session['userid'])
-    studentNumber = client.studentNumber
-    shutil.move(os.path.join(settings.BASE_DIR),os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID,request.session['submission_id']+'.'+request.session['langext']))
-    return HttpResponse('Succesfully saved code')
-    #https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
+    if request.method == "POST":    
+        uploaded_file_url = request.session['uploaded_file_url']
+        prob_ID = request.session['problem_id']
+        client = vespaUser.objects.get(user_id = request.session['userid'])
+        studentNumber = client.studentNumber
+        # shutil.move(os.path.join(settings.BASE_DIR),os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID,request.session['submission_id']+'.'+request.session['langext']))
+        return HttpResponse('Succesfully saved code')
+        #https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
     
 def assignment_list(request):
     if request.method == "GET":
