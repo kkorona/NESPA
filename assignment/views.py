@@ -24,7 +24,7 @@ def submission(request):
         return render(request, 'submission.html')
         
     if request.method == "POST":
-        if request.FILES['source_code']:            
+        if 'source_code' in request.FILES:
             prob_ID = request.POST.get('problem_id')
             language = request.POST.get('language')
             source_code = request.FILES['source_code']
@@ -37,7 +37,7 @@ def submission(request):
             request.session['langext'] = LANGDICT[language]
             request.session['uploaded_file_url'] = uploaded_file_url
             
-            submission = SubmissionModel(client = request.session['userid'], prob_ID = prob_ID, result = 'TBD')
+            submission = SubmissionModel(client = request.session['userid'], prob_ID = prob_ID, result = 'Failed')
             
             submission.save()
             request.session['submission_id'] = str(submission.id)
