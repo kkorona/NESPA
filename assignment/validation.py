@@ -48,7 +48,7 @@ def validate_CPP(CODE, POLICY):
         for x in blacklist:
             for y in libs:
                 if x in y:
-                    return (0, "Blacklist violation : 
+                    return (0, "Blacklist violation")
         return True
     
     
