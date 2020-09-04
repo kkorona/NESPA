@@ -55,7 +55,7 @@ def submission_check(request):
     prob_ID = request.session['problem_id']
     client = vespaUser.objects.get(user_id = request.session['userid'])
     studentNumber = client.studentNumber
-    shutil.move(os.path.join(settings.MEDIA_ROOT,uploaded_file_url),os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID,request.session['submission_id']+'.'+request.session['langext']))
+    shutil.move(os.path.join(settings.BASE_DIR,uploaded_file_url),os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID,request.session['submission_id']+'.'+request.session['langext']))
     return HttpResponse('Succesfully saved code')
     #https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
     
