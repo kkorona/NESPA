@@ -34,8 +34,7 @@
             <input type="submit" class="btn btn-success" value="제출 확인 / Submit">
         </form>
         <div>
-        {% if uploaded_file_url %}
-        {% endif %}
+        {{ request.session.uploaded_file_url }}
         </div>
       </div>
     </main>
