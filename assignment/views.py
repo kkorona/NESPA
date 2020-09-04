@@ -58,7 +58,7 @@ def submission_check(request):
         # shutil.move(os.path.join(settings.BASE_DIR),os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID,request.session['submission_id']+'.'+request.session['langext']))
         return HttpResponse('Succesfully saved code')
         #https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
-    return render(request, "submission.html")
+    return render(request, "submission_check.html")
     
 def assignment_list(request):
     if request.method == "GET":
