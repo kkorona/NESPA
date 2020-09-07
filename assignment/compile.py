@@ -15,7 +15,7 @@ def compiles(target_path, ext):
         
     res = ""
     try:
-        res = subprocess.check_output(query, stderr=subprocess.STDOUT, shell=True, timeout=1, universal_newlines=True)
+        res = subprocess.check_output(query, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
     except subprocess.CalledProcessError as e:
         with open(target_path + ".cerr", "w") as f:
             f.write(str(e.output))
