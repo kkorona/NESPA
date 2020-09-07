@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearArchiveView, MonthArchiveView, DayArchiveView
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 
 from forum.models import Post, Comment
 
@@ -32,6 +33,8 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
+        if title == '' or content == '':
+            return HttpResponse('제목과 내용은 비울 수 없습니다.')
         author = userid
         article = Post(title = title, author = author, content=content)
         article.save()

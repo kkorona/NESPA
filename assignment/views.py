@@ -7,6 +7,8 @@ from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 from . import validation
+# from . import compile
+# from . import execute
 from .models import SubmissionModel
 from accounts.models import vespaUser
 import shutil
@@ -37,12 +39,8 @@ def submission(request):
             request.session['langext'] = LANGDICT[language]
             request.session['uploaded_file_url'] = uploaded_file_url
             
-            submission = SubmissionModel(client = request.session['userid'], prob_ID = prob_ID, result = 'Failed')
-            
-            submission.save()
-            request.session['submission_id'] = str(submission.id)
-            
             return redirect('submission_check')
+            
         else:
             return HttpResponse('소스코드가 첨부되지 않았습니다.')
         # https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
@@ -55,15 +53,32 @@ def submission_check(request):
         prob_ID = request.session['problem_id']
         client = vespaUser.objects.get(user_id = request.session['userid'])
         studentNumber = client.studentNumber
+        ext = request.session['langext']
+        submission_id = request.session['submission_id']        
+        
         departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
         destination_path = os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID)
-        target_name = request.session['submission_id']+'.'+request.session['langext']
+        target_name = submission_id + '.' + ext
+        target_path = os.path.join(destination_path,target_name)
         
         if not os.path.exists(destination_path):
             os.makedirs(destination_path)
         
-        shutil.move(departure_path,os.path.join(destination_path,target_name))
-        return HttpResponse('Succesfully saved code')
+        shutil.move(departure_path,target_path)
+        
+        code_size = os.path.getsize(target_path)
+        
+        return HttpResponse("temp")
+        
+        # submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=code_size, result = 'TBD')
+        
+        # submission.save()
+        # request.session['submission_id'] = str(submission.id)
+        
+        # compile_result = compile.compile(target_path, ext)
+        
+        # execute_result = execute.execute(target_path, prob_ID, ext)
+        
         
     return render(request, "submission_check.html")
     
