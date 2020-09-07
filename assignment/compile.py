@@ -23,7 +23,7 @@ def compiles(target_path, ext):
     return 0
     
 def compile_cpp(target_path):
-    query = "/usr/bin/g++ " + target_path + ".cpp -o " + target_path + " -O2 -Wall -lm -static -std=gnu++14"
+    query = "/usr/bin/env g++ " + target_path + ".cpp -o " + target_path + " -O2 -Wall -lm -static -std=c++11"
     return query
 
 def compile_c(target_path):
