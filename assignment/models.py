@@ -13,7 +13,7 @@ class SubmissionModel(models.Model):
     result = models.CharField(max_length = 40)
     
     def __str__(self):
-        return self.id
+        return str(self.id)
         
     class Meta:
         db_table = "submissions"
