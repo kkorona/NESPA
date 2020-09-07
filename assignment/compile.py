@@ -19,15 +19,15 @@ def compiles(target_path, ext):
     except subprocess.CalledProcessError as e:
         with open(target_path + ".cerr", "w") as f:
             f.write(str(e.output))
-        return (1,str(e.output))
-    return (0,res)
+        return 1
+    return 0
     
 def compile_cpp(target_path):
     query = "g++ " + target_path + ".cpp -o " + target_path + " -O2 -Wall -lm -static -std=gnu++14"
     return query
 
 def compile_c(target_path):
-    query = "gcc " + target_path + ".cpp -o " + target_path + " -O2 -Wall -lm -static -std=gnu++14"
+    query = "gcc " + target_path + ".c -o " + target_path + " -O2 -Wall -lm -static -std=c11"
     return query
 
 def compile_py(target_path):

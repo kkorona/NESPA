@@ -8,7 +8,7 @@ from django.core.files.storage import FileSystemStorage
 
 from . import validation
 from . import compile
-# from . import execute
+from . import execute
 from .models import SubmissionModel
 from accounts.models import vespaUser
 import shutil
@@ -75,7 +75,8 @@ def submission_check(request):
         
         target_name = submission_id + '.' + ext
         target_path = os.path.join(destination_path,target_name)
-        target_title = os.path.join(destination_path, submission_id)      
+        target_title = os.path.join(destination_path, submission_id) 
+        eval_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID,'eval')
         
         if not os.path.exists(destination_path):
             os.makedirs(destination_path)
@@ -88,14 +89,25 @@ def submission_check(request):
         
         compile_result = compile.compiles(target_title, ext)
         
-        if compile_result[0] == 1:
-            return render(request, "compile_error.html", {'error_msg' : compile_result[1]})
+        if compile_result == 1:
+            return render(request, "compile_error.html", {'error_msg' : '컴파일 에러가 발생하였습니다. 소스코드를 확인해주시고, 해결이 안될 경우 조교에게 문의하세요.'})
         
-        return HttpResponse("compile finished.")
+        execute_result = execute.executes(destination_path, eval_path, submission_id, ext)
         
-        # execute_result = execute.execute(target_path, prob_ID, ext)
+        total_tc = len(execute_result)
+        scored_tc = 0
+        total_time = 0.0
         
-        # return HttpResponse("execution finished.")
+        for tc in execute_result:
+            if tc[1] == "CORRECT ANSWER":
+                scored_tc += 1
+            total_time += float(tc[2])
+        
+        score = 100 * scored_tc // total_tc
+     
+        return HttpResponse("execution finished.")
+        
+        # return render(request, "result.html", {'result_table' : execute_result, 'score' : score, 'total_time' : total_time})
         
         
     return render(request, "submission_check.html")
