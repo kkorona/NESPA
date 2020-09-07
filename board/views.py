@@ -20,12 +20,13 @@ def write(request):
     if request.method == "POST":
         username = request.session['username']
         usertype = request.session['usertype']
+        userid = request.session['userid']
         if usertype == "unapproved":
             return HttpResponse('접근할 수 없는 기능입니다.')
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
-        author = username
+        author = userid
         article = Post(title = title, author = author, content=content)
         article.save()
         return redirect('board:post_list')
