@@ -1,1 +1,16 @@
 math
+string
+re
+collections
+heapq
+array
+types
+enum
+numbers
+mathcmath
+decimal
+fractions
+random
+itertools
+functools
+operator

@@ -33,7 +33,7 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
-        author = username
+        author = userid
         article = Post(title = title, author = author, content=content)
         article.save()
         return redirect('qna:post_list')

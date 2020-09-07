@@ -14,11 +14,11 @@ numeric
 ostream
 queue
 set
-stackreg
+stack
+reg
 string
 vector
 array
-atomic
 initializer_list
 random
 tuple

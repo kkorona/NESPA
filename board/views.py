@@ -26,7 +26,7 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
-        author = userid
+        author = username
         article = Post(title = title, author = author, content=content)
         article.save()
         return redirect('board:post_list')
