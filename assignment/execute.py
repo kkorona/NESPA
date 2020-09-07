@@ -30,6 +30,7 @@ def executes(target_path, eval_path, submission_id, ext):
         eval_input_file = os.path.join(eval_path, filename + ".inp")
         eval_output_file = os.path.join(eval_path, filename + ".out")
         query = query_head + " < " + eval_input_file
+        fname = os.path.basename(eval_input_file).split('.')[0]
         queries += query + "\n"
         try:
             timeSt = time.time()
@@ -43,14 +44,14 @@ def executes(target_path, eval_path, submission_id, ext):
                     if not t1 == t2:
                         identical = False
                 if identical:
-                    results.append((filename,"CORRECT ANSWER", str(timeDelta)))
+                    results.append({'filename': fname,'caseRes': "CORRECT ANSWER",'exectime': str(timeDelta)})
                 else:
-                    results.append((filename,"WRONG ANSWER", str(timeDelta)))
+                    results.append({'filename': fname,'caseRes': "WRONG ANSWEWR",'exectime': str(timeDelta)})
         except subprocess.CalledProcessError as e:
-            results.append((filename,"RUNTIME ERROR", "0.0"))
+            results.append({'filename': fname,'caseRes': "RUNTIME ERROR",'exectime': '0'})
     
     for result in results:
-        resf += result[0] + " : " + result[1] + " : " + result[2] + "\n"
+        resf += result['filename'] + " : " + result['caseRes'] + " : " + result['exectime'] + "\n"
     
     target_title = os.path.join(target_path,submission_id)
     with open(target_title + ".que", "w") as f:
@@ -65,10 +66,12 @@ def execute_cpp(target_path, filename):
     return query
 
 def execute_c(target_path):
-    pass
+    query = os.path.join(target_path,filename)
+    return query
 
 def execute_py(target_path):
-    pass
+    query = "python3 " + os.path.join(target_path,filename) + ".py"
+    return query
 
 def execute_java(target_path):
     pass

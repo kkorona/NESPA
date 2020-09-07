@@ -68,7 +68,7 @@ def submission_check(request):
         departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
         destination_path = os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID)
         
-        submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, result = 'TBD')
+        submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0)
         submission.save()
         request.session['submission_id'] = str(submission.id)
         submission_id = str(submission.id)
@@ -97,17 +97,30 @@ def submission_check(request):
         total_tc = len(execute_result)
         scored_tc = 0
         total_time = 0.0
+        res_out = []
+        
+        filename_list = []
+        caseRes_list = []
+        exectime_list = []
         
         for tc in execute_result:
-            if tc[1] == "CORRECT ANSWER":
+            if tc['caseRes'] == "CORRECT ANSWER":
                 scored_tc += 1
-            total_time += float(tc[2])
+            total_time += float(tc['exectime'])
+            filename_list.append(tc['filename'])
+            caseRes_list.append(tc['caseRes'])
+            exectime_list.append(tc['exectime'])
         
         score = 100 * scored_tc // total_tc
-     
-        return HttpResponse("execution finished.")
         
-        # return render(request, "result.html", {'result_table' : execute_result, 'score' : score, 'total_time' : total_time})
+        res_out = zip(filename_list, caseRes_list, exectime_list)
+        
+        submission.exec_time = total_time
+        submission.score = score
+        
+        submission.save()
+            
+        return render(request, "result.html", {'prob_id' : prob_ID, 'result_out_table' : res_out, 'score' : str(score), 'total_time' : str(total_time)})
         
         
     return render(request, "submission_check.html")

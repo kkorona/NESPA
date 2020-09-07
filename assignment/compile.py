@@ -31,7 +31,8 @@ def compile_c(target_path):
     return query
 
 def compile_py(target_path):
-    pass
+    query = "python3 -c \"import py_compile; py_compile.compile(r'" + target_path + ".py')\""
+    return query
 
 def compile_java(target_path):
     pass
