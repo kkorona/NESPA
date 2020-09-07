@@ -8,7 +8,7 @@
         <h1 class="h2">과제물 제출 / Submission</h1>
       </div>
       <div>
-        {% if request.session.logged_in and request.session.usertype == "admin" %}
+        {% if request.session.logged_in and request.session.usertype != "unapproved" %}
         <form method="POST" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             <div class="form-row">
@@ -16,7 +16,10 @@
                     <label for="problem_id">문제 번호 / Problem No.</label>
                     <select id="problem_id" name="problem_id" class="form-control">
                         <option value="01">1. ROBOCOP (2020.09.08. ~ 2020.09.11.)</option>
+                        {% if request.session.usertype == "admin" %}
                         <option value="02">2. MULTICOP  (2020.09.12. ~ 2020.09.16.)</option>
+                        <option value="00">0. sort</option>
+                        {% endif %}
                     </select>
                 </div>
             </div>
@@ -28,7 +31,9 @@
                         <option value="01">C++14</option>
                         <option value="02">C11</option>
                         <option value="03">Python3</option>
+                        {% if request.session.usertype == "admin" %}
                         <option value="04">Java</option>
+                        {% endif %}
                     </select>
                 </div>
             </div>

@@ -46,9 +46,11 @@ def executes(target_path, eval_path, submission_id, ext):
                 if identical:
                     results.append({'filename': fname,'caseRes': "CORRECT ANSWER",'exectime': str(timeDelta)})
                 else:
-                    results.append({'filename': fname,'caseRes': "WRONG ANSWEWR",'exectime': str(timeDelta)})
+                    results.append({'filename': fname,'caseRes': "WRONG ANSWER",'exectime': str(timeDelta)})
         except subprocess.CalledProcessError as e:
             results.append({'filename': fname,'caseRes': "RUNTIME ERROR",'exectime': '0'})
+        except subprocess.TimeoutExpired as e:
+            results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '1'})
     
     for result in results:
         resf += result['filename'] + " : " + result['caseRes'] + " : " + result['exectime'] + "\n"
