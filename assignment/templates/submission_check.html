@@ -26,8 +26,15 @@
 
             <div class="form-row">            
                 <div class="form-group">
-                    <label for="language">제출 번호</label>
-                    <input type="text" readonly class="form-control-plaintext" id="submission_id" name="submission_id" value="{{ request.session.submission_id }}">
+                    <label for="language">제출 시각</label>
+                    <input type="text" readonly class="form-control-plaintext" id="submission_id" name="submission_id" value="{{ request.session.updated_time }}">
+                </div>
+            </div>
+            
+            <div class="form-row">            
+                <div class="form-group">
+                    <label for="language">파일 크기</label>
+                    <input type="text" readonly class="form-control-plaintext" id="file_size" name="file_size" value="{{ request.session.code_size }}">
                 </div>
             </div>
             
