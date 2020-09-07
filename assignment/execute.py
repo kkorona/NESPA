@@ -65,13 +65,13 @@ def execute_cpp(target_path, filename):
     query = os.path.join(target_path,filename)
     return query
 
-def execute_c(target_path):
+def execute_c(target_path, filename):
     query = os.path.join(target_path,filename)
     return query
 
-def execute_py(target_path):
+def execute_py(target_path, filename):
     query = "python3 " + os.path.join(target_path,filename) + ".py"
     return query
 
-def execute_java(target_path):
+def execute_java(target_path, filename):
     pass
