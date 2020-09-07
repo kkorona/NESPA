@@ -28,6 +28,7 @@ def write(request):
     if request.method == "POST":
         username = request.session['username']
         usertype = request.session['usertype']
+        userid = request.session['userid']
         if usertype == "unapproved":
             return HttpResponse('접근할 수 없는 기능입니다.')
             
