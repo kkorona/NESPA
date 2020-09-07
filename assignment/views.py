@@ -64,7 +64,7 @@ def submission_check(request):
         
         shutil.move(departure_path,os.path.join(destination_path,target_name))
         return HttpResponse('Succesfully saved code')
-        #https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
+        
     return render(request, "submission_check.html")
     
 def assignment_list(request):

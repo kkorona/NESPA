@@ -13,3 +13,4 @@ calendar
 webbrowser
 sysconfig
 builtins
+threading

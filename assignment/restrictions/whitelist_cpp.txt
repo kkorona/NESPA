@@ -24,3 +24,10 @@ random
 tuple
 unordered_map
 unordered_set
+cstdio
+cstdlib
+cstring
+cmath
+climits
+cfloat
+regex
