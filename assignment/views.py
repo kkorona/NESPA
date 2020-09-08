@@ -134,7 +134,7 @@ def assignment_list(request):
 def submission_list(request):
     submission_table = None
     if request.session['usertype'] == 'normal':
-        submission_table = SubmissionModel.objects.filter(client_id = request.session['userid'])
+        submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'])
     if request.session['usertype'] == 'admin':
         submission_table = SubmissionModel.objects.all()
     
