@@ -32,6 +32,7 @@ def executes(target_path, eval_path, submission_id, ext):
         query = query_head + " < " + eval_input_file
         fname = os.path.basename(eval_input_file).split('.')[0]
         queries += query + "\n"
+        res = ""
         try:
             timeSt = time.time()
             res = subprocess.check_output(query, stderr=subprocess.STDOUT, timeout = 1, shell=True, universal_newlines=True)
