@@ -16,3 +16,4 @@ class SubmissionModel(models.Model):
         
     class Meta:
         db_table = "submissions"
+        ordering = ('-id',)
