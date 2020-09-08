@@ -30,8 +30,8 @@
                     <td> {{ submission.prob_ID }} </td>
                     <td> {{ submission.created_at }} </td>
                     <td> {{ submission.score }} </td>
-                    <td> {{ submission.exec_time }} </td>
-                    <td> {{ submissoin.code_size }} </td>
+                    <td> {{ submission.exec_time|stringformat:".3f" }} </td>
+                    <td> {{ submission.code_size }} </td>
                 </tr>
                 {% endfor %}
             </tbody>
