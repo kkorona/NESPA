@@ -12,40 +12,29 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">St.Number</th>
                     <th scope="col">Problem</th>
-                    <th scope="col">Code size limit</th>
-                    <th scope="col">Time limit</th>
-                    <th scope="col">Try limit</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                    <th scope="col">Evaluation</th>
-                    <th scope="col">Sample data</th>
+                    <th scope="col">Submit Time</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Exec. Time</th>
+                    <th scope="col">Size</th>
                 </tr>
             </thead>
             <tbody>
+                {% for submission in submission_table %}
                 <tr>
-                    <th score="row">1</th>
-                    <td><a href="/media/assignment/documents/01_ROBOCOP2(a).hwp">로보캅2(RoboCop2)</a></td>
-                    <td>3000 Bytes</td>
-                    <td>1 sec.</td>
-                    <td>15</td>
-                    <td>09.08 00:00</td>
-                    <td>09.11 22:00</td>
-                    <td>TBD</td>
-                    <td><a href="/media/assignment/markingdata/01/open01.zip">로보캅2(RoboCop2)</td>
-                    <td></td>
+                    <td> {{ submission.client_ID }} </td>
+                    <td> {{ submission.client_number }} </td>
+                    <td> {{ submission.prob_ID }} </td>
+                    <td> {{ submission.created_at }} </td>
+                    <td> {{ submission.score }} </td>
+                    <td> {{ submission.exec_time }} </td>
+                    <td> {{ submissoin.code_size }} </td>
                 </tr>
-                <tr>
-                    <th score="row">2</th>
-                    <td><a href="/media/assignment/documents/02_2COPS(b).hwp">투캅스(2Cops)</a></td>
-                    <td>3500 Bytes</td>
-                    <td>1 sec.</td>
-                    <td>15</td>
-                    <td>09.12 00:00</td>
-                    <td>09.16 22:00</td>
-                    <td>TBD</td>
-                    <td>TBA</td>
-                </tr>
+                {% endfor %}
+            </tbody>
+            
       </div>
     </main>
   </div>

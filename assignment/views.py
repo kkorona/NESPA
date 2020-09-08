@@ -130,3 +130,12 @@ def submission_check(request):
 def assignment_list(request):
     if request.method == "GET":
         return render(request, 'assignment_list.html')
+        
+def submission_list(request):
+    submission_table = None
+    if request.session['usertype'] == 'normal':
+        submission_table = SubmissionModel.objects.filter(client_id = request.session['userid'])
+    if request.session['usertype'] == 'admin':
+        submission_table = SubmissionModel.objects.all()
+    
+    return render(request, "submission_list.html", {'submission_table' : submission_table})
