@@ -33,9 +33,9 @@ class Post(models.Model):
         return self.get_next_by_mod_date()
 
 class Comment(models.Model):
-    parent = models.CharField(max_length=200)
+    parent = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.CharField(max_length=50)
-    content = models.TextField('CONTENT', default='')
+    text = models.TextField()
     pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
     mod_date = models.DateTimeField('MODIFY DATE', auto_now = True)
     
@@ -43,7 +43,7 @@ class Comment(models.Model):
         verbose_name = 'comment'
         verbose_name_plural = 'comments'
         db_table = 'forum_comments'
-        ordering = ('-mod_date',)
+        ordering = ('-pub_date',)
         
     def get_parent(self):
         return self.parent

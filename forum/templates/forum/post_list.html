@@ -26,8 +26,8 @@
             <td>{{ post.id }}</td>
             <td><a href="{{ post.get_absolute_url }}">{{ post.title }} </a></td>
             <td>{{ post.author }}</td>
-            <td>{{ post.pub_date|date:"N d, Y" }}</td>
-            <td>{{ post.mod_date|date:"N d, Y" }}</td>
+            <td>{{ post.pub_date|date:"N j일, H:i" }}</td>
+            <td>{{ post.mod_date|date:"N j일, H:i" }}</td>
             </tr>
             {% endfor %}
             </tbody>

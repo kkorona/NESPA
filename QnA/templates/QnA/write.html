@@ -8,8 +8,6 @@
             <h1 class="h2">질문 게시판 / Q&amp;A</h1>
         </div>
         <div>
-            <form method='POST' action="">
-            {% csrf_token %}
             <div class="w-75">
             <form method='POST' action="">
             {% csrf_token %}
@@ -28,12 +26,11 @@
             <br>
             <div class="float-sm-right">
                 <input type="submit" class="btn btn-primary btn-lg" value="등록">
-            <div>
+            </div>
             </form>
-        </div>
+            </div>
         </div>
     </main>
-</div>
 </div>
       
 {% endblock %}

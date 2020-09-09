@@ -35,7 +35,7 @@ class Post(models.Model):
 class Comment(models.Model):
     parent = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.CharField(max_length=50)
-    content = models.TextField()
+    text = models.TextField()
     pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
     mod_date = models.DateTimeField('MODIFY DATE', auto_now = True)
     
@@ -43,7 +43,7 @@ class Comment(models.Model):
         verbose_name = 'comment'
         verbose_name_plural = 'comments'
         db_table = 'qna_comments'
-        ordering = ('-mod_date',)
+        ordering = ('-pub_date',)
         
     def get_parent(self):
         return self.parent
