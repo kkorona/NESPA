@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf import settings
-
+from django.utils import timezone
 from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
@@ -32,7 +32,16 @@ EXTDICT = {
 def submission(request):
     if request.method == "GET":
         full_prob_list = ProblemModel.objects.all()
-        return render(request, 'submission.html')
+        now = timezone.now()
+        cur_prob_list = []
+        for prob in full_prob_list:
+            if prob.starts_at <= now and prob.ends_at >= now:
+                cur_prob_list.append(prob)
+            with open("test.txt","a") as f:
+                f.write(str(prob.starts_at)+"\n")
+                f.write(str(prob.ends_at)+"\n")
+                f.write(str(now)+"\n\n")
+        return render(request, 'submission.html', {'full_prob_list' : full_prob_list, 'cur_prob_list':cur_prob_list})
         
     if request.method == "POST":
         if 'source_code' in request.FILES:
@@ -145,7 +154,7 @@ def submission_detail(request):
             if prob_ID == 'full':
                 submission_table = SubmissionModel.objects.all()
             else:
-                full_submission_table = SubmissionModel.objects.filter(prob_ID = prob_ID).order_by('client_number','-created_at','-score','exec_time','code_size')
+                full_submission_table = SubmissionModel.objects.filter(prob_ID = prob_ID).order_by('-score','exec_time','code_size','client_number','-created_at')
                 submission_table = []
                 last = None
                 for submission in full_submission_table:
