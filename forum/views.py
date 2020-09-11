@@ -63,7 +63,7 @@ def write(request):
         if title == '' or content == '':
             return HttpResponse('제목과 내용은 비울 수 없습니다.')
         author = userid
-        article = Post(title = title, author = author, content=content)
+        article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
         return redirect('forum:post_list')
         

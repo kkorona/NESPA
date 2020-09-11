@@ -5,29 +5,39 @@
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
         <img src="/static/miscs/banner.png">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">자유 게시판 / Forum</h1>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75">
+        <h2 class="">자유 게시판 / Forum</h2>
       </div>
-      <div>
-        <table class="table table-hover">
-            <thead>
+      <div class="w-75">
+        <table class="table table-hover table-bordered border">
+            <thead class="thead-light">
             <tr>
-            <th>#</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>게시날짜</th>
-            <th>수정날짜</th>
+                <th class="w-5 text-center">#</th>
+                <th class="w-50">제목</th>
+                <th class="w-10 text-center">작성자</th>
+                <th class="w-10 text-center">게시날짜</th>
+                <th class="w-5 text-center">조회수</th>
             </tr>
             </thead>
             <tbody>
             
             {% for post in posts %}
             <tr>
-            <td>{{ post.id }}</td>
-            <td><a href="{{ post.get_absolute_url }}">{{ post.title }} </a></td>
-            <td>{{ post.author }}</td>
-            <td>{{ post.pub_date|date:"N j일, H:i" }}</td>
-            <td>{{ post.mod_date|date:"N j일, H:i" }}</td>
+            <td class="text-center">{{ post.id }}</td>
+            <td><a href="{{ post.get_absolute_url }}">{{ post.title }}
+            {% if post.comment_set.count > 0 %}
+            [{{ post.comment_set.count }}]
+            {% endif %}
+            </a></td>
+            <td class="text-center">{{ post.author }}</td>
+            <td class="text-center">{{ post.pub_date|date:"N j일, H:i" }}</td>
+            <td class="text-center">
+            {% if post.post_hit %}
+            {{ post.post_hit }}
+            {% else %}
+            0
+            {% endif %}
+            </td>
             </tr>
             {% endfor %}
             </tbody>
@@ -37,20 +47,28 @@
                 <a class="btn btn-primary pull-right" href="/forum/write">글쓰기</a>
             </div>
             {% endif %}
-      </div>
-      <div>
-      {% if page_obj.has_previous %}
-       <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
-      {% endif %}
-      
-      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-      
-      {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}">Next</a>
-      {% endif %}
-      </div>
-    </main>
-</div>
+            <nav>
+                <div class="text-center">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
+                      {% if page_obj.has_previous %}
+                       <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+                      {% endif %}
+                      </li>
+                      <li  class="page-item">
+                      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                      </li>
+                      <li class="page-item">
+                      {% if page_obj.has_next %}
+                       <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                      {% endif %}
+                      </li>
+                    </ul>
+                  </div>
+            </nav>
+            </div>
+        </main>
+    </div>
 </div>
       
 {% endblock %}

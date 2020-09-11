@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView
+from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormMixin
 from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearArchiveView, MonthArchiveView, DayArchiveView
+from django.core.exceptions import ObjectDoesNotExist
 
-from board.models import Post
-
+from board.models import Post, Comment
+from board.forms import CommentForm
 # Create your views here.
 
 class PostLV(ListView):
@@ -11,8 +13,40 @@ class PostLV(ListView):
     context_object_name = 'posts'
     paginate_by = 15
 
-class PostDV(DetailView):
+class PostDV(FormMixin, DetailView):
     model = Post
+    form_class = CommentForm
+    def get_success_url(self, **kwargs):
+        return reverse('board:post_detail', kwargs = {'pk': self.object.pk })
+        
+    def get_context_data(self, **kwargs):
+        context = super(PostDV, self).get_context_data(**kwargs)
+        context['form'] = CommentForm(initial={
+            'text' : '댓글을 입력해주세요.',
+        })
+        if 'logged_in' in self.request.session:
+            context['user'] = self.request.session['userid']
+        else:
+            context['user'] = 'anonymous'
+        context['comments'] = self.object.comment_set.all()
+        return context
+        
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+            
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.parent = get_object_or_404(Post, pk=self.object.pk)
+        comment.author = self.request.session['userid']
+        comment.save()
+        return super(PostDV, self).form_valid(form)
+
 
 def write(request):
     if request.method == "GET":
@@ -27,52 +61,10 @@ def write(request):
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
         author = username
-        article = Post(title = title, author = author, content=content)
+        article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
         return redirect('board:post_list')
         
-        '''
-        res_data = {}
-        
-        # validation zone
-        
-        # user ID
-        
-        p = re.compile('[a-zA-Z0-9]+')
-        
-        if p.match(user_id) == None:
-            return HttpResponse('잘못된 아이디입니다: '+user_id + '<br>Wrong user id: '+ user_id)
-        
-        if len(user_id) < 4 or len(user_id) > 10:
-            return HttpResponse('user id is too long or too short.')
-            
-        # student number
-        if not len(studentNumber) == 9:
-            return HttpResponse('Wrong Student Number.')
-        
-        # email match
-        
-        p = re.compile('^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
-        if p.match(email) == None:
-            return HttpResponse('Wrong Email.')
-        
-        # all-fill validation
-        if not (username and studentNumber and user_id and password1 and password2 and grade and major and email and phone):
-            return HttpResponse('Please fill all the blanks in registeration form.')
-            
-        # validate passwords
-        elif password1 != password2:
-            return HttpResponse('Please fill all the blanks in registeration form.')
-        else:
-            user = vespaUser(username=username, studentNumber=studentNumber, password=make_password(password1), user_id=user_id, grade=grade, major=major, email=email, phone=phone)
-            try:
-                c_user = vespaUser.objects.get(user_id=user_id)
-                return HttpResponse('이미 등록된 사용자입니다.<br>Already registerd user.')
-            except vespaUser.DoesNotExist:
-                user.save()
-                return redirect('/login')
-        return render(request, 'accounts/signup.html')
-        '''
 
 '''        
 class PostAV(ArchiveIndexView):

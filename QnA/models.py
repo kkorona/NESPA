@@ -10,7 +10,8 @@ class Post(models.Model):
     content = models.TextField('CONTENT', default='')
     pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
     mod_date = models.DateTimeField('MODIFY DATE', auto_now = True)
-
+    post_hit = models.IntegerField()
+    
     class Meta:
         verbose_name = 'post'
         verbose_name_plural = 'posts'
@@ -31,6 +32,12 @@ class Post(models.Model):
 
     def get_next(self):
         return self.get_next_by_mod_date()
+        
+    @property
+    def update_counter(self):
+        self.post_hit += 1
+        self.save()
+        return ''
 
 class Comment(models.Model):
     parent = models.ForeignKey(Post, on_delete=models.CASCADE)

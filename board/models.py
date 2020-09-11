@@ -10,7 +10,8 @@ class Post(models.Model):
     content = models.TextField('CONTENT', default='')
     pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
     mod_date = models.DateTimeField('MODIFY DATE', auto_now = True)
-
+    post_hit = models.IntegerField()
+    
     class Meta:
         verbose_name = 'post'
         verbose_name_plural = 'posts'
@@ -31,3 +32,25 @@ class Post(models.Model):
 
     def get_next(self):
         return self.get_next_by_mod_date()
+        
+    @property
+    def update_counter(self):
+        self.post_hit += 1
+        self.save()
+        return ''
+
+class Comment(models.Model):
+    parent = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.CharField(max_length=50)
+    text = models.TextField()
+    pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
+    mod_date = models.DateTimeField('MODIFY DATE', auto_now = True)
+    
+    class Meta:
+        verbose_name = 'comment'
+        verbose_name_plural = 'comments'
+        db_table = 'board_comments'
+        ordering = ('-pub_date',)
+        
+    def get_parent(self):
+        return self.parent
