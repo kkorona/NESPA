@@ -1,0 +1,54 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">과제 제출 현황 / Submission Result</h1>
+      </div>
+      {% if not request.session.logged_in  %}
+      <span>로그인이 필요한 기능입니다.</span>
+      {% else %}
+      <div class="w-75">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">학번/S.No.</th>
+                    <th scope="col">문제/Prob</th>
+                    <th scope="col">제출시간/Submission</th>
+                    <th scope="col">점수/Score</th>
+                    <th scope="col">시간/Time</th>
+                    <th scope="col">크기/Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in submission_table %}
+                <tr>
+                    <td> {{ submission.id }} </td>
+                    <td> {{ submission.client_ID }} </td>
+                    <td> {{ submission.client_number }} </td>
+                    <td> {{ submission.prob_ID }} </td>
+                    <td> {{ submission.created_at | date:"N j일, H:i" }} </td>
+                    <td> {{ submission.score }} </td>
+                    <td> {{ submission.exec_time|stringformat:".3f" }}sec. </td>
+                    <td> {{ submission.code_size }} Bytes </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+      </div>
+      {% endif %}
+    </main>
+  </div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_result).attr('class','nav-link active'); 
+</script>
+{% endblock %}
+
