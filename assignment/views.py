@@ -37,10 +37,6 @@ def submission(request):
         for prob in full_prob_list:
             if prob.starts_at <= now and prob.ends_at >= now:
                 cur_prob_list.append(prob)
-            with open("test.txt","a") as f:
-                f.write(str(prob.starts_at)+"\n")
-                f.write(str(prob.ends_at)+"\n")
-                f.write(str(now)+"\n\n")
         return render(request, 'submission.html', {'full_prob_list' : full_prob_list, 'cur_prob_list':cur_prob_list})
         
     if request.method == "POST":
