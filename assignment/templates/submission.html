@@ -15,8 +15,8 @@
                 <div class="form-group">
                     <label for="problem_id">문제 번호 / Problem No.</label>
                     <select id="problem_id" name="problem_id" class="form-control">
-                        <option value="01">1. ROBOCOP (2020.09.08. ~ 2020.09.11.)</option>
                         {% if request.session.usertype == "admin" %}
+                       <option value="01">1. ROBOCOP (2020.09.08. ~ 2020.09.11.)</option>
                         <option value="02">2. MULTICOP  (2020.09.12. ~ 2020.09.16.)</option>
                         <option value="00">0. sort</option>
                         {% endif %}
