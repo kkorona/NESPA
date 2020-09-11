@@ -150,7 +150,7 @@ def submission_detail(request):
             if prob_ID == 'full':
                 submission_table = SubmissionModel.objects.all()
             else:
-                full_submission_table = SubmissionModel.objects.filter(prob_ID = prob_ID).order_by('-score','exec_time','code_size','client_number','-created_at')
+                full_submission_table = SubmissionModel.objects.filter(prob_ID = prob_ID).order_by('client_number','-score','exec_time','code_size','-created_at')
                 submission_table = []
                 last = None
                 for submission in full_submission_table:
