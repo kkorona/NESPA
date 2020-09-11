@@ -17,3 +17,13 @@ class SubmissionModel(models.Model):
     class Meta:
         db_table = "submissions"
         ordering = ('-id',)
+        
+class ProblemModel(models.Model):
+    prob_id = models.CharField(max_length=20)
+    prob_name = models.CharField(max_length=20)
+    starts_at = models.DateTimeField()
+    ends_at = models.DateTimeField()
+    size_limit = models.IntegerField()
+    try_limit = models.IntegerField()
+    time_limit = models.FloatField()
+    eval = models.CharField(max_length=20)

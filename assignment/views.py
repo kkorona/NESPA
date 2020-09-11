@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from . import validation
 from . import compile
 from . import execute
-from .models import SubmissionModel
+from .models import SubmissionModel, ProblemModel
 from accounts.models import vespaUser
 import shutil
 import os
@@ -31,6 +31,7 @@ EXTDICT = {
 
 def submission(request):
     if request.method == "GET":
+        full_prob_list = ProblemModel.objects.all()
         return render(request, 'submission.html')
         
     if request.method == "POST":
@@ -132,10 +133,26 @@ def assignment_list(request):
         return render(request, 'assignment_list.html')
         
 def submission_list(request):
-    submission_table = None
-    if request.session['usertype'] == 'normal':
-        submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'])
-    if request.session['usertype'] == 'admin':
-        submission_table = SubmissionModel.objects.all()
+    return render(request, "submission_list.html")
     
-    return render(request, "submission_list.html", {'submission_table' : submission_table})
+def submission_detail(request):
+    if request.method == "GET":
+        submission_table = None
+        prob_ID = request.GET.get('prob_id', None)
+        if request.session['usertype'] == 'normal':
+            submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
+        elif request.session['usertype'] == 'admin':
+            if prob_ID == 'full':
+                submission_table = SubmissionModel.objects.all()
+            else:
+                full_submission_table = SubmissionModel.objects.filter(prob_ID = prob_ID).order_by('client_number','-created_at','-score','exec_time','code_size')
+                submission_table = []
+                last = None
+                for submission in full_submission_table:
+                    if len(submission_table) > 0:
+                        if last.client_number == submission.client_number:
+                            continue
+                    
+                    submission_table.append(submission)
+                    last = submission
+        return render(request, "submission_detail.html", {'submission_table' : submission_table})

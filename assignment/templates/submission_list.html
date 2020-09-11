@@ -7,35 +7,25 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">과제물 목록 / Assignment list</h1>
       </div>
-      <div>
+      <div class="w-25">
         <table class="table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">St.Number</th>
-                    <th scope="col">Problem</th>
-                    <th scope="col">Submit Time</th>
-                    <th scope="col">Score</th>
-                    <th scope="col">Exec. Time</th>
-                    <th scope="col">Size</th>
+                    <th scope="col">과제명</th>
                 </tr>
             </thead>
             <tbody>
-                {% for submission in submission_table %}
                 <tr>
-                    <td> {{ submission.id }} </td>
-                    <td> {{ submission.client_ID }} </td>
-                    <td> {{ submission.client_number }} </td>
-                    <td> {{ submission.prob_ID }} </td>
-                    <td> {{ submission.created_at }} </td>
-                    <td> {{ submission.score }} </td>
-                    <td> {{ submission.exec_time|stringformat:".3f" }} </td>
-                    <td> {{ submission.code_size }} </td>
+                    <td> 01 </td>
+                    <td> <a href="/assignment/submission_detail?prob_id=01"> 로보캅2(RoboCop2)</a> </td>
                 </tr>
-                {% endfor %}
+                <tr>
+                    <td> 02 </td>
+                    <td> <a href="/assignment/submission_detail?prob_id=02"> 투캅스(2Cops)</a> </td>
+                </tr>
             </tbody>
-            
+        </table>
       </div>
     </main>
   </div>
@@ -45,7 +35,7 @@
 
 {% block scripts %}
 <script>
-    $("#sidebar_list).attr('class','nav-link active'); 
+    $("#sidebar_result).attr('class','nav-link active'); 
 </script>
 {% endblock %}
 
