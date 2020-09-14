@@ -76,7 +76,7 @@ def submission_check(request):
         departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
         destination_path = os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID)
         
-        submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0)
+        submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, lang=ext)
         submission.save()
         request.session['submission_id'] = str(submission.id)
         submission_id = str(submission.id)
