@@ -29,14 +29,18 @@ def executes(target_path, eval_path, submission_id, ext):
     for filename in filenames:
         eval_input_file = os.path.join(eval_path, filename + ".inp")
         eval_output_file = os.path.join(eval_path, filename + ".out")
-        query = query_head + " < " + eval_input_file
+        query = "timeout 1 " + query_head + " < " + eval_input_file
         fname = os.path.basename(eval_input_file).split('.')[0]
         queries += query + "\n"
         res = ""
         try:
             timeSt = time.time()
-            res = subprocess.check_output(query, stderr=subprocess.STDOUT, timeout = 1, shell=True, universal_newlines=True)
+            res = subprocess.check_output(query, stderr=subprocess.STDOUT, universal_newlines=True)
             timeDelta = time.time() - timeSt
+            exit_status = subprocess.check_output("echo $s")
+            if exit_status == "124":
+                results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '1'})
+                continue
             with open(eval_output_file,"r") as f:
                 identical = True
                 for line1,line2 in zip(f.readlines(),re.split('[\n]+',res)):
