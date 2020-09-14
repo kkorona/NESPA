@@ -10,6 +10,7 @@ class SubmissionModel(models.Model):
     score = models.IntegerField()
     exec_time = models.FloatField()
     code_size = models.IntegerField()
+    lang = models.CharField(max_length=20)
     
     def __str__(self):
         return str(self.id)
