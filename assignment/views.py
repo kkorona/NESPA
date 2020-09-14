@@ -49,7 +49,7 @@ def submission(request):
             uploaded_file_url = fs.url(filename)      
             departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])            
             request.session['code_size'] = os.path.getsize(departure_path)
-            if int(request.session['code_size']) > 3000:
+            if int(request.session['code_size']) > 3500:
                 os.remove(departure_path)
                 return HttpResponse('코드 크기가 초과되었습니다.')
             request.session['problem_id'] = prob_ID
