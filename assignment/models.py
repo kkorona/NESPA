@@ -32,5 +32,5 @@ class ProblemModel(models.Model):
         return str(self.prob_id)
         
     class Meta:
-        db_table = "submissions"
+        db_table = "problems"
         ordering = ('prob_id',)
