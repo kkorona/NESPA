@@ -52,7 +52,7 @@ def submission(request):
             
             prob = ProblemModel.objects.get(prob_id = prob_ID)
 
-            my_submissions = SubmissionModel.object.filter(prob_id = prob_ID, client_ID = user_id).count()
+            my_submissions = SubmissionModel.objects.filter(prob_id = prob_ID, client_ID = user_id).count()
             if my_submissions >= prob.try_limit:
                 return HttpResponse('제출 횟수가 초과되었습니다.')
             
