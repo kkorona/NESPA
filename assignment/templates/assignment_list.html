@@ -23,28 +23,6 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th score="row">1</th>
-                    <td><a href="/media/assignment/documents/01_ROBOCOP2.hwp">로보캅2(RoboCop2)</a></td>
-                    <td>3000 Bytes</td>
-                    <td>1 sec.</td>
-                    <td>15</td>
-                    <td>09.08 00:00</td>
-                    <td>09.11 22:00</td>
-                    <td>TBD</td>
-                    <td><a href="/media/assignment/sampledata/01/open01.zip">로보캅2(RoboCop2)</td>
-                </tr>
-                <tr>
-                    <th score="row">2</th>
-                    <td><a href="/media/assignment/documents/02_2COPS.hwp">투캅스(2Cops)</a></td>
-                    <td>3500 Bytes</td>
-                    <td>1 sec.</td>
-                    <td>15</td>
-                    <td>09.12 00:00</td>
-                    <td>09.16 22:00</td>
-                    <td>TBD</td>
-                    <td><a href="/media/assignment/sampledata/02/open02.zip">투캅스(2Cops)</td>
-                </tr>
                 {% for prob in prob_list %}
                 <tr>
                     <th score="row">{{ prob.prob_id }}
@@ -55,6 +33,7 @@
                     <td>{{ prob.starts_at | date:"N.j H:i" }}</td>
                     <td>{{ prob.ends_at }}</td>
                     <td>{{ prob.eval }}</td>
+                    <td><a href="/media/assignment/sampledata/{{ prob.prob_id }}/open{{prob.prob_id}}.zip">{{prob.prob_name}}</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
