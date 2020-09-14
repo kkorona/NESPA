@@ -47,9 +47,11 @@ def submission(request):
             fs = FileSystemStorage()
             filename = fs.save(source_code.name,source_code)
             uploaded_file_url = fs.url(filename)      
-            departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])            
+            departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
+            
+            prob = ProblemModel.objects.get(prob_id = prob_ID)            
             request.session['code_size'] = os.path.getsize(departure_path)
-            if int(request.session['code_size']) > 3500:
+            if int(request.session['code_size']) > prob.code_size:
                 os.remove(departure_path)
                 return HttpResponse('코드 크기가 초과되었습니다.')
             request.session['problem_id'] = prob_ID
@@ -69,6 +71,8 @@ def submission_check(request):
     if request.method == "POST":    
         uploaded_file_url = request.session['uploaded_file_url']
         prob_ID = request.session['problem_id']
+        prob = ProblemModel.objects.get(prob_id = prob_ID)  
+
         client = vespaUser.objects.get(user_id = request.session['userid'])
         studentNumber = client.studentNumber
         ext = request.session['langext']
@@ -76,7 +80,7 @@ def submission_check(request):
         departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
         destination_path = os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID)
         
-        submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, lang=ext)
+        submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, lang=ext, prob_name = prob.prob_name)
         submission.save()
         request.session['submission_id'] = str(submission.id)
         submission_id = str(submission.id)

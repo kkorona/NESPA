@@ -16,12 +16,13 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">ID</th>
-                    <th scope="col">학번/S.No.</th>
-                    <th scope="col">문제/Prob</th>
-                    <th scope="col">제출시간/Submission</th>
-                    <th scope="col">점수/Score</th>
-                    <th scope="col">시간/Time</th>
-                    <th scope="col">크기/Size</th>
+                    <th scope="col">S.No.</th>
+                    <th scope="col">Prob</th>
+                    <th scope="col">Lang</th>
+                    <th scope="col">Submitted at</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Size</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +31,8 @@
                     <td> {{ submission.id }} </td>
                     <td> {{ submission.client_ID }} </td>
                     <td> {{ submission.client_number }} </td>
-                    <td> {{ submission.prob_ID }} </td>
+                    <td> {{ submission.prob_name }} </td>
+                    <td> {{ submission.lang }} </td>
                     <td> {{ submission.created_at | date:"N j일, H:i" }} </td>
                     <td> {{ submission.score }} </td>
                     <td> {{ submission.exec_time|stringformat:".3f" }}sec. </td>

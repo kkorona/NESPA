@@ -6,6 +6,7 @@ class SubmissionModel(models.Model):
     client_ID = models.CharField(max_length=20)
     client_number = models.CharField(max_length=20)
     prob_ID = models.CharField(max_length=20)
+    prob_name = models.CharField(max_length=20, default="-")
     created_at = models.DateTimeField(auto_now_add = True)
     score = models.IntegerField()
     exec_time = models.FloatField()
