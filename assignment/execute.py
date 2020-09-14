@@ -37,10 +37,6 @@ def executes(target_path, eval_path, submission_id, ext):
             timeSt = time.time()
             res = subprocess.check_output(query, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
             timeDelta = time.time() - timeSt
-            exit_status = subprocess.check_output("/usr/bin/echo $?")
-            if exit_status == "124":
-                results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '1'})
-                continue
             with open(eval_output_file,"r") as f:
                 identical = True
                 for line1,line2 in zip(f.readlines(),re.split('[\n]+',res)):
@@ -53,7 +49,10 @@ def executes(target_path, eval_path, submission_id, ext):
                 else:
                     results.append({'filename': fname,'caseRes': "WRONG ANSWER",'exectime': str(timeDelta)})
         except subprocess.CalledProcessError as e:
-            results.append({'filename': fname,'caseRes': "RUNTIME ERROR - " + res,'exectime': '0'})
+            if e.returncode == 124:
+                results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED - " + e.output,'exectime': '1'})
+            else:
+                results.append({'filename': fname,'caseRes': "RUNTIME ERROR - " + res,'exectime': '0'})
         except subprocess.TimeoutExpired as e:
             results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '1'})
         except Exception as e:
