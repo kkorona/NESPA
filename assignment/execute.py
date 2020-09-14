@@ -52,6 +52,8 @@ def executes(target_path, eval_path, submission_id, ext):
             results.append({'filename': fname,'caseRes': "RUNTIME ERROR - " + res,'exectime': '0'})
         except subprocess.TimeoutExpired as e:
             results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '1'})
+        except Exception as e:
+            results.append({'filename': fname,'caseRes': str(e), 'exectime' : '0'})
     
     for result in results:
         resf += result['filename'] + " : " + result['caseRes'] + " : " + result['exectime'] + "\n"
