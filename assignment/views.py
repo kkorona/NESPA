@@ -134,8 +134,8 @@ def submission_check(request):
     return render(request, "submission_check.html")
     
 def assignment_list(request):
-    if request.method == "GET":
-        return render(request, 'assignment_list.html')
+    prob_list = ProblemModel.objects.all()
+    return render(request, 'assignment_list.html', {'prob_list':prob_list})
         
 def submission_list(request):
     return render(request, "submission_list.html")
