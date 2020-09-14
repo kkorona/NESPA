@@ -27,3 +27,10 @@ class ProblemModel(models.Model):
     try_limit = models.IntegerField()
     time_limit = models.FloatField()
     eval = models.CharField(max_length=20)
+    
+    def __str__(self):
+        return str(self.prob_id)
+        
+    class Meta:
+        db_table = "submissions"
+        ordering = ('prob_id',)
