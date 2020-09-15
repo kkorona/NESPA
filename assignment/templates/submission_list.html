@@ -7,27 +7,33 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">과제물 목록 / Assignment list</h1>
       </div>
-      <div class="w-25">
+      <div class="w-50">
         <table class="table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">과제명</th>
+                    <th scope="col">Problem</th>
+                    <th scope="col">Max Size</th>
+                    <th scope="col">Timeout</th>
+                    <th scope="col">Max Try</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Evaluation</th>
                 </tr>
             </thead>
             <tbody>
+                {% for prob in prob_list %}
                 <tr>
-                    <td> 01 </td>
-                    <td> <a href="/assignment/submission_detail?prob_id=01"> ROBOCOP2</a> </td>
+                    <th score="row">{{ prob.prob_id }}
+                    <td><a href="/assignment/submission_detail?prob_id=01">{{prob.prob_name}}</a></td>
+                    <td>{{ prob.size_limit}}</td>
+                    <td>{{ prob.time_limit }}</td>
+                    <td>{{ prob.try_limit }}</td>
+                    <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
+                    <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
+                    <td>{{ prob.eval }}</td>
                 </tr>
-                <tr>
-                    <td> 02 </td>
-                    <td> <a href="/assignment/submission_detail?prob_id=02">2COPS</a> </td>
-                </tr>
-                <tr>
-                    <td> 03 </td>
-                    <td> <a href="/assignment/submission_detail?prob_id=03"> BITMAP</a> </td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
       </div>
