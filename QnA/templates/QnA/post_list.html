@@ -1,5 +1,10 @@
 <!doctype html>
 {% extends 'base.html' %}
+{% block styles %}
+.text-comment-info {
+    color: #ff8c00;
+}
+{% endblock %}
 {% block contents %}
 <div class="container-fluid">
   <div class="row">
@@ -26,7 +31,9 @@
             <td class="text-center">{{ post.id }}</td>
             <td><a href="{{ post.get_absolute_url }}">{{ post.title }}
             {% if post.comment_set.count > 0 %}
+            <span class="text-comment-info">
             [{{ post.comment_set.count }}]
+            </span>
             {% endif %}
             </a></td>
             <td class="text-center">{{ post.author }}</td>

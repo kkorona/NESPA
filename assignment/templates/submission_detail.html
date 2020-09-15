@@ -11,18 +11,19 @@
       <span>로그인이 필요한 기능입니다.</span>
       {% else %}
       <div class="w-75">
-        <table class="table">
+        <table class="table table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">ID</th>
-                    <th scope="col">S.No.</th>
-                    <th scope="col">Prob</th>
-                    <th scope="col">Lang</th>
+                    <th scope="col">Std.No.</th>
+                    <th scope="col">Problem</th>
+                    <th scope="col">Language</th>
                     <th scope="col">Submitted at</th>
                     <th scope="col">Score</th>
                     <th scope="col">Time</th>
                     <th scope="col">Size</th>
+                    <th scope="col">Code</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,10 +34,15 @@
                     <td> {{ submission.client_number }} </td>
                     <td> {{ submission.prob_name }} </td>
                     <td> {{ submission.lang }} </td>
-                    <td> {{ submission.created_at | date:"N j일, H:i" }} </td>
+                    <td> {{ submission.created_at | date:"n/j, H:i" }} </td>
                     <td> {{ submission.score }} </td>
-                    <td> {{ submission.exec_time|stringformat:".3f" }}sec. </td>
-                    <td> {{ submission.code_size }} Bytes </td>
+                    <td> {{ submission.exec_time|stringformat:".3f" }} </td>
+                    <td> {{ submission.code_size }}</td>
+                    <td> TBA
+                    <!--
+                    <a href="/data/submission/{{ submission.client_number }}/{{ submission.prob_ID }}/{{submission.id}}.{{ submission.lang }}">test</a>
+                    -->
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
