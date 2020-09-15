@@ -16,13 +16,14 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">ID</th>
-                    <th scope="col">S.No.</th>
-                    <th scope="col">Prob</th>
-                    <th scope="col">Lang</th>
+                    <th scope="col">Std.No.</th>
+                    <th scope="col">Problem</th>
+                    <th scope="col">Language</th>
                     <th scope="col">Submitted at</th>
                     <th scope="col">Score</th>
                     <th scope="col">Time</th>
                     <th scope="col">Size</th>
+                    <th scope="col">Code</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,10 +34,11 @@
                     <td> {{ submission.client_number }} </td>
                     <td> {{ submission.prob_name }} </td>
                     <td> {{ submission.lang }} </td>
-                    <td> {{ submission.created_at | date:"N j일, H:i" }} </td>
+                    <td> {{ submission.created_at | date:"n/j, H:i" }} </td>
                     <td> {{ submission.score }} </td>
-                    <td> {{ submission.exec_time|stringformat:".3f" }}sec. </td>
-                    <td> {{ submission.code_size }} Bytes </td>
+                    <td> {{ submission.exec_time|stringformat:".3f" }} </td>
+                    <td> {{ submission.code_size }}</td>
+                    <td> <a href="/opt/vespa/data/submission/{{ submission.cliend_ID }}/{{ prob.prob_id }}/{{prob.prob_name}}.{{ submission.lang }}">test</a>
                 </tr>
                 {% endfor %}
             </tbody>
