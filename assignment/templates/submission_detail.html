@@ -38,7 +38,7 @@
                     <td> {{ submission.score }} </td>
                     <td> {{ submission.exec_time|stringformat:".3f" }} </td>
                     <td> {{ submission.code_size }}</td>
-                    <td> <a href="/opt/vespa/data/submission/{{ submission.cliend_ID }}/{{ prob.prob_id }}/{{prob.prob_name}}.{{ submission.lang }}">test</a>
+                    <td> <a href="/data/submission/{{ submission.cliend_ID }}/{{ prob.prob_id }}/{{prob.prob_name}}.{{ submission.lang }}">test</a>
                 </tr>
                 {% endfor %}
             </tbody>
