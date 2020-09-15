@@ -152,6 +152,8 @@ def submission_list(request):
     return render(request, "submission_list.html", {'prob_list':prob_list})
     
 def submission_detail(request):
+    if not "logged_in" in request.session:
+        return HttpResponse("로그인이 필요한 기능입니다.")
     if request.method == "GET":
         submission_table = None
         prob_ID = request.GET.get('prob_id', None)
