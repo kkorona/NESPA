@@ -38,7 +38,7 @@
                     <td> {{ submission.score }} </td>
                     <td> {{ submission.exec_time|stringformat:".3f" }} </td>
                     <td> {{ submission.code_size }}</td>
-                    <td> <a href="/data/submission/{{ submission.client_ID }}/{{ submission.prob_id }}/{{submission.prob_name}}.{{ submission.lang }}">test</a>
+                    <td> <a href="/data/submission/{{ submission.client_number }}/{{ submission.prob_ID }}/{{submission.id}}.{{ submission.lang }}">test</a>
                 </tr>
                 {% endfor %}
             </tbody>
