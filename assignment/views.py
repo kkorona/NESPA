@@ -11,6 +11,7 @@ from . import compile
 from . import execute
 from .models import SubmissionModel, ProblemModel
 from accounts.models import vespaUser
+from collections import OrderedDict
 import shutil
 import os
 import time
@@ -159,18 +160,28 @@ def submission_detail(request):
         prob_ID = request.GET.get('prob_id', None)
         if request.session['usertype'] == 'normal':
             submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
+            return render(request, "submission_detail.html", {'submission_table' : submission_table})
         elif request.session['usertype'] == 'admin':
             if prob_ID == 'full':
                 submission_table = SubmissionModel.objects.all()
             else:
-                full_submission_table = SubmissionModel.objects.filter(prob_ID = prob_ID).order_by('client_number','-score','exec_time','code_size','-created_at')
+                users = vespaUser.objects.filter(usertype="normal")
                 submission_table = []
-                last = None
-                for submission in full_submission_table:
-                    if len(submission_table) > 0:
-                        if last.client_number == submission.client_number:
-                            continue
-                    
-                    submission_table.append(submission)
-                    last = submission
-        return render(request, "submission_detail.html", {'submission_table' : submission_table})
+                scores = {}
+                for user in users:
+                    recent_submission = SubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user.user_id).order_by('-created_at')
+                    if recent_submission:
+                        recent_submission = recent_submission[0]
+                    else:
+                        recent_submission = SubmissionModel(client_ID = user.user_id, client_number = user.studentNumber, prob_ID = prob_ID, created_at = "-", score = 0, exec_time = 0.0, code_size = 0, lang = '-')
+                    submission_table.append(recent_submission)
+                    if not recent_submission.score in scores:
+                        scores[recent_submission.score] = 0
+                    scores[recent_submission.score] += 1
+                scores = OrderedDict(sorted(scores.items()))
+                key_list = []
+                score_list = []
+                for key,score in scores.items():
+                    key_list.append(key)
+                    score_list.append(score)
+                return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list})
