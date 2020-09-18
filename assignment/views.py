@@ -168,7 +168,7 @@ def watch_code(request):
     code_path = os.path.join("/opt/vespa/data/submission",student_number,prob_ID,submission_ID+'.'+ext)
     code_content = ""
     if os.path.isfile(code_path) :
-        with open(code_path, 'r') as f:
+        with open(code_path, 'r', encoding="utf-8") as f:
             code_content = f.readlines()
     
     return render(request, "watch_code.html", {'code_content' : code_content, 'path':code_path})
