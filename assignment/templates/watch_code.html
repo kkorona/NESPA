@@ -11,6 +11,7 @@
       <span>로그인이 필요한 기능입니다.</span>
       {% else %}
       {% if request.session.usertype == "admin" %}
+      <span>{{path}}</span>
       <div class="w-75">
         <pre><code>{{ code_content }}</code></pre>
       </div>      

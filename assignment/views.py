@@ -171,7 +171,7 @@ def watch_code(request):
         with open(code_path, 'r') as f:
             code_content = f.readlines()
     
-    return render(request, "watch_code.html", {'code_content' : code_content })
+    return render(request, "watch_code.html", {'code_content' : code_content, 'path':code_path})
     
 def submission_detail(request):
     if not "logged_in" in request.session:
