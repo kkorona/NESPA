@@ -1,83 +1,16 @@
 <!doctype html>
-{% extends 'base.html' %}
-{% block styles %}
-.text-comment-info {
-    color: #ff8c00;
-}
+{% extends 'board_list.html' %}
+{% block board_title %}
+    
+    <h2 class="">자유 게시판 / Forum</h2>
 {% endblock %}
-{% block contents %}
-<div class="container-fluid">
-  <div class="row">
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-        <img src="/static/miscs/banner.png">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75">
-        <h2 class="">자유 게시판 / Forum</h2>
-      </div>
-      <div class="w-75">
-        <table class="table table-hover table-bordered border">
-            <thead class="thead-light border border-black">
-            <tr>
-                <th class="text-center">#</th>
-                <th class="w-50">제목</th>
-                <th class="text-center">작성자</th>
-                <th class="text-center">게시날짜</th>
-                <th class="text-center">조회수</th>
-            </tr>
-            </thead>
-            <tbody>
-            
-            {% for post in posts %}
-            <tr>
-            <td class="text-center">{{ post.id }}</td>
-            <td><a href="{{ post.get_absolute_url }}">{{ post.title }}
-            {% if post.comment_set.count > 0 %}
-            <span class="text-comment-info">
-            [{{ post.comment_set.count }}]
-            </span>
-            {% endif %}
-            </a></td>
-            <td class="text-center">{{ post.author }}</td>
-            <td class="text-center">{{ post.pub_date|date:"N j일, H:i" }}</td>
-            <td class="text-center">
-            {% if post.post_hit %}
-            {{ post.post_hit }}
-            {% else %}
-            0
-            {% endif %}
-            </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-            </table>
-            {% if request.session.logged_in == 'YES' and request.session.usertype != 'unapproved' %}
-            <div align="right">
-                <a class="btn btn-primary pull-right" href="/forum/write">글쓰기</a>
-            </div>
-            {% endif %}
-            <nav>
-                <div class="text-center">
-                    <ul class="pagination justify-content-center">
-                      <li class="page-item">
-                      {% if page_obj.has_previous %}
-                       <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
-                      {% endif %}
-                      </li>
-                      <li  class="page-item">
-                      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                      </li>
-                      <li class="page-item">
-                      {% if page_obj.has_next %}
-                       <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-                      {% endif %}
-                      </li>
-                    </ul>
-                  </div>
-            </nav>
-            </div>
-        </main>
-    </div>
+
+{% block write_button %}
+{% if request.session.logged_in == 'YES' and request.session.usertype != 'unapproved' %}
+<div align="right">
+    <a class="btn btn-primary pull-right" href="/forum/write">글쓰기</a>
 </div>
-      
+{% endif %}
 {% endblock %}
 
 {% block scripts %}

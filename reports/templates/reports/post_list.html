@@ -2,19 +2,19 @@
 {% extends 'board_list.html' %}
 {% block board_title %}
     
-    <h2 class="">질문 게시판 / Q&amp;A</h2>
+    <h2 class="">실습 보고서 제출 / Reports</h2>
 {% endblock %}
 
 {% block write_button %}
 {% if request.session.logged_in == 'YES' and request.session.usertype != 'unapproved' %}
 <div align="right">
-    <a class="btn btn-primary pull-right" href="/qna/write">글쓰기</a>
+    <a class="btn btn-primary pull-right" href="/reports/write">글쓰기</a>
 </div>
 {% endif %}
 {% endblock %}
 
 {% block scripts %}
 <script>
-    $("#sidebar_qna").attr('class','nav-link active'); 
+    $("#sidebar_reports").attr('class','nav-link active'); 
 </script>
 {% endblock %}

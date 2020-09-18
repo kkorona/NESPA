@@ -46,7 +46,6 @@
                     <th scope="col">Score</th>
                     <th scope="col">Time</th>
                     <th scope="col">Size</th>
-                    <th scope="col">Code</th>
                     {% else %}
                     <th scope="col">Std.No.</th>
                     <th scope="col">ID</th>
@@ -73,10 +72,6 @@
                     <td> {{ submission.score }} </td>
                     <td> {{ submission.exec_time|stringformat:".3f" }} </td>
                     <td> {{ submission.code_size }}</td>
-                    <td> TBA
-                    <!--
-                    <a href="/data/submission/{{ submission.client_number }}/{{ submission.prob_ID }}/{{submission.id}}.{{ submission.lang }}">test</a>
-                    -->
                     </td>
                     {% else %}
                     <td> {{ submission.client_number }} </td>
@@ -87,7 +82,8 @@
                     <td> {{ submission.score }} </td>
                     <td> {{ submission.exec_time|stringformat:".3f" }} </td>
                     <td> {{ submission.code_size }}</td>
-                    <td> TBA </td>
+                    <td> 
+                    <a href="/assignment/watch_code?prob_id={{submission.prob_ID}}&student_number={{submission.client_number}}&submission_id={{submission.id}}&ext={{submission.lang}}">test</a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}

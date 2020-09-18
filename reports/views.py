@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearArchiveView, MonthArchiveView, DayArchiveView
 from django.core.exceptions import ObjectDoesNotExist
 
-from forum.models import Post, Comment
-from forum.forms import CommentForm, PostForm
+from reports.models import Post, Comment
+from reports.forms import CommentForm
 
 # Create your views here.
 
@@ -18,7 +18,7 @@ class PostDV(FormMixin, DetailView):
     model = Post
     form_class = CommentForm
     def get_success_url(self, **kwargs):
-        return reverse('forum:post_detail', kwargs = {'pk': self.object.pk })
+        return reverse('reports:post_detail', kwargs = {'pk': self.object.pk })
         
     def get_context_data(self, **kwargs):
         context = super(PostDV, self).get_context_data(**kwargs)
@@ -50,7 +50,7 @@ class PostDV(FormMixin, DetailView):
         
 def write(request):
     if request.method == "GET":
-        return render(request, 'forum/write.html')
+        return render(request, 'reports/write.html')
     if request.method == "POST":
         username = request.session['username']
         usertype = request.session['usertype']
@@ -60,15 +60,11 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
-        if title == '' or content == '':
-            return HttpResponse('제목과 내용은 비울 수 없습니다.')
         author = userid
         article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
-        return redirect('forum:post_list')
-
-def PostCV(CreateView):
-    pass
+        return redirect('reports:post_list')
+        
 
 '''
 class PostAV(ArchiveIndexView):

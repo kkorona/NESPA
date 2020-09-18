@@ -152,6 +152,27 @@ def submission_list(request):
     prob_list = ProblemModel.objects.all()
     return render(request, "submission_list.html", {'prob_list':prob_list})
     
+def watch_code(request):
+    prob_ID = request.GET.get('prob_id', None)
+    student_number = request.GET.get('student_number', None)
+    submission_ID = request.GET.get('submission_id', None)
+    ext = request.GET.get('ext', None)
+    if not prob_ID:
+        return HttpResponse("Wrong prob_id")
+    if not student_number:
+        return HttpResponse("Wrong student_number")
+    if not submission_ID:
+        return HttpResponse("Wrong submission_id")
+    if not ext:
+        return HttpResponse("Wrong ext")
+    code_path = os.path.join("/opt/vespa/data/submission",student_number,prob_ID,submission_ID+'.'+ext)
+    code_content = ""
+    if os.path.isfile(code_path) :
+        with open(code_path, 'r') as f:
+            code_content = f.readlines()
+    
+    return render(request, "watch_code.html", {'code_content' : code_content })
+    
 def submission_detail(request):
     if not "logged_in" in request.session:
         return HttpResponse("로그인이 필요한 기능입니다.")
