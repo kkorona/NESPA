@@ -179,14 +179,15 @@ def submission_detail(request):
     if request.method == "GET":
         submission_table = None
         prob_ID = request.GET.get('prob_id', None)
-        prob = ProblemModel.objects.get(prob_id = prob_ID)
         if request.session['usertype'] == 'normal':
+            prob = ProblemModel.objects.get(prob_id = prob_ID)
             submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
             return render(request, "submission_detail.html", {'submission_table' : submission_table, "prob":prob})
         elif request.session['usertype'] == 'admin':
             if prob_ID == 'full':
                 submission_table = SubmissionModel.objects.all()
             else:
+                prob = ProblemModel.objects.get(prob_id = prob_ID)
                 users = vespaUser.objects.filter(usertype="normal")
                 submission_table = []
                 scores = {}
