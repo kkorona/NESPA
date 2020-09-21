@@ -1,5 +1,10 @@
 <!doctype html>
 {% extends 'base.html' %}
+{% block styles %}
+    .courier-new {
+        font-family: Courier New, Consolas, Monaco;
+    }
+{% endblock %}
 {% block contents %}
 <div class="container-fluid">
   <div class="row">
@@ -11,9 +16,8 @@
       <span>로그인이 필요한 기능입니다.</span>
       {% else %}
       {% if request.session.usertype == "admin" %}
-      <span>{{path}}</span>
       <div class="w-75">
-        <pre><code>{{ code_content }}</code></pre>
+        <pre><code class="courier-new">{{ code_content }}</code></pre>
       </div>      
       {% else %}
       <span>허용되지 않은 기능입니다.<span>
