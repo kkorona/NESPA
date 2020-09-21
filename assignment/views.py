@@ -169,7 +169,7 @@ def watch_code(request):
     code_content = ""
     if os.path.isfile(code_path) :
         with open(code_path, 'r', encoding="utf-8") as f:
-            code_content = f.readlines()
+            code_content = f.read()
     
     return render(request, "watch_code.html", {'code_content' : code_content, 'path':code_path})
     
