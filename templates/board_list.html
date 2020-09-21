@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.0.1">
+    <title>NESPA - advaNced ESPA</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      
+        .text-comment-info {
+            color: #cc3300;
+            font-weight: bold;
+        }
+      {% block styles %}
+      {% endblock %}
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+        
+    </head>
+    <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/ds2020">NESPA 0.55a (beta)</a>
+      <ul class="navbar-nav ml-auto px-3 flex">
+        <li>
+          <button class="btn-secondary mr-3" onclick="location.href='/ds2020'">공지사항</button>
+          <button class="btn-secondary mr-3" onclick="location.href='/forum'">자유게시판</button>
+          <button class="btn-secondary mr-3" onclick="location.href='/qna'">질문게시판</button>
+          <button class="btn-secondary mr-3" onclick="location.href='/devs'">오류보고</button>
+          {% if request.session.userid %}
+            <button class="btn-secondary" onclick="location.href='/accounts/logout'">로그아웃</button>
+            {% else %}
+            <button class="btn-secondary" onclick="location.href='/accounts/login'">로그인</button>
+            {% endif %}
+        </li>
+      </ul>
+    </nav>
+    <div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+      
+      <ul class="nav flex-column mb-2">
+         {% if request.session.userid %}
+          <li class="nav-item"> 
+            <span class="nav-link" id="sidebar_username" href="#">
+                <span data-feather="user"></span>
+                사용자 : {{ request.session.username }}
+            </a>
+          </li>
+          <li class="nav-item"> 
+            <a class="nav-link" id="sidebar_logout" href="/accounts/logout">
+                  <span data-feather="log-out"></span>
+                  로그아웃
+            </a>
+          </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" id="sidebar_login" href="/accounts/login">
+                  <span data-feather="log-in"></span>
+                  로그인
+                </a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_signup" href="/accounts/signup">
+              <span data-feather="user-plus"></span>
+              회원가입
+            </a>
+          </li>
+            {% endif %}
+          
+        </ul>
+      
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>강의 정보</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="chevrons-left"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_notice" href="/ds2020">
+              <span data-feather="aperture"></span>
+              공지사항
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_syllabus" href="/syllabus">
+              <span data-feather="compass"></span>
+              교수계획표
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_lecture" href="/lecture">
+              <span data-feather="archive"></span>
+              강의자료
+            </a>
+          </li>
+        </ul>
+        
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>과제</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="chevrons-left"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_list" href="/assignment/assignment_list">
+              <span data-feather="list"></span>
+              과제물 목록
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_submission" href="/assignment/submission">
+              <span data-feather="terminal"></span>
+              과제물 제출
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_result" href="/assignment/submission_list">
+              <span data-feather="pie-chart"></span>
+              과제 제출 현황
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_exam" href="/exam">
+              <span data-feather="edit"></span>
+              온라인 시험
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>게시판</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="chevrons-left"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_forum" href="/forum">
+              <span data-feather="file-text"></span>
+              자유 게시판
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_qna" href="/qna">
+              <span data-feather="alert-circle"></span>
+              질문 게시판
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_reports" href="/reports">
+              <span data-feather="edit-3"></span>
+              실습 보고서
+            </a>
+          </li>
+        </ul>
+    
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>About</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="chevrons-left"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_nespa_about" href="/about">
+              <span data-feather="code"></span>
+              NESPA 소개
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_nespa_devs" href="/devs">
+              <span data-feather="slack"></span>
+              NESPA 개발팀
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sidebar_nespa_qna" href="/nespa_qna">
+              <span data-feather="check-circle"></span>
+              NESPA Q&amp;A
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <img src="/static/miscs/banner.png">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75">
+            {% block board_title %}
+            {% endblock %}
+          </div>
+    
+    <div class="w-75">
+        <table class="table table-hover table-bordered border">
+            <thead class="thead-light">
+            <tr>
+                <th class="w-5 text-center">#</th>
+                <th class="w-50">제목</th>
+                <th class="w-10 text-center">작성자</th>
+                <th class="w-10 text-center">게시날짜</th>
+                <th class="w-5 text-center">조회수</th>
+            </tr>
+            </thead>
+                <tbody>
+                {% for post in posts %}
+                <tr>
+                <td class="text-center">{{ post.id }}</td>
+                <td><a href="{{ post.get_absolute_url }}">{{ post.title }}
+                {% if post.comment_set.count > 0 %}
+                <span class="text-comment-info">
+                [{{ post.comment_set.count }}]
+                </span>
+                {% endif %}
+                </a></td>
+                <td class="text-center">{{ post.author }}</td>
+                <td class="text-center">{{ post.pub_date|date:"N j일, H:i" }}</td>
+                <td class="text-center">
+                {% if post.post_hit %}
+                {{ post.post_hit }}
+                {% else %}
+                0
+                {% endif %}
+                </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% block write_button %}
+            {% endblock %}
+            <nav>
+                <div class="text-center">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
+                      {% if page_obj.has_previous %}
+                       <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+                      {% endif %}
+                      </li>
+                      <li  class="page-item">
+                      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                      </li>
+                      <li class="page-item">
+                      {% if page_obj.has_next %}
+                       <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                      {% endif %}
+                      </li>
+                    </ul>
+                </div>
+            </nav>    
+        </div>
+      </div>
+    </div>
+    </main>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="/static/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/static/js/bootstrap.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+    {% block scripts %}
+    
+    
+    {% endblock %}
+</html>
+

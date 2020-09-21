@@ -152,15 +152,37 @@ def submission_list(request):
     prob_list = ProblemModel.objects.all()
     return render(request, "submission_list.html", {'prob_list':prob_list})
     
+def watch_code(request):
+    prob_ID = request.GET.get('prob_id', None)
+    student_number = request.GET.get('student_number', None)
+    submission_ID = request.GET.get('submission_id', None)
+    ext = request.GET.get('ext', None)
+    if not prob_ID:
+        return HttpResponse("Wrong prob_id")
+    if not student_number:
+        return HttpResponse("Wrong student_number")
+    if not submission_ID:
+        return HttpResponse("Wrong submission_id")
+    if not ext:
+        return HttpResponse("Wrong ext")
+    code_path = os.path.join("/opt/vespa/data/submission",student_number,prob_ID,submission_ID+'.'+ext)
+    code_content = ""
+    if os.path.isfile(code_path) :
+        with open(code_path, 'r', encoding="utf-8") as f:
+            code_content = f.read()
+    
+    return render(request, "watch_code.html", {'code_content' : code_content, 'path':code_path})
+    
 def submission_detail(request):
     if not "logged_in" in request.session:
         return HttpResponse("로그인이 필요한 기능입니다.")
     if request.method == "GET":
         submission_table = None
         prob_ID = request.GET.get('prob_id', None)
+        prob = ProblemModel.objects.get(prob_id = prob_ID)
         if request.session['usertype'] == 'normal':
             submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
-            return render(request, "submission_detail.html", {'submission_table' : submission_table})
+            return render(request, "submission_detail.html", {'submission_table' : submission_table, "prob":prob})
         elif request.session['usertype'] == 'admin':
             if prob_ID == 'full':
                 submission_table = SubmissionModel.objects.all()
@@ -174,6 +196,7 @@ def submission_detail(request):
                         recent_submission = recent_submission[0]
                     else:
                         recent_submission = SubmissionModel(client_ID = user.user_id, client_number = user.studentNumber, prob_ID = prob_ID, created_at = "-", score = 0, exec_time = 0.0, code_size = 0, lang = '-')
+                    recent_submission.client_ID = user.username
                     submission_table.append(recent_submission)
                     if not recent_submission.score in scores:
                         scores[recent_submission.score] = 0
@@ -184,4 +207,4 @@ def submission_detail(request):
                 for key,score in scores.items():
                     key_list.append(key)
                     score_list.append(score)
-                return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list})
+                return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list, "prob":prob})
