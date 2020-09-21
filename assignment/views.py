@@ -179,7 +179,7 @@ def submission_detail(request):
     if request.method == "GET":
         submission_table = None
         prob_ID = request.GET.get('prob_id', None)
-        prob = ProblemModel.objects.get(prob_ID = prob_ID)
+        prob = ProblemModel.objects.get(prob_id = prob_ID)
         if request.session['usertype'] == 'normal':
             submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
             return render(request, "submission_detail.html", {'submission_table' : submission_table, "prob":prob})
@@ -196,6 +196,7 @@ def submission_detail(request):
                         recent_submission = recent_submission[0]
                     else:
                         recent_submission = SubmissionModel(client_ID = user.user_id, client_number = user.studentNumber, prob_ID = prob_ID, created_at = "-", score = 0, exec_time = 0.0, code_size = 0, lang = '-')
+                    recent_submission.client_ID = user.username
                     submission_table.append(recent_submission)
                     if not recent_submission.score in scores:
                         scores[recent_submission.score] = 0
