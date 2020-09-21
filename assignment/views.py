@@ -182,7 +182,7 @@ def submission_detail(request):
         prob = ProblemModel.objects.get(prob_ID = prob_ID)
         if request.session['usertype'] == 'normal':
             submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
-            return render(request, "submission_detail.html", {'submission_table' : submission_table}, "prob":prob)
+            return render(request, "submission_detail.html", {'submission_table' : submission_table, "prob":prob})
         elif request.session['usertype'] == 'admin':
             if prob_ID == 'full':
                 submission_table = SubmissionModel.objects.all()
