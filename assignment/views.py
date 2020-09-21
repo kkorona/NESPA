@@ -186,7 +186,7 @@ def submission_detail(request):
         elif request.session['usertype'] == 'admin':
             if prob_ID == 'full':
                 submission_table = SubmissionModel.objects.all()
-                return render(request, "submission_detail.html", {'submission_table' : submission_table, "prob":prob})
+                return render(request, "submission_detail.html", {'submission_table' : submission_table})
             else:
                 prob = ProblemModel.objects.get(prob_id = prob_ID)
                 users = vespaUser.objects.filter(usertype="normal")
