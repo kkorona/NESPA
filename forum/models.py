@@ -50,7 +50,7 @@ class Comment(models.Model):
         verbose_name = 'comment'
         verbose_name_plural = 'comments'
         db_table = 'forum_comments'
-        ordering = ('pub_date',)
+        ordering = ('-pub_date',)
         
     def get_parent(self):
         return self.parent
