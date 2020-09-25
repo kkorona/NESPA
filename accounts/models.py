@@ -37,5 +37,6 @@ class vespaUser(models.Model):
         
     class Meta:
         db_table = "users"
+        ordering = ('username',)
 
 # Create your models here.
