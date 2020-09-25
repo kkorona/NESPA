@@ -7,12 +7,9 @@
     code {
         font-size : 12pt;
     }
-    code-cover {
-        background-color : #1f1e33;
-        
-        padding : 2px;
-    }
     pre {
+        background-color : #1f1e33;
+        padding : 2px;{
         line-height: 120%;
         color : white;
     }
@@ -28,7 +25,7 @@
       <span>로그인이 필요한 기능입니다.</span>
       {% else %}
       {% if request.session.usertype == "admin" %}
-      <div class="w-75 code-cover">
+      <div class="w-75">
         <pre><code class="courier-new">{{ code_content }}</code></pre>
       </div>      
       {% else %}
