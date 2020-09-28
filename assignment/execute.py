@@ -50,7 +50,7 @@ def executes(target_path, eval_path, submission_id, ext):
                     results.append({'filename': fname,'caseRes': "WRONG ANSWER",'exectime': str(timeDelta)})
         except subprocess.CalledProcessError as e:
             if e.returncode == 124:
-                results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED" + e.output,'exectime': '1'})
+                results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '1'})
             else:
                 results.append({'filename': fname,'caseRes': "RUNTIME ERROR - " + res,'exectime': '0'})
         except subprocess.TimeoutExpired as e:
