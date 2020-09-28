@@ -52,20 +52,22 @@ def submission(request):
             departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
             
             prob = ProblemModel.objects.get(prob_id = prob_ID)
+            
+            if request.session['usertype'] == 'normal':
 
-            my_submissions = SubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user_id).count()
-            if my_submissions >= prob.try_limit:
-                return HttpResponse('제출 횟수가 초과되었습니다. ')
-            
-            now = timezone.now()
-            
-            if prob.starts_at >= now or prob.ends_at <= now:
-                return HttpResponse('제출 기간이 아닙니다.')
-            
-            request.session['code_size'] = os.path.getsize(departure_path)
-            if int(request.session['code_size']) > prob.size_limit:
-                os.remove(departure_path)
-                return HttpResponse('코드 크기가 초과되었습니다.')
+                my_submissions = SubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user_id).count()
+                if my_submissions >= prob.try_limit:
+                    return HttpResponse('제출 횟수가 초과되었습니다. ')
+                
+                now = timezone.now()
+                
+                if prob.starts_at >= now or prob.ends_at <= now:
+                    return HttpResponse('제출 기간이 아닙니다.')
+                
+                request.session['code_size'] = os.path.getsize(departure_path)
+                if int(request.session['code_size']) > prob.size_limit:
+                    os.remove(departure_path)
+                    return HttpResponse('코드 크기가 초과되었습니다.')
             
             request.session['problem_id'] = prob_ID
             request.session['language'] = LANGDICT[language]
