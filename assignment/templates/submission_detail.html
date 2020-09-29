@@ -17,6 +17,9 @@
     td.try {
         color : blue;
     }
+    td.zero-score {
+        color : gray;
+    }
 {% endblock %}
 {% block contents %}
 <div class="container-fluid">
@@ -121,12 +124,16 @@
                     <td> {{ submission.code_size }}</td>
                     </td>
                     {% else %}
-                    <td class="students bold"> {{ submission.client_number }} </td>
+                    <td class="students"> {{ submission.client_number }} </td>
                     <td class="students bold"> {{ submission.client_ID }} </td>
                     <td class="students"> {{ submission.prob_name }} </td>
                     <td class="students"> {{ submission.created_at | date:"n/j, H:i" }} </td>
                     <td class="students"> {{ submission.lang }} </td>
+                    {% if submission.score == 0 %}
+                    <td class="students zero-score"> {{ submission.score }} </td>
+                    {% else %}
                     <td class="students bold score"> {{ submission.score }} </td>
+                    {% endif %}
                     <td class="students"> {{ submission.exec_time|stringformat:".3f" }} </td>
                     <td class="students"> {{ submission.code_size }}</td>
                     <td class="students bold try"> {{ submission.count }}</td>
