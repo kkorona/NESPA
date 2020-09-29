@@ -8,6 +8,15 @@
         padding : 0.1em !important;
         text-align : center;
     }
+    td.bold {
+        font-weight: bold;
+    }
+    td.score {
+        color: red;
+    }
+    td.try {
+        color : blue;
+    }
 {% endblock %}
 {% block contents %}
 <div class="container-fluid">
@@ -112,15 +121,15 @@
                     <td> {{ submission.code_size }}</td>
                     </td>
                     {% else %}
-                    <td class="students"> {{ submission.client_number }} </td>
-                    <td class="students"> {{ submission.client_ID }} </td>
+                    <td class="students bold"> {{ submission.client_number }} </td>
+                    <td class="students bold"> {{ submission.client_ID }} </td>
                     <td class="students"> {{ submission.prob_name }} </td>
                     <td class="students"> {{ submission.created_at | date:"n/j, H:i" }} </td>
                     <td class="students"> {{ submission.lang }} </td>
-                    <td class="students"> {{ submission.score }} </td>
+                    <td class="students bold score"> {{ submission.score }} </td>
                     <td class="students"> {{ submission.exec_time|stringformat:".3f" }} </td>
                     <td class="students"> {{ submission.code_size }}</td>
-                    <td class="students"> {{ submission.count }}</td>
+                    <td class="students bold try"> {{ submission.count }}</td>
                     <td class="students"> 
                     <a href="/assignment/watch_code?prob_id={{submission.prob_ID}}&student_number={{submission.client_number}}&submission_id={{submission.id}}&ext={{submission.lang}}"><span data-feather="align-left"></span>
                     </a></td>
