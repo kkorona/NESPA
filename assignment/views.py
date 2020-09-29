@@ -185,6 +185,19 @@ def watch_code(request):
     
     return render(request, "watch_code.html", {'code_content' : code_content, 'path':code_path})
     
+def sub_to_show(sub, count):
+    show = {}
+    show['client_ID'] = sub.client_ID
+    show['client_number'] = sub.client_number
+    show['prob_ID'] = sub.prob_ID
+    show['created_at'] = sub.created_at
+    show['score'] = sub.score
+    show['exec_time'] = sub.exec_time
+    show['code_size'] = sub.code_size
+    show['lang'] = sub.lang
+    show['count'] = count
+    return show
+
 def submission_detail(request):
     if not "logged_in" in request.session:
         return HttpResponse("로그인이 필요한 기능입니다.")
@@ -206,12 +219,13 @@ def submission_detail(request):
                 scores = {}
                 for user in users:
                     recent_submission = SubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user.user_id).order_by('-created_at')
+                    sub_count = recent_submission.count()
                     if recent_submission:
                         recent_submission = recent_submission[0]
                     else:
                         recent_submission = SubmissionModel(client_ID = user.user_id, client_number = user.studentNumber, prob_ID = prob_ID, created_at = "-", score = 0, exec_time = 0.0, code_size = 0, lang = '-')
                     recent_submission.client_ID = user.username
-                    submission_table.append(recent_submission)
+                    submission_table.append(sub_to_show(recent_submission, sub_count))
                     if not recent_submission.score in scores:
                         scores[recent_submission.score] = 0
                     scores[recent_submission.score] += 1
