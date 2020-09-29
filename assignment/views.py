@@ -195,7 +195,7 @@ def sub_to_show(sub, count):
     show['exec_time'] = sub.exec_time
     show['code_size'] = sub.code_size
     show['lang'] = sub.lang
-    show['count'] = counts
+    show['count'] = count
     show['id'] = sub.id
     return show
 
