@@ -63,11 +63,7 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
-                    
-        author = username
-        article = Post(title = title, author = author, content=content, post_hit = 0)
-        article.save()
-        
+                     
         files = request.FILES.getlist('attach_files')
         fs = FileSystemStorage()
         for file in files:
@@ -78,7 +74,12 @@ def write(request):
             if not os.path.exists(destination_path):
                 os.makedirs(destination_path)
             shutil.move(departure_path, os.path.join(destination_path, file.name)
-            
+            content += file.name + "\n"
+        if files is None:
+            content += "Shibal!"
+        author = username
+        article = Post(title = title, author = author, content=content, post_hit = 0)
+        article.save()
         return redirect('board:post_list')
         
 
