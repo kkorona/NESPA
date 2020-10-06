@@ -73,7 +73,7 @@ def write(request):
             destination_path = os.path.join(settings.BASE_DIR, 'media','attached',str(article.id))
             if not os.path.exists(destination_path):
                 os.makedirs(destination_path)
-            shutil.move(departure_path, os.path.join(destination_path, file.name)
+            shutil.move(departure_path, os.path.join(destination_path, file.name))
             content += file.name + "\n"
         if files is None:
             content += "Shibal!"
