@@ -2,10 +2,14 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearArchiveView, MonthArchiveView, DayArchiveView
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.storage import FileSystemStorage
 
 from board.models import Post, Comment
 from board.forms import CommentForm
+
+import os, shutil
 # Create your views here.
 
 class PostLV(ListView):
@@ -47,7 +51,6 @@ class PostDV(FormMixin, DetailView):
         comment.save()
         return super(PostDV, self).form_valid(form)
 
-
 def write(request):
     if request.method == "GET":
         return render(request, 'board/write.html')
@@ -60,9 +63,21 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
+                    
         author = username
         article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
+        
+        files = request.FILES.getlist('file')
+        fs = FileSystemStorage()
+        for file in files:
+            filename = fs.save(file.name,file)
+            uploaded_file_url = fs.url(filename);
+            departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
+            destination_path = os.path.join(settings.BASE_DIR, 'media','attached',str(article.id))
+            if not os.path.exists(destination_path):
+                os.makedirs(destination_path)
+            shutil.move
         return redirect('board:post_list')
         
 
