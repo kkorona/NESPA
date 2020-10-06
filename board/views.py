@@ -68,7 +68,7 @@ def write(request):
         article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
         
-        files = request.FILES.getlist('file')
+        files = request.FILES.getlist('attach_files')
         fs = FileSystemStorage()
         for file in files:
             filename = fs.save(file.name,file)
@@ -77,7 +77,8 @@ def write(request):
             destination_path = os.path.join(settings.BASE_DIR, 'media','attached',str(article.id))
             if not os.path.exists(destination_path):
                 os.makedirs(destination_path)
-            shutil.move
+            shutil.move(departure_path, os.path.join(destination_path, file.name)
+            
         return redirect('board:post_list')
         
 
