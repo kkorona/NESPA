@@ -40,7 +40,7 @@
        <a href="?page={{ object.get_next.get_absolute_url }}" title="Next">{{ object.get_next }}</a>
       {% endif %}
       </div>
-                <div class="w-75">
+      <div class="w-75">
         <ul>
         {% for attachment in attachments %}
             <li><a href="/media/attached/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a></li>

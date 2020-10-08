@@ -1,11 +1,14 @@
+# -*- encoding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearArchiveView, MonthArchiveView, DayArchiveView
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.storage import FileSystemStorage
 
-from forum.models import Post, Comment
-from forum.forms import CommentForm, PostForm
+from forum.models import Post, Comment, Attach
+from forum.forms import CommentForm
 
 # Create your views here.
 
@@ -30,6 +33,7 @@ class PostDV(FormMixin, DetailView):
         else:
             context['user'] = 'anonymous'
         context['comments'] = self.object.comment_set.all()
+        context['attachments'] = self.object.attach_set.all()
         return context
         
     def post(self, request, *args, **kwargs):
@@ -60,15 +64,28 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
-        if title == '' or content == '':
-            return HttpResponse('제목과 내용은 비울 수 없습니다.')
-        author = userid
+        author = username
         article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
-        return redirect('forum:post_list')
 
-def PostCV(CreateView):
-    pass
+                     
+        files = request.FILES.getlist('attach_files')
+        fs = FileSystemStorage()
+        for file in files:
+            fname = file.name
+            filename = fs.save(fname,file)
+            uploaded_file_url = fs.url(filename);
+            departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
+            destination_path = os.path.join(settings.BASE_DIR, 'media','attached',str(article.id))
+            if not os.path.exists(destination_path):
+                os.makedirs(destination_path)
+            destination_path = os.path.join(destination_path, fname)
+            shutil.move(departure_path,destination_path)
+            ext = filename.split(".")[-1]
+            attach = Attach(parent=article, path = destination_path,name=fname, ext = ext)
+            attach.save()
+            
+        return redirect('forum:post_list')
 
 '''
 class PostAV(ArchiveIndexView):

@@ -1,10 +1,14 @@
+# -*- encoding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearArchiveView, MonthArchiveView, DayArchiveView
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.storage import FileSystemStorage
 
-from QnA.models import Post, Comment
+
+from QnA.models import Post, Comment, Attach
 from QnA.forms import CommentForm
 
 # Create your views here.
@@ -50,7 +54,7 @@ class PostDV(FormMixin, DetailView):
         
 def write(request):
     if request.method == "GET":
-        return render(request, 'QnA/write.html')
+        return render(request, 'qna/write.html')
     if request.method == "POST":
         username = request.session['username']
         usertype = request.session['usertype']
@@ -60,9 +64,27 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
-        author = userid
+        author = username
         article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
+
+                     
+        files = request.FILES.getlist('attach_files')
+        fs = FileSystemStorage()
+        for file in files:
+            fname = file.name
+            filename = fs.save(fname,file)
+            uploaded_file_url = fs.url(filename);
+            departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
+            destination_path = os.path.join(settings.BASE_DIR, 'media','attached',str(article.id))
+            if not os.path.exists(destination_path):
+                os.makedirs(destination_path)
+            destination_path = os.path.join(destination_path, fname)
+            shutil.move(departure_path,destination_path)
+            ext = filename.split(".")[-1]
+            attach = Attach(parent=article, path = destination_path,name=fname, ext = ext)
+            attach.save()
+            
         return redirect('qna:post_list')
         
 
