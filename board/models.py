@@ -57,6 +57,7 @@ class Comment(models.Model):
         
 class Attach(models.Model):
     parent = models.ForeignKey(Post, on_delete=models.CASCADE)
+    name = models.CharField(max_length = 50)
     path = models.CharField(max_length=100)
     ext = models.CharField(max_length=10)
     

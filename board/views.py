@@ -81,7 +81,7 @@ def write(request):
             destination_path =  os.path.join(destination_path, file.name)
             shutil.move(departure_path,destination_path)
             ext = filename.split(".")[-1]
-            attach = Attach(parent=article, path = destination_path, ext = ext)
+            attach = Attach(parent=article, path = destination_path,name=file.name, ext = ext)
             attach.save()
             
         return redirect('board:post_list')
