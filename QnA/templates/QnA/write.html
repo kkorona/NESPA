@@ -43,5 +43,26 @@
 {% block scripts %}
 <script>
     $("#sidebar_qna").attr('class','nav-link active'); 
+    $(document).ready( function() {
+ 
+        $("input[type=file]").change(function () {
+            
+            var fileInput = document.getElementById("attach_files");
+            
+            var files = fileInput.files;
+            var file;
+            var result = "<ul>";
+            
+            for (var i = 0; i < files.length; i++) {
+                
+                file = files[i];
+ 
+                result += "<li>" + (i+1) + ": " + file.name + "</li>\n";
+            }
+            result += "</ul>";
+            document.getElementById("attach_files_list").innerHTML=result;
+        });
+ 
+    });
 </script>
 {% endblock %}
