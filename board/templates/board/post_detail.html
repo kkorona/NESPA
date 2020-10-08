@@ -28,7 +28,7 @@
         <ul>
         {% for attachment in attachments %}
             <li><a href="/media/attached/{{object.id}}/{{attachment.path}}">{{attachment.filename}}</a></li>
-        {% endif %}
+        {% endfor %}
         </ul>
       </div>      
       <div class="text-right w-75 p-3">
