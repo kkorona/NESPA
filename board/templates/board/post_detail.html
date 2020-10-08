@@ -23,7 +23,14 @@
       {% if page_obj.has_next %}
        <a href="?page={{ object.get_next.get_absolute_url }}" title="Next">{{ object.get_next }}</a>
       {% endif %}
-      </div>     
+      </div>
+        <div class="w-75">
+        <ul>
+        {% for attachment in attachments %}
+            <li><a href="/media/attached/{{object.id}}/{{attachment.path}}">{{attachment.filename}}</a></li>
+        {% endif %}
+        </ul>
+      </div>      
       <div class="text-right w-75 p-3">
         <button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'board:post_list' %}'"> 목록으로 </button>
       </div>      

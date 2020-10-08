@@ -54,3 +54,13 @@ class Comment(models.Model):
         
     def get_parent(self):
         return self.parent
+        
+class Attach(models.Model):
+    parent = models.ForeignKey(Post, on_delete=models.CASCADE)
+    path = models.CharField(max_length=100)
+    ext = models.CharField(max_length=10)
+    
+    class Meta:
+        verbose_name = 'attachment'
+        verbose_name_plural = 'attachments'
+        db_table = 'board_attachments'

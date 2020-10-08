@@ -6,10 +6,10 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
 
-from board.models import Post, Comment
+from board.models import Post, Comment, Attach
 from board.forms import CommentForm
 
-import os, shutil
+import os, shutil, glob
 # Create your views here.
 
 class PostLV(ListView):
@@ -20,6 +20,7 @@ class PostLV(ListView):
 class PostDV(FormMixin, DetailView):
     model = Post
     form_class = CommentForm
+    attachments = Attach.objects.get(parent = self.kwargs.get('pk'))
     def get_success_url(self, **kwargs):
         return reverse('board:post_detail', kwargs = {'pk': self.object.pk })
         
@@ -77,7 +78,12 @@ def write(request):
             destination_path = os.path.join(settings.BASE_DIR, 'media','attached',str(article.id))
             if not os.path.exists(destination_path):
                 os.makedirs(destination_path)
-            shutil.move(departure_path, os.path.join(destination_path, file.name))
+            destination_path =  os.path.join(destination_path, file.name)
+            shutil.move(departure_path,)
+            ext = filename.split(".")[-1]
+            attach = new Attach(parent=get_object_or_404(article, pk=article.pk), path = destination_path, ext = ext)
+            attach.save()
+            
         return redirect('board:post_list')
         
 
