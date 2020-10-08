@@ -20,7 +20,6 @@ class PostLV(ListView):
 class PostDV(FormMixin, DetailView):
     model = Post
     form_class = CommentForm
-    attachments = Attach.objects.get(parent = self.kwargs.get('pk'))
     def get_success_url(self, **kwargs):
         return reverse('board:post_detail', kwargs = {'pk': self.object.pk })
         
@@ -34,6 +33,7 @@ class PostDV(FormMixin, DetailView):
         else:
             context['user'] = 'anonymous'
         context['comments'] = self.object.comment_set.all()
+        context['attachments'] = self.objects.attachment_set.all()
         return context
         
     def post(self, request, *args, **kwargs):
