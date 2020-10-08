@@ -33,7 +33,7 @@ class PostDV(FormMixin, DetailView):
         else:
             context['user'] = 'anonymous'
         context['comments'] = self.object.comment_set.all()
-        context['attachments'] = self.objects.attachment_set.all()
+        context['attachments'] = self.objects.attach_set.all()
         return context
         
     def post(self, request, *args, **kwargs):
@@ -80,8 +80,9 @@ def write(request):
                 os.makedirs(destination_path)
             destination_path =  os.path.join(destination_path, file.name)
             shutil.move(departure_path,)
+            name = file.name
             ext = filename.split(".")[-1]
-            attach = new Attach(parent=get_object_or_404(article, pk=article.pk), path = destination_path, ext = ext)
+            attach = new Attach(parent=get_object_or_404(article, pk=article.pk), path = destination_path,name=name, ext = ext)
             attach.save()
             
         return redirect('board:post_list')
