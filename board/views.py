@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
@@ -72,16 +73,17 @@ def write(request):
         files = request.FILES.getlist('attach_files')
         fs = FileSystemStorage()
         for file in files:
-            filename = fs.save(file.name,file)
+            fname = file.name
+            filename = fs.save(fname,file)
             uploaded_file_url = fs.url(filename);
             departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
             destination_path = os.path.join(settings.BASE_DIR, 'media','attached',str(article.id))
             if not os.path.exists(destination_path):
                 os.makedirs(destination_path)
-            destination_path = os.path.join(destination_path, file.name)
+            destination_path = os.path.join(destination_path, fname)
             shutil.move(departure_path,destination_path)
             ext = filename.split(".")[-1]
-            attach = Attach(parent=article, path = destination_path,name=file.name, ext = ext)
+            attach = Attach(parent=article, path = destination_path,name=fname, ext = ext)
             attach.save()
             
         return redirect('board:post_list')
