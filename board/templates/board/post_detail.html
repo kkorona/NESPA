@@ -17,6 +17,16 @@
       <h3 class="font-weight-bold">{{ object.title }}</h4>
       <h5>by <span class="text-primary">{{ object.author }}</span>, <span class="font-italic">{{ post.pub_date | date:"N j일, H:i" }}</span><br></h5>
       </div>
+	<div class="w-75">
+        <ul>
+        {% for attachment in attachments %}
+	    {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
+            <img src="/media/attached/{{object.id}}/{{attachment.name}}">
+	    {% endif %}
+        {% endfor %}
+        </ul>
+      </div>
+
       <div class="w-75 border-dark">
       {{ object.update_counter }}
       {{ object.content|linebreaks }}
@@ -30,16 +40,7 @@
        <a href="?page={{ object.get_next.get_absolute_url }}" title="Next">{{ object.get_next }}</a>
       {% endif %}
       </div>
-        <div class="w-75">
-        <ul>
-        {% for attachment in attachments %}
-	    {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
-            <img src="/media/attached/{{object.id}}/{{attachment.name}}">
-	    {% endif %}
-        {% endfor %}
-        </ul>
-      </div>
-        <div class="w-75">
+                <div class="w-75">
         <ul>
         {% for attachment in attachments %}
             <li><a href="/media/attached/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a></li>
