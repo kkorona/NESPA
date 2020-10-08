@@ -7,10 +7,10 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
 
-
 from QnA.models import Post, Comment, Attach
 from QnA.forms import CommentForm
 
+import os, shutil, glob
 # Create your views here.
 
 class PostLV(ListView):

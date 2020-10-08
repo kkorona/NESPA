@@ -10,6 +10,7 @@ from django.core.files.storage import FileSystemStorage
 from forum.models import Post, Comment, Attach
 from forum.forms import CommentForm
 
+import os, shutil, glob
 # Create your views here.
 
 class PostLV(ListView):
