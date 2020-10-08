@@ -34,6 +34,7 @@ class PostDV(FormMixin, DetailView):
         else:
             context['user'] = 'anonymous'
         context['comments'] = self.object.comment_set.all()
+        context['attachments'] = self.object.attach_set.all()
         return context
         
     def post(self, request, *args, **kwargs):
