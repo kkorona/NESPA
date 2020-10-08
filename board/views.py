@@ -81,7 +81,7 @@ def write(request):
             destination_path =  os.path.join(destination_path, file.name)
             shutil.move(departure_path,)
             ext = filename.split(".")[-1]
-            attach = new Attach(parent=get_object_or_404(article, pk=article.pk), path = destination_path, ext = ext)
+            attach = Attach(parent=get_object_or_404(article, pk=article.pk), path = destination_path, ext = ext)
             attach.save()
             
         return redirect('board:post_list')
