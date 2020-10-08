@@ -6,3 +6,4 @@ db.sqlite3
 vespa/settings.py
 *.cpp
 data/submission
+media/attached

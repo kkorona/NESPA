@@ -1,5 +1,11 @@
 <!doctype html>
 {% extends 'base.html' %}
+{% block styles %}
+    img {
+	max-width: 100%;
+	height: auto;
+    }
+{% endblock %}
 {% block contents %}
 <div class="container-fluid">
   <div class="row">
@@ -27,8 +33,17 @@
         <div class="w-75">
         <ul>
         {% for attachment in attachments %}
-            <li><a href="/media/attached/{{object.id}}/{{attachment.path}}">{{attachment.filename}}</a></li>
-        {% endif %}
+	    {% if attachment.ext == "jpg" or attachment.ext == "png" %}
+            <img src="/media/attached/{{object.id}}/{{attachment.name}}">
+	    {% endif %}
+        {% endfor %}
+        </ul>
+      </div>
+        <div class="w-75">
+        <ul>
+        {% for attachment in attachments %}
+            <li><a href="/media/attached/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a></li>
+        {% endfor %}
         </ul>
       </div>      
       <div class="text-right w-75 p-3">
