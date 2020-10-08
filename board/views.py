@@ -77,7 +77,7 @@ def write(request):
             filename = fs.save(fname,file)
             uploaded_file_url = fs.url(filename);
             departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
-            destination_path = os.path.join(settings.BASE_DIR, 'media','attached',str(article.id))
+            destination_path = os.path.join(settings.BASE_DIR, 'media','attached','board',str(article.id))
             if not os.path.exists(destination_path):
                 os.makedirs(destination_path)
             destination_path = os.path.join(destination_path, fname)

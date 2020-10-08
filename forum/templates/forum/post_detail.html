@@ -31,7 +31,7 @@
         <ul>
         {% for attachment in attachments %}
 	    {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
-            <img src="/media/attached/{{object.id}}/{{attachment.name}}">
+            <img src="/media/attached/forum/{{object.id}}/{{attachment.name}}">
 	    {% endif %}
         {% endfor %}
         </ul>
