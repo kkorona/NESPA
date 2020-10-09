@@ -58,7 +58,7 @@
             </div>
         {% endfor %}
       </div>
-      {% if request.session.logged_in and request.session.usertype != 'unapproved' %}
+      {% if request.session.logged_in and request.session.usertype == 'unapproved' %}
       <div class="w-75 border-top border-dark p-3">
         <form method="post" action="">
             {% csrf_token %}
