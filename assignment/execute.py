@@ -29,7 +29,7 @@ def executes(target_path, eval_path, submission_id, ext):
     for filename in filenames:
         eval_input_file = os.path.join(eval_path, filename + ".inp")
         eval_output_file = os.path.join(eval_path, filename + ".out")
-        query = '"/usr/bin/timeout" 1 ' + query_head + " < " + eval_input_file
+        query = '"/usr/bin/timeout" 3 ' + query_head + " < " + eval_input_file
         fname = os.path.basename(eval_input_file).split('.')[0]
         queries += query + "\n"
         res = ""
@@ -50,11 +50,11 @@ def executes(target_path, eval_path, submission_id, ext):
                     results.append({'filename': fname,'caseRes': "WRONG ANSWER",'exectime': str(timeDelta)})
         except subprocess.CalledProcessError as e:
             if e.returncode == 124:
-                results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '1'})
+                results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '3'})
             else:
                 results.append({'filename': fname,'caseRes': "RUNTIME ERROR - " + res,'exectime': '0'})
         except subprocess.TimeoutExpired as e:
-            results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '1'})
+            results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '3'})
         except Exception as e:
             results.append({'filename': fname,'caseRes': str(e), 'exectime' : '0'})
     
