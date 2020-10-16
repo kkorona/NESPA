@@ -6,7 +6,7 @@ import time
 def tokenize(str):
     return re.split("[ \t]+",str)
 
-def executes(target_path, eval_path, submission_id, ext):
+def executes(target_path, eval_path, submission_id, ext, timeout):
     inplist = glob.glob(os.path.join(eval_path,"*.inp"))
     
     filenames = [ "".join(x.split('.')[:-1]) for x in inplist]
@@ -29,7 +29,7 @@ def executes(target_path, eval_path, submission_id, ext):
     for filename in filenames:
         eval_input_file = os.path.join(eval_path, filename + ".inp")
         eval_output_file = os.path.join(eval_path, filename + ".out")
-        query = '"/usr/bin/timeout" 3 ' + query_head + " < " + eval_input_file
+        query = '"/usr/bin/timeout" '+ timeout + 's ' + query_head + " < " + eval_input_file
         fname = os.path.basename(eval_input_file).split('.')[0]
         queries += query + "\n"
         res = ""
@@ -50,11 +50,11 @@ def executes(target_path, eval_path, submission_id, ext):
                     results.append({'filename': fname,'caseRes': "WRONG ANSWER",'exectime': str(timeDelta)})
         except subprocess.CalledProcessError as e:
             if e.returncode == 124:
-                results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '3'})
+                results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': timeout})
             else:
                 results.append({'filename': fname,'caseRes': "RUNTIME ERROR - " + res,'exectime': '0'})
         except subprocess.TimeoutExpired as e:
-            results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': '3'})
+            results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': timeout})
         except Exception as e:
             results.append({'filename': fname,'caseRes': str(e), 'exectime' : '0'})
     

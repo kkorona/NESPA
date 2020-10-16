@@ -119,7 +119,7 @@ def submission_check(request):
         if compile_result == 1:
             return render(request, "compile_error.html", {'error_msg' : '컴파일 에러가 발생하였습니다. 소스코드를 확인해주시고, 해결이 안될 경우 조교에게 문의하세요.'})
         
-        execute_result = execute.executes(destination_path, eval_path, submission_id, ext)
+        execute_result = execute.executes(destination_path, eval_path, submission_id, ext, str(prob.time_limit))
         
         total_tc = len(execute_result)
         scored_tc = 0
