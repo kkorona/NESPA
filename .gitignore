@@ -6,4 +6,5 @@ db.sqlite3
 vespa/settings.py
 *.cpp
 data/submission
+data/exam_submission
 media/attached
