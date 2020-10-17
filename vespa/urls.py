@@ -28,7 +28,7 @@ urlpatterns = [
     path('lecture/', dev2020.views.index, name='index'),
     path('accounts/', include('accounts.urls')),
     path('assignment/', include('assignment.urls')),
-    path('exam/', dev2020.views.index, name='index'),
+    path('online_exam/', include('online_exam.urls')),
     path('forum/', include('forum.urls')),
     path('qna/', include('QnA.urls')),
     path('reports/', dev2020.views.index, name='index'),
