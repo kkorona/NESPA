@@ -151,16 +151,16 @@ def submission_check(request):
         
         
     return render(request, "submission_check.html")
-    
-def assignment_list(request):
-    prob_list = ProblemModel.objects.all()
-    return render(request, 'assignment_list.html', {'prob_list':prob_list})
         
 def submission_list(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')        
     prob_list = ProblemModel.objects.all()
     return render(request, "submission_list.html", {'prob_list':prob_list})
     
 def watch_code(request):
+    if request.session['usertype'] != 'admin':
+        return HttpResponse('허용되지 않은 기능입니다.')        
     prob_ID = request.GET.get('prob_id', None)
     student_number = request.GET.get('student_number', None)
     submission_ID = request.GET.get('submission_id', None)
@@ -200,6 +200,8 @@ def sub_to_show(sub, count):
     return show
 
 def submission_detail(request):
+    if request.session['usertype'] != 'admin':
+        return HttpResponse('허용되지 않은 기능입니다.')        
     if not "logged_in" in request.session:
         return HttpResponse("로그인이 필요한 기능입니다.")
     if request.method == "GET":
