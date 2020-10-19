@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from . import validation
 from . import compile
 from . import execute
-from .models import SubmissionModel, ProblemModel
+from online_exam.models import SubmissionModel, ProblemModel
 from accounts.models import vespaUser
 from collections import OrderedDict
 import shutil
