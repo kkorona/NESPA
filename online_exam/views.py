@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from . import validation
 from . import compile
 from . import execute
-from .models import SubmissionModel, ProblemModel
+from online_exam.models import ExamSubmissionModel, ExamProblemModel
 from accounts.models import vespaUser
 from collections import OrderedDict
 import shutil
@@ -32,7 +32,7 @@ EXTDICT = {
 
 def submission(request):
     if request.method == "GET":
-        full_prob_list = ProblemModel.objects.all()
+        full_prob_list = ExamProblemModel.objects.all()
         now = timezone.now()
         cur_prob_list = []
         for prob in full_prob_list:
@@ -51,11 +51,11 @@ def submission(request):
             uploaded_file_url = fs.url(filename)      
             departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
             
-            prob = ProblemModel.objects.get(prob_id = prob_ID)
+            prob = ExamProblemModel.objects.get(prob_id = prob_ID)
             
             if request.session['usertype'] == 'normal':
 
-                my_submissions = SubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user_id).count()
+                my_submissions = ExamSubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user_id).count()
                 if my_submissions >= prob.try_limit:
                     return HttpResponse('제출 횟수가 초과되었습니다. ')
                 
@@ -86,7 +86,7 @@ def submission_check(request):
     if request.method == "POST":    
         uploaded_file_url = request.session['uploaded_file_url']
         prob_ID = request.session['problem_id']
-        prob = ProblemModel.objects.get(prob_id = prob_ID)  
+        prob = ExamProblemModel.objects.get(prob_id = prob_ID)  
 
         client = vespaUser.objects.get(user_id = request.session['userid'])
         studentNumber = client.studentNumber
@@ -95,7 +95,7 @@ def submission_check(request):
         departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
         destination_path = os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID)
         
-        submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, lang=ext, prob_name = prob.prob_name)
+        submission = ExamSubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, lang=ext, prob_name = prob.prob_name)
         submission.save()
         request.session['submission_id'] = str(submission.id)
         submission_id = str(submission.id)
@@ -155,7 +155,7 @@ def submission_check(request):
 def submission_list(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')        
-    prob_list = ProblemModel.objects.all()
+    prob_list = ExamProblemModel.objects.all()
     return render(request, "submission_list.html", {'prob_list':prob_list})
     
 def watch_code(request):
@@ -208,25 +208,25 @@ def submission_detail(request):
         submission_table = None
         prob_ID = request.GET.get('prob_id', None)
         if request.session['usertype'] == 'normal':
-            prob = ProblemModel.objects.get(prob_id = prob_ID)
-            submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
+            prob = ExamProblemModel.objects.get(prob_id = prob_ID)
+            submission_table = ExamSubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
             return render(request, "submission_detail.html", {'submission_table' : submission_table, "prob":prob})
         elif request.session['usertype'] == 'admin':
             if prob_ID == 'full':
-                submission_table = SubmissionModel.objects.all()
+                submission_table = ExamSubmissionModel.objects.all()
                 return render(request, "submission_detail.html", {'submission_table' : submission_table})
             else:
-                prob = ProblemModel.objects.get(prob_id = prob_ID)
+                prob = ExamProblemModel.objects.get(prob_id = prob_ID)
                 users = vespaUser.objects.filter(usertype="normal")
                 submission_table = []
                 scores = {}
                 for user in users:
-                    recent_submission = SubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user.user_id).order_by('-created_at')
+                    recent_submission = ExamSubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user.user_id).order_by('-created_at')
                     sub_count = recent_submission.count()
                     if recent_submission:
                         recent_submission = recent_submission[0]
                     else:
-                        recent_submission = SubmissionModel(client_ID = user.user_id, client_number = user.studentNumber, prob_ID = prob_ID, created_at = "-", score = 0, exec_time = 0.0, code_size = 0, lang = '-')
+                        recent_submission = ExamSubmissionModel(client_ID = user.user_id, client_number = user.studentNumber, prob_ID = prob_ID, created_at = "-", score = 0, exec_time = 0.0, code_size = 0, lang = '-')
                     recent_submission.client_ID = user.username
                     submission_table.append(sub_to_show(recent_submission, sub_count))
                     if not recent_submission.score in scores:
