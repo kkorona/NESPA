@@ -30,7 +30,7 @@ EXTDICT = {
 '04':'java'
 }
 
-def submission(request):
+def exam_submission(request):
     if request.method == "GET":
         full_prob_list = ExamProblemModel.objects.all()
         now = timezone.now()
@@ -38,7 +38,7 @@ def submission(request):
         for prob in full_prob_list:
             if prob.starts_at <= now and prob.ends_at >= now:
                 cur_prob_list.append(prob)
-        return render(request, 'submission.html', {'full_prob_list' : full_prob_list, 'cur_prob_list':cur_prob_list})
+        return render(request, 'exam_submission.html', {'full_prob_list' : full_prob_list, 'cur_prob_list':cur_prob_list})
         
     if request.method == "POST":
         if 'source_code' in request.FILES:
@@ -82,7 +82,7 @@ def submission(request):
             return HttpResponse('소스코드가 첨부되지 않았습니다.')
         # https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
 
-def submission_check(request):
+def exam_submission_check(request):
     if request.method == "POST":    
         uploaded_file_url = request.session['uploaded_file_url']
         prob_ID = request.session['problem_id']
@@ -117,7 +117,7 @@ def submission_check(request):
         compile_result = compile.compiles(target_title, ext)
         
         if compile_result == 1:
-            return render(request, "compile_error.html", {'error_msg' : '컴파일 에러가 발생하였습니다. 소스코드를 확인해주시고, 해결이 안될 경우 조교에게 문의하세요.'})
+            return render(request, "exam_compile_error.html", {'error_msg' : '컴파일 에러가 발생하였습니다. 소스코드를 확인해주시고, 해결이 안될 경우 조교에게 문의하세요.'})
         
         execute_result = execute.executes(destination_path, eval_path, submission_id, ext, str(prob.time_limit))
         
@@ -147,18 +147,18 @@ def submission_check(request):
         
         submission.save()
             
-        return render(request, "result.html", {'prob_id' : prob_ID, 'result_out_table' : res_out, 'score' : str(score), 'total_time' : str(total_time)})
+        return render(request, "exam_result.html", {'prob_id' : prob_ID, 'result_out_table' : res_out, 'score' : str(score), 'total_time' : str(total_time)})
         
         
-    return render(request, "submission_check.html")
+    return render(request, "exam_submission_check.html")
         
-def submission_list(request):
+def exam_submission_list(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')        
     prob_list = ExamProblemModel.objects.all()
-    return render(request, "submission_list.html", {'prob_list':prob_list})
+    return render(request, "exam_submission_list.html", {'prob_list':prob_list})
     
-def watch_code(request):
+def exam_watch_code(request):
     if request.session['usertype'] != 'admin':
         return HttpResponse('허용되지 않은 기능입니다.')        
     prob_ID = request.GET.get('prob_id', None)
@@ -183,7 +183,7 @@ def watch_code(request):
             with open(code_path, 'r', encoding="ISO-8859-1") as f:
                 code_content = f.read()
     
-    return render(request, "watch_code.html", {'code_content' : code_content, 'path':code_path})
+    return render(request, "exam_watch_code.html", {'code_content' : code_content, 'path':code_path})
     
 def sub_to_show(sub, count):
     show = {}
@@ -210,11 +210,11 @@ def submission_detail(request):
         if request.session['usertype'] == 'normal':
             prob = ExamProblemModel.objects.get(prob_id = prob_ID)
             submission_table = ExamSubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
-            return render(request, "submission_detail.html", {'submission_table' : submission_table, "prob":prob})
+            return render(request, "exam_submission_detail.html", {'submission_table' : submission_table, "prob":prob})
         elif request.session['usertype'] == 'admin':
             if prob_ID == 'full':
                 submission_table = ExamSubmissionModel.objects.all()
-                return render(request, "submission_detail.html", {'submission_table' : submission_table})
+                return render(request, "exam_submission_detail.html", {'submission_table' : submission_table})
             else:
                 prob = ExamProblemModel.objects.get(prob_id = prob_ID)
                 users = vespaUser.objects.filter(usertype="normal")
@@ -238,4 +238,4 @@ def submission_detail(request):
                 for key,score in scores.items():
                     key_list.append(key)
                     score_list.append(score)
-                return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list, "prob":prob})
+                return render(request, "exam_submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list, "prob":prob})
