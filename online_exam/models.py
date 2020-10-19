@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
     
-class SubmissionModel(models.Model):
+class ExamSubmissionModel(models.Model):
     client_ID = models.CharField(max_length=20)
     client_number = models.CharField(max_length=20)
     prob_ID = models.CharField(max_length=20)
@@ -20,7 +20,7 @@ class SubmissionModel(models.Model):
         db_table = "exam_submissions"
         ordering = ('-id',)
         
-class ProblemModel(models.Model):
+class ExamProblemModel(models.Model):
     prob_id = models.CharField(max_length=20)
     prob_name = models.CharField(max_length=20)
     starts_at = models.DateTimeField()
