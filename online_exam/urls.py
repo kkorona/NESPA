@@ -1,12 +1,11 @@
 from django.urls import path
-from . import views
+from online_exam import views
 
 urlpatterns = [
-    path('', views.submission, name='submission'),
-    path('submission/', views.submission, name='submission'),
-    path('submission_check/', views.submission_check, name='submission_check'),
-    # path('assignment_list/', views.assignment_list, name='assignment_list'),
-    path('submission_list/', views.submission_list, name='submission_list'),
-    path('submission_detail/', views.submission_detail, name='submission_detail'),
-    path('watch_code/',views.watch_code, name='watch_code'),
+    path('', views.exam_submission, name='exam_submission'),
+    path('submission/', views.exam_submission, name='exam_submission'),
+    path('submission_check/', views.exam_submission_check, name='exam_submission_check'),
+    path('submission_list/', views.exam_submission_list, name='exam_submission_list'),
+    path('submission_detail/', views.exam_submission_detail, name='exam_submission_detail'),
+    path('watch_code/',views.exam_watch_code, name='watch_code'),
 ]
