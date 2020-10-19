@@ -76,7 +76,7 @@ def exam_submission(request):
             now = time.localtime()
             request.session['updated_time'] = "%04d/%02d/%02d %02d:%02d:%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
             
-            return redirect('submission_check')
+            return redirect('exam_submission_check')
             
         else:
             return HttpResponse('소스코드가 첨부되지 않았습니다.')
@@ -199,7 +199,7 @@ def sub_to_show(sub, count):
     show['id'] = sub.id
     return show
 
-def submission_detail(request):
+def exam_submission_detail(request):
     if request.session['usertype'] != 'admin':
         return HttpResponse('허용되지 않은 기능입니다.')        
     if not "logged_in" in request.session:
