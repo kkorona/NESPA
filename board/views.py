@@ -6,6 +6,7 @@ from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearA
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
 
 from board.models import Post, Comment, Attach
 from board.forms import CommentForm
@@ -65,6 +66,8 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
+        if title == "" or content == "":
+            return HttpResponse('제목 또는 내용이 비어있습니다.')
         author = username
         article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
