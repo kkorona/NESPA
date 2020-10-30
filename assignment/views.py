@@ -97,8 +97,6 @@ def submission_check(request):
         
         submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, lang=ext, prob_name = prob.prob_name)
         submission.save()
-        request.session['submission_id'] = str(submission.id)
-        submission_id = str(submission.id)
         
         target_name = submission_id + '.' + ext
         target_path = os.path.join(destination_path,target_name)
