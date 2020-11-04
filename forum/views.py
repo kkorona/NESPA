@@ -6,6 +6,7 @@ from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearA
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
 
 from forum.models import Post, Comment, Attach
 from forum.forms import CommentForm
@@ -62,7 +63,8 @@ def write(request):
         userid = request.session['userid']
         if usertype == "unapproved":
             return HttpResponse('접근할 수 없는 기능입니다.')
-            
+        if title == "" or content == "":
+            return HttpResponse('제목 또는 내용이 비어있습니다.')
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
         author = userid
