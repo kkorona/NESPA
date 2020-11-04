@@ -94,6 +94,8 @@ def submission_check(request):
         
         departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
         destination_path = os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID)
+        subfile_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID, subs)
+        header_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID, header)
         
         submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, lang=ext, prob_name = prob.prob_name)
         submission.save()
@@ -105,8 +107,12 @@ def submission_check(request):
         
         if not os.path.exists(destination_path):
             os.makedirs(destination_path)
-        
         shutil.move(departure_path,target_path)
+        
+        if os.path.exists(subfile_path):
+            subfiles = os.listdir(subfile_path)
+            for subfile in subfiles:
+                shutil.copyfile(os.path.join(subfile_path,subfile),os.path.join(destination_path,subfile))
         
         code_size = os.path.getsize(target_path)        
         
