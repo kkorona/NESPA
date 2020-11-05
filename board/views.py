@@ -64,9 +64,9 @@ def write(request):
         if usertype == "unapproved":
             return HttpResponse('접근할 수 없는 기능입니다.')
             
-        title = request.POST.get('post_title',None)
-        content = request.POST.get('post_contents',None)
-        if title == "" or content == "":
+        post_title = request.POST.get('post_title',None)
+        post_content = request.POST.get('post_contents',None)
+        if post_title == "" or post_content == "":
             return HttpResponse('제목 또는 내용이 비어있습니다.')
         author = username
         article = Post(title = title, author = author, content=content, post_hit = 0)
