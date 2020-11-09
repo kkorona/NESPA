@@ -54,6 +54,51 @@ class PostDV(FormMixin, DetailView):
         comment.save()
         return super(PostDV, self).form_valid(form)
 
+def edit(request, article_id):
+    username = request.session['username']
+    usertype = request.session['usertype']
+    userid = request.session['userid']
+    article = Post.objects.get(id=article_id)
+    
+    if usertype == "unapproved":
+        return HttpResponse('접근할 수 없는 기능입니다.')
+    
+    if usertype == "normal":
+        if article.author != username:
+            return HttpResponse('수정 권한이 없습니다.')
+    
+    if request.method == "POST":
+        title = request.POST.get('post_title',None)
+        content = request.POST.get('post_contents',None)
+        if title == "" or content == "":
+            return HttpResponse('제목 또는 내용이 비어있습니다.')
+        article.title = title
+        article.content = content
+        article.save()
+        return redirect('/ds2020/post/' + str(article_id))
+        
+    if request.method == "GET":
+        return render(request, 'board/edit.html')
+    '''             
+    files = request.FILES.getlist('attach_files')
+    fs = FileSystemStorage()
+    for file in files:
+        fname = file.name
+        filename = fs.save(fname,file)
+        uploaded_file_url = fs.url(filename);
+        departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
+        destination_path = os.path.join(settings.BASE_DIR, 'media','attached','board',str(article.id))
+        if not os.path.exists(destination_path):
+            os.makedirs(destination_path)
+        destination_path = os.path.join(destination_path, fname)
+        shutil.move(departure_path,destination_path)
+        ext = filename.split(".")[-1]
+        attach = Attach(parent=article, path = destination_path,name=fname, ext = ext)
+        attach.save()
+        
+    return redirect('board:post_list')
+    '''
+
 def write(request):
     if request.method == "GET":
         return render(request, 'board/write.html')

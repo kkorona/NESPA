@@ -53,6 +53,33 @@ class PostDV(FormMixin, DetailView):
         comment.author = self.request.session['userid']
         comment.save()
         return super(PostDV, self).form_valid(form)
+
+def edit(request, article_id):
+    username = request.session['username']
+    usertype = request.session['usertype']
+    userid = request.session['userid']
+    article = Post.objects.get(id=article_id)
+    
+    if usertype == "unapproved":
+        return HttpResponse('접근할 수 없는 기능입니다.')
+    
+    if usertype == "normal":
+        if article.author != username:
+            HttpResponse('수정 권한이 없습니다.')
+        
+    article = Post.objects.get(id=article_id)
+    if request.method == "POST":
+        title = request.POST.get('post_title',None)
+        content = request.POST.get('post_contents',None)
+        if title == "" or content == "":
+            return HttpResponse('제목 또는 내용이 비어있습니다.')
+        article.title = title
+        article.content = content
+        article.save()
+        return redirect('/qna/post/' + str(article_id))
+        
+    if request.method == "GET":
+        return render(request, 'QnA/edit.html')
         
 def write(request):
     if request.method == "GET":

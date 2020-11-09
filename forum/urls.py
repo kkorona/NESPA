@@ -6,8 +6,9 @@ app_name = 'forum'
 urlpatterns =[
     path('',views.PostLV.as_view(), name='index'),
     path('post/',views.PostLV.as_view(), name='post_list'),
-    path('post/<int:pk>/',views.PostDV.as_view(), name='post_detail'),
+    path('edit/<int:article_id>',views.edit, name='edit'),
     path('write/',views.write, name='write'),
+    path('post/<int:pk>/',views.PostDV.as_view(), name='post_detail'),
 ]
 
 '''
