@@ -79,7 +79,7 @@ def edit(request, article_id):
         return redirect('/qna/post/' + str(article_id))
         
     if request.method == "GET":
-        return render(request, 'QnA/edit.html')
+        return render(request, 'QnA/edit.html',{'article_content' : article.content, 'article_title' : article.title})
         
 def write(request):
     if request.method == "GET":

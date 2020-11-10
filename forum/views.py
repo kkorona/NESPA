@@ -78,7 +78,7 @@ def edit(request, article_id):
         return redirect('/forum/post/' + str(article_id))
         
     if request.method == "GET":
-        return render(request, 'forum/edit.html')
+        return render(request, 'forum/edit.html',{'article_content' : article.content, 'article_title' : article.title})
         
 def write(request):
     if request.method == "GET":
