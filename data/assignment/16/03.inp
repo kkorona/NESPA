@@ -1,0 +1,12 @@
+10
+a o z
+a b c o p q w x y z $
+y z a b c o p q w x $
+x y a b c o p q w z $
+w x y z a b c o p q $
+q a b c o p w x y z $
+p a b c o q w x y z $
+o a b c p q w x y z $
+c a b o p q w x y z $
+b a c o p q w x y z $
+z a b c o p q w x y $
