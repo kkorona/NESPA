@@ -15,6 +15,7 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
     
     queries = ""
     resf = ""
+    raw_res = ""
     
     query_head = ""
     if ext == "cpp":
@@ -51,6 +52,7 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
                     results.append({'filename': fname,'caseRes': "CORRECT ANSWER",'exectime': str(timeDelta)})
                 else:
                     results.append({'filename': fname,'caseRes': "WRONG ANSWER",'exectime': str(timeDelta)})
+                    raw_res += res+"\n"
         except subprocess.CalledProcessError as e:
             if e.returncode == 124:
                 results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': timeout})
@@ -69,6 +71,9 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
         f.write(queries)
     with open(target_title + ".cres", "w") as f:
         f.write(resf)
+    if raw_res != "":
+        with open(target_title + ".wal", "w") as f:
+            f.write(raw_res)
     return results
        
     
