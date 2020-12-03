@@ -34,14 +34,12 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
         queries += query + "\n"
         res = ""
         try:
-            timeSt = time.time()
             res = subprocess.check_output(query, cwd=target_path, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
-            timeDelta = time.time() - timeSt
             with open(eval_output_file,"r") as f:
                 identical = True
                 for line1,line2 in zip(f.readlines(),re.split('[\n]+',res)):
-                    t1 = tokenize(line1.lstrip().rstrip())
-                    t2 = tokenize(line2.lstrip().rstrip())
+                    t1 = tokenize(line1.strip())
+                    t2 = tokenize(line2.strip())
                     if not t1 == t2:
                         identical = False
                 if identical:

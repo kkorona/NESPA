@@ -1,25 +1,9 @@
-import sys
-#2839
-n = int(input())
+import execute
 
-result = 0
-
-if n in [1,2,4,7]:
-    result = -1
-else:
-    while n>0:
-        if n>12:
-            result += 1
-            n -= 5
-        else:
-            if n%5==0:
-                result += n//5
-                n -= 5*(n//5)
-            elif n%3==0:
-                result += n//3
-                n -= 3*(n//3)
-            else:
-                result += 1
-                n -= 5
-
-print(result)
+s1 = "test"
+s2 = "test "
+Q1 = execute.tokenize(s1.strip())
+Q2 = execute.tokenize(s2.strip())
+print(Q1)
+print(Q2)
+print((Q1 == Q2))
