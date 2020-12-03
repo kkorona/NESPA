@@ -38,7 +38,7 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
             res = subprocess.check_output(query, cwd=target_path, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
             timeDelta = time.time() - timeSt
             res = res.strip()
-            l2 = resplit('[\n]+',res)
+            l2 = re.split('[\n]+',res)
             with open(eval_output_file,"r") as f:
                 l1 = f.readlines()
                 identical = True
