@@ -38,9 +38,9 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
             res = subprocess.check_output(query, cwd=target_path, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
             timeDelta = time.time() - timeSt
             res = res.strip()
-            l1 = f.readlines()
             l2 = resplit('[\n]+',res)
             with open(eval_output_file,"r") as f:
+                l1 = f.readlines()
                 identical = True
                 for line1,line2 in zip(l1,l2):
                     t1 = tokenize(line1.strip())
