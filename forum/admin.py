@@ -18,5 +18,5 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('title', 'author')
 
 @admin.register(Attach)
-class CommentAdmin(admin.ModelAdmin):
+class AttachAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'path', 'ext')
