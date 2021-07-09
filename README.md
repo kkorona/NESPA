@@ -1,4 +1,4 @@
-# VESPA(adVanced Evaluation System for Programming Assignment)
+# NESPA(advaNced Evaluation System for Programming Assignment)
 
 ## Specifications
 |대상|특징|
