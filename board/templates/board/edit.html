@@ -16,10 +16,13 @@
                         <label for="post_title" class="h4">제목</label>
                         <input id="post_title" name="post_title" class="form-control" type="text" value="{{article_title}}">
                     </div>
-                    <div class="w-100 d-inline-block mb-3">
+
+                    <div id="post_contents">{{article_content}}</div>
+
+                    <!-- <div class="w-100 d-inline-block mb-3">
                         <label for="post_contents" class="h4">내용</label>
                         <textarea class="form-control" id="post_contents" name="post_contents" rows="15">{{article_content}}</textarea>
-                    </div>
+                    </div> -->
                     <!--
                     <div class="w-100 d-inline-block">
                         <label for="attach_files" class="h4">첨부 파일</label>
@@ -44,6 +47,17 @@
 
 {% block scripts %}
 <script>
+    const { Editor } = toastui;
+    const { codeSyntaxHighlight } = Editor.plugin;
+
+    const editor = new Editor({
+        el: document.querySelector('#post_contents'),
+        height: '600px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical',
+        plugins: [[codeSyntaxHighlight, { highlighter: Prism }]]
+    });
+
     $("#sidebar_notice").attr('class','nav-link active'); 
     $(document).ready( function() {
  
@@ -66,6 +80,6 @@
         });
  
     });
-     
+
 </script>
 {% endblock %}
