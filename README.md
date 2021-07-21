@@ -4,7 +4,7 @@
 |대상|특징|
 |---|---|
 |Web Framework|Django|
-|DB|PostgreSQL|
+|DB|SQLite|
 
 ## 지원 기능
 
