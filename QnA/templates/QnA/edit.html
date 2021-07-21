@@ -18,7 +18,10 @@
                         <input id="post_title" name="post_title" class="form-control" type="text" value="{{article_title}}">
                     </div>
 
-                    <div id="post_contents">{{article_content}}</div>
+                    <div id="post_contents">
+                        <!-- 기존 DB의 text는 <pre>로 감싸면 됨 -->
+                        {{article_content}}
+                    </div>
 
                     <!-- <div class="w-100 d-inline-block mb-3">
                         <label for="post_contents" class="h4">내용</label>
