@@ -36,7 +36,8 @@ class PostDV(FormMixin, DetailView):
             context['user'] = 'anonymous'
         context['comments'] = self.object.comment_set.all()
         context['attachments'] = self.object.attach_set.all()
-        context['content'] = self.object.content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
+        context['content'] = self.object.content.replace('\\n', '\\\n')
+        context['content'] = context['content'].replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
         context['content'] = context['content'].replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
         return context
         
