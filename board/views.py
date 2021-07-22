@@ -36,7 +36,8 @@ class PostDV(FormMixin, DetailView):
             context['user'] = 'anonymous'
         context['comments'] = self.object.comment_set.all()
         context['attachments'] = self.object.attach_set.all()
-        context['content'] = self.object.content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n').replace("\"", "\'")
+        context['content'] = self.object.content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
+        context['content'] = context['content'].replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
         return context
         
     def post(self, request, *args, **kwargs):
@@ -112,7 +113,6 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
-        content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
         print(content)
 
         if title == "" or content == "":
