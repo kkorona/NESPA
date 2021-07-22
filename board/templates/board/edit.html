@@ -19,7 +19,6 @@
 
                     <div id="post_contents">
                         <!-- 기존 DB의 text는 <pre>로 감싸면 됨 -->
-                        {{article_content}}
                     </div>
 
                     <!-- <div class="w-100 d-inline-block mb-3">
@@ -58,6 +57,7 @@
         height: '600px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical',
+        initialValue: "{{ article_content|safe }}",
         plugins: [[codeSyntaxHighlight, { highlighter: Prism }]]
     });
 
