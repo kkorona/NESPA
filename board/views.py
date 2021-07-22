@@ -81,7 +81,11 @@ def edit(request, article_id):
         return redirect('/ds2020/post/' + str(article_id))
         
     if request.method == "GET":
-        return render(request, 'board/edit.html',{'article_content' : article.content, 'article_title' : article.title})
+        content = article.content
+        content = content.replace('\\n', '\\\n')
+        content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
+        content = content.replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
+        return render(request, 'board/edit.html',{'article_content' : content, 'article_title' : article.title})
     '''             
     files = request.FILES.getlist('attach_files')
     fs = FileSystemStorage()
