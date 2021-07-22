@@ -103,7 +103,8 @@
     el: document.querySelector('#viewer'),
     viewer:true ,
     height: '600px',
-    initialValue: `{{ object.update_counter }}{{ object.content|linebreaks }}`
+    initialValue: "{{ content|safe }}",
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   });
 
   $("#sidebar_notice").attr('class','nav-link active'); 
