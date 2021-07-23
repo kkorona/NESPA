@@ -59,7 +59,7 @@
         height: '600px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical',
-        initialValue: `{{ article_content|safe }}`,
+        initialValue: "{{ article_content|safe }}",
         plugins: [
             [codeSyntaxHighlight, { highlighter: Prism }],
             [colorSyntax]
@@ -99,7 +99,7 @@
 
     function writeArticle() {
         var editForm = document.edit_form;
-        var content = editor.getHTML();
+        var content = editor.getMarkdown();
         editForm.post_contents.value = content;
         editForm.submit();
     }

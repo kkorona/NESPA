@@ -92,7 +92,7 @@
 
     function writeArticle() {
         var writeForm = document.write_form;
-        var content = editor.getHTML();
+        var content = editor.getMarkdown();
         writeForm.post_contents.value = content;
         writeForm.submit();
     }
