@@ -103,7 +103,7 @@
     el: document.querySelector('#viewer'),
     viewer:true ,
     height: '600px',
-    initialValue: "{{ content|safe }}",
+    initialValue:  `{{ object.content|safe }}`,
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   });
 
