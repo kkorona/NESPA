@@ -50,12 +50,22 @@
       {% endif %}
       </div>
       <div class="w-75">
-        <ul>
+        <div class="wrap-table100">
+          <div class="table100">
+            <table>
+              <tbody>
         {% for attachment in attachments %}
-            <li><a href="/media/attached/board/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a></li>
+            <tr>
+              <td class="column1">
+                <a href="/media/attached/board/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
+              </td>
+            </tr>
         {% endfor %}
-        </ul>
-      </div>      
+              </tbody>
+            </table>
+          </div>
+        </div>      
+      </div>
       <div class="text-right w-75 p-3">
       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
       <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'board:edit' object.id %}'"> 수정 </button>

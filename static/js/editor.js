@@ -1,20 +1,17 @@
 $(document).ready( function() {
     // attach files
     $("input[type=file]").change(function () {
-        
         var fileInput = document.getElementById("attach_files");
         
         var files = fileInput.files;
         var file;
-        var result = "<ul>";
+        var result = `<div class="wrap-table100"><div class="table100"><table><tbody>`;
         
         for (var i = 0; i < files.length; i++) {
-            
             file = files[i];
-
-            result += "<li>" + (i+1) + ": " + file.name + "</li>\n";
+            result += `<tr><td class="column1">` + (i+1) + ": " + file.name + "</td></tr>";
         }
-        result += "</ul>";
+        result += `</tbody></table></div>`;
         document.getElementById("attach_files_list").innerHTML=result;
     });
 
