@@ -67,9 +67,9 @@
       </div>      
       <div class="text-right w-75 p-3">
       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-      <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'board:edit' object.id %}'"> 수정 </button>
+      <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'forum:edit' object.id %}'"> 수정 </button>
       {% endif %}
-	<button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'board:post_list' %}'"> 목록으로 </button>      
+	<button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'forum:post_list' %}'"> 목록으로 </button>      
       </div>      
       <div class="w-75">
         {% for comment in comments %}
@@ -112,7 +112,8 @@
     el: document.querySelector('#viewer'),
     viewer:true ,
     height: '600px',
-    initialValue: `{{ object.update_counter }}{{ object.content|linebreaks }}`
+    initialValue:  "{{ content|safe }}",
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   });
 
   $("#sidebar_forum").attr('class','nav-link active'); 
