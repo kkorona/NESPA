@@ -52,6 +52,7 @@
 <script>
     const { Editor } = toastui;
     const { codeSyntaxHighlight } = Editor.plugin;
+    const { colorSyntax } = Editor.plugin;
 
     const editor = new Editor({
         el: document.querySelector('#post_contents'),
@@ -59,7 +60,10 @@
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical',
         initialValue: `{{ article_content|safe }}`,
-        plugins: [[codeSyntaxHighlight, { highlighter: Prism }]]
+        plugins: [
+            [codeSyntaxHighlight, { highlighter: Prism }],
+            [colorSyntax]
+        ]
     });
 
     $("#sidebar_notice").attr('class','nav-link active'); 
@@ -81,6 +85,15 @@
             }
             result += "</ul>";
             document.getElementById("attach_files_list").innerHTML=result;
+        });
+
+        $("button.heading.toastui-editor-toolbar-icons").click(() => {
+                $('.toastui-editor-popup-add-heading h1').text("H1 24px");
+                $('.toastui-editor-popup-add-heading h2').text("H2 22px");
+                $('.toastui-editor-popup-add-heading h3').text("H3 20px");
+                $('.toastui-editor-popup-add-heading h4').text("H4 18px");
+                $('.toastui-editor-popup-add-heading h5').text("H5 16px");
+                $('.toastui-editor-popup-add-heading h6').text("H6 14px");
         });
     });
 
