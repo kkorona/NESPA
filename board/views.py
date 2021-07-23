@@ -36,9 +36,10 @@ class PostDV(FormMixin, DetailView):
             context['user'] = 'anonymous'
         context['comments'] = self.object.comment_set.all()
         context['attachments'] = self.object.attach_set.all()
-        context['content'] = self.object.content.replace('\\n', '\\\n')
-        context['content'] = context['content'].replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
-        context['content'] = context['content'].replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
+        #context['content'] = self.object.content
+        #context['content'] = self.object.content.replace('\\n', '\\\n')
+        #context['content'] = context['content'].replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
+        #context['content'] = context['content'].replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
         return context
         
     def post(self, request, *args, **kwargs):
@@ -82,9 +83,9 @@ def edit(request, article_id):
         
     if request.method == "GET":
         content = article.content
-        content = content.replace('\\n', '\\\n')
-        content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
-        content = content.replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
+        #content = content.replace('\\n', '\\\n')
+        #content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
+        #content = content.replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
         return render(request, 'board/edit.html',{'article_content' : content, 'article_title' : article.title})
     '''             
     files = request.FILES.getlist('attach_files')
