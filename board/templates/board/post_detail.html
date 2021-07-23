@@ -36,7 +36,9 @@
         </ul>
       </div>
 
-      <div class="w-75 border-dark"> <pre class="content">{{ object.update_counter }}{{ object.content|linebreaks }}</pre>
+      <div id="viewer" class="w-75 border-dark"> 
+        <!-- <pre class="content"></pre> -->
+        
       </div>
       <div class="w-75">
       {% if page_obj.has_previous %}
@@ -91,7 +93,20 @@
 {% endblock %}
 
 {% block scripts %}
+
+
 <script>
-    $("#sidebar_notice").attr('class','nav-link active'); 
+  const { Editor } = toastui;
+  const { codeSyntaxHighlight } = Editor.plugin;
+
+  const viewer = new Editor.factory({
+    el: document.querySelector('#viewer'),
+    viewer:true ,
+    height: '600px',
+    initialValue:  `{{ object.content|safe }}`,
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+  });
+
+  $("#sidebar_notice").attr('class','nav-link active'); 
 </script>
 {% endblock %}

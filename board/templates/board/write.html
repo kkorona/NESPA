@@ -8,7 +8,7 @@
             <h1 class="h2">공지사항 / Notices</h1>
         </div>
         <div class="w-75">
-            <form method='POST' enctype="multipart/form-data" action="">
+            <form method='POST' enctype="multipart/form-data" name="write_form" action="">
             {% csrf_token %}
             <div class="form-row w-100">            
                 <div class="form-group w-100">
@@ -16,10 +16,12 @@
                         <label for="post_title" class="h4">제목</label>
                         <input id="post_title" name="post_title" class="form-control" type="text">
                     </div>
-                    <div class="w-100 d-inline-block mb-3">
-                        <label for="post_contents" class="h4">내용</label>
-                        <textarea class="form-control" id="post_contents" name="post_contents" rows="15"></textarea>
-                    </div>
+
+                    <!-- new 에디터 부 -->
+                    <div id="post_contents"></div>
+                    <input id="post_content" name="post_contents" class="form-control" type="hidden">
+
+                    <br>
                     <div class="w-100 d-inline-block">
                         <label for="attach_files" class="h4">첨부 파일</label>
                         <input id="attach_files" name="attach_files" type="file" multiple />
@@ -28,10 +30,9 @@
                 </div>
             </div>
             <br>
-            
             <div class="float-sm-right">
-                <input type="submit" class="btn btn-primary btn-lg" value="등록">
-            <div>
+                <input type="button" class="btn btn-primary btn-lg" value="등록" onclick="writeArticle()">
+            </div>
             </form>
         </div>
     </main>
@@ -42,6 +43,17 @@
 
 {% block scripts %}
 <script>
+    const { Editor } = toastui;
+    const { codeSyntaxHighlight } = Editor.plugin;
+
+    const editor = new Editor({
+        el: document.querySelector('#post_contents'),
+        height: '600px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical',
+        plugins: [[codeSyntaxHighlight, { highlighter: Prism }]]
+    });
+
     $("#sidebar_notice").attr('class','nav-link active'); 
     $(document).ready( function() {
  
@@ -62,8 +74,14 @@
             result += "</ul>";
             document.getElementById("attach_files_list").innerHTML=result;
         });
- 
     });
+
+    function writeArticle() {
+        var writeForm = document.write_form;
+        var content = editor.getHTML();
+        writeForm.post_contents.value = content;
+        writeForm.submit();
+    }
      
 </script>
 {% endblock %}
