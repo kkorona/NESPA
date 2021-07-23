@@ -8,7 +8,7 @@
             <h1 class="h2">공지사항 / Notices</h1>
         </div>
         <div class="w-75">
-            <form method='POST' enctype="multipart/form-data" name="edit_form" action="">
+            <form method='POST' enctype="multipart/form-data" name="write_form" action="">
             {% csrf_token %}
             <div class="form-row w-100">            
                 <div class="form-group w-100">
@@ -98,10 +98,10 @@
     });
 
     function writeArticle() {
-        var editForm = document.edit_form;
+        var writeForm = document.write_form;
         var content = editor.getMarkdown();
-        editForm.post_contents.value = content;
-        editForm.submit();
+        writeForm.post_contents.value = content;
+        writeForm.submit();
     }
 
 </script>

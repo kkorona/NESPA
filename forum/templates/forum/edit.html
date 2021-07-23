@@ -8,7 +8,7 @@
             <h1 class="h2">자유게시판 / Forum</h1>
         </div>
         <div class="w-75">
-            <form method='POST' enctype="multipart/form-data" action="">
+            <form method='POST' enctype="multipart/form-data" name="write_form" action="">
             {% csrf_token %}
              <div class="form-row w-100">            
                 <div class="form-group w-100">
@@ -17,10 +17,10 @@
                         <input id="post_title" name="post_title" class="form-control" type="text" value="{{article_title}}">
                     </div>
 
-                    <id id="post_contents">
-                        <!-- 기존 DB의 text는 <pre>로 감싸면 됨 -->
-                        {{article_content}}
+                    <div id="post_contents">
+
                     </div>
+                    <input id="post_content" name="post_contents" class="form-control" type="hidden">
 
                     <!-- <div class="w-100 d-inline-block mb-3">
                         <label for="post_contents" class="h4">내용</label>
@@ -95,7 +95,13 @@
                 $('.toastui-editor-popup-add-heading h5').text("H5 16px");
                 $('.toastui-editor-popup-add-heading h6').text("H6 14px");
         });
- 
     });
+
+    function writeArticle() {
+        var writeForm = document.write_form;
+        var content = editor.getMarkdown();
+        writeForm.post_contents.value = content;
+        writeForm.submit();
+    }
 </script>
 {% endblock %}
