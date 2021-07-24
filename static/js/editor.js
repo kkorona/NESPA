@@ -1,6 +1,6 @@
 $(document).ready( function() {
     // attach files
-    $("input[type=file]").change(function () {
+    /*$("input[type=file]").change(function () {
         var fileInput = document.getElementById("attach_files");
         
         var files = fileInput.files;
@@ -13,7 +13,7 @@ $(document).ready( function() {
         }
         result += `</tbody></table></div>`;
         document.getElementById("attach_files_list").innerHTML=result;
-    });
+    });*/
 
     // edit heading toolbar pop-up text of toast ui editor
     $("button.heading.toastui-editor-toolbar-icons").click(() => {
@@ -32,4 +32,3 @@ function writeArticle() {
     writeForm.post_contents.value = content;
     writeForm.submit();
 }
-
