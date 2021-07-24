@@ -4,10 +4,11 @@
 <div class="container-fluid">
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <div id="main_center" class="w-75 m-auto">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">공지사항 / Notices</h1>
         </div>
-        <div class="w-75">
+        <div class="w-100">
             <form method='POST' enctype="multipart/form-data" name="write_form" action="">
             {% csrf_token %}
             <div class="form-row w-100">            
@@ -58,6 +59,7 @@
                     <input type="button" class="btn btn-primary btn-lg" value="등록" onclick="writeArticle()">
             </div>
             </form>
+        </div>
         </div>
     </main>
 </div>
