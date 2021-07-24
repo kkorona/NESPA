@@ -3,9 +3,6 @@ from board.models import Post, Attach
 
 # Register your models here.
 
-#admin.site.register(Post)
-#admin.site.register(Attach)
-
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'author', 'pub_date', 'mod_date')

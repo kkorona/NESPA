@@ -100,7 +100,6 @@ def edit(request, article_id):
             ext = filename.split(".")[-1]
             attach = Attach(parent=article, path = destination_path,name=fname, ext = ext)
             attach.save()
-
         return redirect('/ds2020/post/' + str(article_id))
         
     if request.method == "GET":
@@ -109,6 +108,7 @@ def edit(request, article_id):
         content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
         content = content.replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
         return render(request, 'board/edit.html',{'article_content' : content, 'article_title' : article.title, 'attachments' : article.attach_set.all()})
+
     '''             
     files = request.FILES.getlist('attach_files')
     fs = FileSystemStorage()
