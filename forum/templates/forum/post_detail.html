@@ -4,7 +4,16 @@
     .border-2 {
         border-width:3px !important;
     }
-    pre {
+    pre.content {
+        font-family : Courier New, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size : .875rem;
+        white-space: -moz-pre-wrap; /* Mozilla, supported since 1999 */
+        white-space: -pre-wrap; /* Opera */
+        white-space: -o-pre-wrap; /* Opera */
+        white-space: pre-wrap; /* CSS3 - Text module (Candidate Recommendation) http://www.w3.org/TR/css3-text/#white-space */
+        word-wrap: break-word; /* IE 5.5+ */
+    }
+    pre.comment {
         white-space: pre-wrap;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	font-size : 14px;
@@ -20,14 +29,18 @@
 <div class="container-fluid">
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom w-75 border-dark">
+      <div id="main_center" class="w-75 m-auto">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom  border-dark">
         <h2 class="">자유 게시판 / Forum</h2>
       </div>
-      <div class="pb-2 mb-3 w-75 border-dark">
-      <h3 class="font-weight-bold">{{ object.title }}</h4>
-      <h5>by <span class="text-primary">{{ object.author }}</span>, <span class="font-italic">{{ post.pub_date | date:"N j일, H:i" }}</span><br></h5>
+      <div class="pb-4 pt-2 mb-3 m-autoborder-dark post_info">
+        <h3 class="font-weight-bold">{{ object.title }}</h3>
+        <h5>
+          <span style="font-weight: 200;">{{ post.pub_date | date:"N j일 | H:i" }}</span>
+          <span class="text-primary" style="font-weight: 500;">{{ object.author }}</span>
+        </h5>
       </div>
-      <div class="w-75">
+      <div class="">
         <ul>
         {% for attachment in attachments %}
 	    {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
@@ -36,11 +49,11 @@
         {% endfor %}
         </ul>
       </div>
-      <div class="w-75 border-dark">
-      {{ object.update_counter }}
-      {{ object.content|linebreaks }}
+      <div id="viewer" class=" border-dark"> 
+        <!-- <pre class="content"></pre> -->
+        
       </div>
-      <div class="w-75">
+      <div >
       {% if page_obj.has_previous %}
        <a href="?page={{ object.get_previous.get_absolute_url}}" title="Prev">{{ object.get_previous</a>
       {% endif %}
@@ -48,29 +61,40 @@
       {% if page_obj.has_next %}
        <a href="?page={{ object.get_next.get_absolute_url }}" title="Next">{{ object.get_next }}</a>
       {% endif %}
-      </div>     
-      <div class="w-75">
-        <ul>
+      </div>
+      <div id="f-table">
+        <div class="wrap-table100">
+          <div class="table100">
+            <table>
+              <tbody>
         {% for attachment in attachments %}
-            <li><a href="/media/attached/forum/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a></li>
+            <tr>
+              <td class="column1">
+                <a href="/media/attached/board/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
+              </td>
+            </tr>
         {% endfor %}
-        </ul>
+              </tbody>
+            </table>
+          </div>
+        </div>      
+      </div>
+      <div class="text-right  p-3">
+      {% if request.session.usertype == "admin" or request.session.userid == object.author %}
+      <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'forum:edit' object.id %}'"> 수정 </button>
+      {% endif %}
+	<button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'forum:post_list' %}'"> 목록으로 </button>      
       </div>      
-      <div class="text-right w-75 p-3">
-        <button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'forum:post_list' %}'"> 목록으로 </button>
-      </div>      
-      <div class="w-75">
+      <div >
         {% for comment in comments %}
             <div class="border-top border-dark pt-2 pb-2 pl-2">
-                <div class="border-bottom border-left pb-1 pl-1 pr-1 d-inline-block comment-info-border">
-                    <span class="text-primary font-weight-bold">{{ comment.author }} ,</span> <span class="font-italic">{{ comment.pub_date | date:"N j일, H:i" }}</span><br>
-                </div>
-                <pre> {{ comment.text }} </pre>
+                <span class="text-primary font-weight-bold">{{ comment.author }} ,</span> <span class="font-italic">{{ comment.pub_date | date:"N j일, H:i" }}</span><br>
+                <span class="p-1"> {{ comment.text }} </span>
             </div>
         {% endfor %}
       </div>
-      {% if request.session.logged_in and request.session.usertype != 'unapproved' %}
-      <div class="w-75 border-top border-dark p-3">
+      {% if request.session.logged_in and request.session.usertype == 'unapproved' %}
+      <div class=" border-top border-dark p-3">
         <form method="post" action="">
             {% csrf_token %}
             <div class="form-row w-100">
@@ -85,6 +109,7 @@
         </form>
       </div>
       {% endif %}
+    </div>
     </main>
   </div>
 </div>
@@ -92,7 +117,20 @@
 {% endblock %}
 
 {% block scripts %}
+
+
 <script>
-    $("#sidebar_forum").attr('class','nav-link active'); 
+  const { Editor } = toastui;
+  const { codeSyntaxHighlight } = Editor.plugin;
+
+  const viewer = new Editor.factory({
+    el: document.querySelector('#viewer'),
+    viewer:true ,
+    height: '600px',
+    initialValue:  "{{ content|safe }}",
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+  });
+
+  $("#sidebar_forum").attr('class','nav-link active'); 
 </script>
 {% endblock %}

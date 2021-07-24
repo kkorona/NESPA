@@ -15,6 +15,7 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
     
     queries = ""
     resf = ""
+    raw_res = ""
     
     query_head = ""
     if ext == "cpp":
@@ -35,19 +36,23 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
         res = ""
         try:
             timeSt = time.time()
-            res = subprocess.check_output(query, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
+            res = subprocess.check_output(query, cwd=target_path, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
             timeDelta = time.time() - timeSt
+            res = res.strip()
+            l2 = re.split('[\n]+',res)
             with open(eval_output_file,"r") as f:
+                l1 = f.readlines()
                 identical = True
-                for line1,line2 in zip(f.readlines(),re.split('[\n]+',res)):
-                    t1 = tokenize(line1.lstrip().rstrip())
-                    t2 = tokenize(line2.lstrip().rstrip())
+                for line1,line2 in zip(l1,l2):
+                    t1 = tokenize(line1.strip())
+                    t2 = tokenize(line2.strip())
                     if not t1 == t2:
                         identical = False
                 if identical:
                     results.append({'filename': fname,'caseRes': "CORRECT ANSWER",'exectime': str(timeDelta)})
                 else:
                     results.append({'filename': fname,'caseRes': "WRONG ANSWER",'exectime': str(timeDelta)})
+                    raw_res += res+"\n"
         except subprocess.CalledProcessError as e:
             if e.returncode == 124:
                 results.append({'filename': fname,'caseRes': "TIME LIMIT EXCEEDED",'exectime': timeout})
@@ -66,6 +71,9 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
         f.write(queries)
     with open(target_title + ".cres", "w") as f:
         f.write(resf)
+    if raw_res != "":
+        with open(target_title + ".wal", "w") as f:
+            f.write(raw_res)
     return results
        
     

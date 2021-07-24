@@ -5,9 +5,9 @@ from django.urls import reverse
 # Create your models here.
 
 class Post(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, blank = False)
     author = models.CharField(max_length=50)
-    content = models.TextField('CONTENT', default='')
+    content = models.TextField('CONTENT', blank = False)
     pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
     mod_date = models.DateTimeField('MODIFY DATE', auto_now = True)
     post_hit = models.IntegerField()
@@ -42,7 +42,7 @@ class Post(models.Model):
 class Comment(models.Model):
     parent = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.CharField(max_length=50)
-    text = models.TextField()
+    text = models.TextField(blank=False)
     pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
     mod_date = models.DateTimeField('MODIFY DATE', auto_now = True)
     

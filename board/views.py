@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
@@ -6,6 +6,7 @@ from django.views.generic.dates import ArchiveIndexView, TodayArchiveView, YearA
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
 
 from board.models import Post, Comment, Attach
 from board.forms import CommentForm
@@ -35,6 +36,10 @@ class PostDV(FormMixin, DetailView):
             context['user'] = 'anonymous'
         context['comments'] = self.object.comment_set.all()
         context['attachments'] = self.object.attach_set.all()
+        context['content'] = self.object.content
+        context['content'] = self.object.content.replace('\\n', '\\\n')
+        context['content'] = context['content'].replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
+        context['content'] = context['content'].replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
         return context
         
     def post(self, request, *args, **kwargs):
@@ -53,6 +58,77 @@ class PostDV(FormMixin, DetailView):
         comment.save()
         return super(PostDV, self).form_valid(form)
 
+def edit(request, article_id):
+    username = request.session['username']
+    usertype = request.session['usertype']
+    userid = request.session['userid']
+    article = Post.objects.get(id=article_id)
+    
+    if usertype == "unapproved":
+        return HttpResponse('접근할 수 없는 기능입니다.')
+    
+    if usertype == "normal":
+        if article.author != username:
+            return HttpResponse('수정 권한이 없습니다.')
+    
+    if request.method == "POST":
+        title = request.POST.get('post_title',None)
+        content = request.POST.get('post_contents',None)
+        if title == "" or content == "":
+            return HttpResponse('제목 또는 내용이 비어있습니다.')
+        article.title = title
+        article.content = content
+        article.save()
+
+        files = request.FILES.getlist('attach_files')
+        existing_files = request.POST.getlist('existing_files')
+        for attach in article.attach_set.all():
+            if attach.id not in existing_files:
+                attach.delete()
+        
+        fs = FileSystemStorage()
+        for file in files:
+            fname = file.name
+            filename = fs.save(fname,file)
+            uploaded_file_url = fs.url(filename);
+            departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
+            destination_path = os.path.join(settings.BASE_DIR, 'media','attached','board',str(article.id))
+            if not os.path.exists(destination_path):
+                os.makedirs(destination_path)
+            destination_path = os.path.join(destination_path, fname)
+            shutil.move(departure_path,destination_path)
+            ext = filename.split(".")[-1]
+            attach = Attach(parent=article, path = destination_path,name=fname, ext = ext)
+            attach.save()
+
+        return redirect('/ds2020/post/' + str(article_id))
+        
+    if request.method == "GET":
+        content = article.content
+        content = content.replace('\\n', '\\\n')
+        content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
+        content = content.replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
+        return render(request, 'board/edit.html',{'article_content' : content, 'article_title' : article.title, 'attachments' : article.attach_set.all()})
+    '''             
+    files = request.FILES.getlist('attach_files')
+    fs = FileSystemStorage()
+    for file in files:
+        fname = file.name
+        filename = fs.save(fname,file)
+        uploaded_file_url = fs.url(filename);
+        departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
+        destination_path = os.path.join(settings.BASE_DIR, 'media','attached','board',str(article.id))
+        if not os.path.exists(destination_path):
+            os.makedirs(destination_path)
+        destination_path = os.path.join(destination_path, fname)
+        shutil.move(departure_path,destination_path)
+        ext = filename.split(".")[-1]
+        attach = Attach(parent=article, path = destination_path,name=fname, ext = ext)
+        attach.save()
+        
+    return redirect('board:post_list')
+    '''
+
 def write(request):
     if request.method == "GET":
         return render(request, 'board/write.html')
@@ -65,11 +141,14 @@ def write(request):
             
         title = request.POST.get('post_title',None)
         content = request.POST.get('post_contents',None)
+        print(content)
+
+        if title == "" or content == "":
+            return HttpResponse('제목 또는 내용이 비어있습니다.')
         author = username
         article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
 
-                     
         files = request.FILES.getlist('attach_files')
         fs = FileSystemStorage()
         for file in files:
