@@ -120,7 +120,7 @@
                     <span class="action-icons">
                       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
                       <a href="#" data-abc="true"><i class="fa fa-pencil"></i></a>
-                      <a href="#" data-abc="true"><i class="fa fa-trash"></i></a> 
+                      <a href='deleteComment/{{comment.id}}' data-abc="true"><i class="fa fa-trash"></i></a> 
                       {% endif %}
                       <a href="#" data-abc="true"><i class="fa fa-comment"></i></a> 
                     </span> 
