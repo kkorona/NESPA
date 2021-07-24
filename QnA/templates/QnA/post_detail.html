@@ -117,7 +117,7 @@
               <div class="d-flex flex-row comment-row">
                 <div class="p-2"><span class="round"><div width="50"></div></div>
                 <div class="comment-text w-100">
-                  <h5 class="mb-0">{{ comment.author }}</h5>
+                  <h5 id="comment-author" class="mb-0">{{ comment.author }}</h5>
                   <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
                     <span class="action-icons">
                       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
