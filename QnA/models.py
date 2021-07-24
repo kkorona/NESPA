@@ -39,9 +39,12 @@ class Post(models.Model):
         self.save()
         return ''
 
+    def comments_count(self):
+        return len(self.comment_set.filter(deleted=False))
+
 class Comment(models.Model):
     parent = models.ForeignKey(Post, on_delete=models.CASCADE)
-    retweet = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    retweet = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     deleted = models.BooleanField(default=False)
     author = models.CharField(max_length=50)
     text = models.TextField()
