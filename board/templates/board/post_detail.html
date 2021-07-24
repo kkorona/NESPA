@@ -33,20 +33,14 @@
       <div>
         <ul>
         {% for attachment in attachments %}
-	    {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
+          {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
             <img src="/media/attached/board/{{object.id}}/{{attachment.name}}">
-	    {% endif %}
+          {% endif %}
         {% endfor %}
         </ul>
       </div>
 
-      
-
-      <div id="viewer" class= "mh-5 pt-3 pb-4 m-auto border-dark"> 
-        <!-- <pre class="content"></pre> -->
-      </div>
-
-      <hr>
+      <div id="viewer" class= "mh-5 pt-3 pb-4 m-auto border-dark"></div><hr>
 
       <div>
       {% if page_obj.has_previous %}
@@ -79,11 +73,11 @@
         </div>      
       </div>
       {% endif %}
-      <div class="text-right p-3">
-      {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-      <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'board:edit' object.id %}'"> 수정 </button>
-      {% endif %}
-	<button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'board:post_list' %}'"> 목록으로 </button>      
+      <div class="text-right p-3 d-flex justify-content-end">
+        {% if request.session.usertype == "admin" or request.session.userid == object.author %}
+        <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'board:edit' object.id %}'"> 수정 </button>
+        {% endif %}
+        <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'board:post_list' %}'"> 목록으로 </button>      
       </div>      
       <div class="">
         {% for comment in comments %}
