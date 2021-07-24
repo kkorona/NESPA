@@ -121,7 +121,7 @@
                     <span class="action-icons">
                       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
                       <a href="#" data-abc="true"><i class="fa fa-pencil"></i></a>
-                      <a href='deleteComment/{{comment.id}}' data-abc="true"><i class="fa fa-trash"></i></a> 
+                      <a onclick="deleteComment({{comment.id}})" data-abc="true"><i class="fa fa-trash"></i></a> 
                       {% endif %}
                       <a href="#" data-abc="true"><i class="fa fa-comment"></i></a> 
                     </span> 
@@ -174,5 +174,13 @@
   });
   
   $("#sidebar_qna").attr('class','nav-link active'); 
+
+  function deleteComment(comment_id) {
+    var is_delete = confirm('선택한 댓글을 삭제하시겠습니까?');
+    if (is_delete) {
+      location.href = `deleteComment/${comment_id}`; 
+      alert('삭제되었습니다.');
+    }
+  }
 </script>
 {% endblock %}
