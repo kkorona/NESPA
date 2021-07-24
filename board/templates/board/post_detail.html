@@ -41,7 +41,7 @@
       </div>
 
       
-      <div id="viewer" class= mh-5 pt-3 pb-4 m-auto border-dark"> 
+      <div id="viewer" class= "mh-5 pt-3 pb-4 m-auto border-dark"> 
         <!-- <pre class="content"></pre> -->
       </div>
 
@@ -82,7 +82,7 @@
       {% endif %}
 	<button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'board:post_list' %}'"> 목록으로 </button>      
       </div>      
-      <div class=">
+      <div class="">
         {% for comment in comments %}
             <div class="border-top border-dark pt-2 pb-2 pl-2">
                 <span class="text-primary font-weight-bold">{{ comment.author }} ,</span> <span class="font-italic">{{ comment.pub_date | date:"N j일, H:i" }}</span><br>
@@ -91,7 +91,7 @@
         {% endfor %}
       </div>
       {% if request.session.logged_in and request.session.usertype == 'unapproved' %}
-      <div class= border-top border-dark p-3">
+      <div class= "border-top border-dark p-3">
         <form method="post" action="">
             {% csrf_token %}
             <div class="form-row w-100">
