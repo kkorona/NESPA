@@ -115,6 +115,10 @@ body {
   margin-bottom: 50px;
 }
 
+#viewer .toastui-editor-contents p, toastui-editor-main p{
+  font-size: 15px !important;
+}
+
 #main_center{
   max-width: 800px;
 }
