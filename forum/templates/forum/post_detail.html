@@ -101,10 +101,12 @@
                 <div class="comment-text w-100">
                   <h5 class="mb-0">{{ comment.author }}</h5>
                   <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
-                    <span class="action-icons"> 
-                      <a href="#" data-abc="true"><i class="fa fa-pencil"></i></a> 
-                      <a href="#" data-abc="true"><i class="fa fa-comment"></i></a> 
+                    <span class="action-icons">
+                      {% if request.session.usertype == "admin" or request.session.userid == object.author %}
+                      <a href="#" data-abc="true"><i class="fa fa-pencil"></i></a>
                       <a href="#" data-abc="true"><i class="fa fa-trash"></i></a> 
+                      {% endif %}
+                      <a href="#" data-abc="true"><i class="fa fa-comment"></i></a> 
                     </span> 
                     <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
                   </div>
