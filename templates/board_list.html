@@ -237,9 +237,9 @@
                 <tr>
                 <td class="text-center">{{ post.id }}</td>
                 <td><a href="{{ post.get_absolute_url }}">{{ post.title }}
-                {% if post.comment_set.count > 0 %}
+                {% if post.comments_count > 0 %}
                 <span class="text-comment-info">
-                [{{ post.comment_set.count }}]
+                [{{ post.comments_count }}]
                 </span>
                 {% endif %}
                 </a></td>
