@@ -57,6 +57,7 @@
        <a href="?page={{ object.get_next.get_absolute_url }}" title="Next">{{ object.get_next }}</a>
       {% endif %}
       </div>
+      {% if attachments %}
       <div id="f-table">
         <div class="wrap-table100">
           <div class="table100">
@@ -77,6 +78,7 @@
           </div>
         </div>      
       </div>
+      {% endif %}
       <div class="text-right p-3">
       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
       <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'board:edit' object.id %}'"> 수정 </button>
