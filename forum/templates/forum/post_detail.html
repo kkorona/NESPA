@@ -112,6 +112,7 @@
           <h4 class="card-title">댓글 목록</h4>
           <div class="comment-widgets m-b-20">
             {% for comment in comments %}
+              {% if not comment.deleted %}
               <div class="d-flex flex-row comment-row">
                 <div class="p-2"><span class="round"><div width="50"></div></div>
                 <div class="comment-text w-100">
@@ -129,6 +130,7 @@
                   <p class="pt-3 m-b-5 m-t-10">{{ comment.text }}</p>
                 </div>
               </div>
+              {% endif %}
             {% endfor %}
           </div>
         </div>
@@ -178,7 +180,6 @@
     var is_delete = confirm('선택한 댓글을 삭제하시겠습니까?');
     if (is_delete) {
       location.href = `deleteComment/${comment_id}`; 
-      alert('삭제되었습니다.');
     }
   }
 </script>
