@@ -18,28 +18,51 @@
                         <input id="post_title" name="post_title" class="form-control" type="text" value="{{article_title}}">
                     </div>
 
-                    <div id="post_contents">
-                        <!-- 기존 DB의 text는 <pre>로 감싸면 됨 -->
-                    </div>
+                    <div id="post_contents"></div>
                     <input id="post_content" name="post_contents" class="form-control" type="hidden">
 
-                    <!-- <div class="w-100 d-inline-block mb-3">
-                        <label for="post_contents" class="h4">내용</label>
-                        <textarea class="form-control" id="post_contents" name="post_contents" rows="15">{{article_content}}</textarea>
-                    </div> -->
-                    <!--
+                    <br>
                     <div class="w-100 d-inline-block">
-                        <label for="attach_files" class="h4">첨부 파일</label>
-                        <input id="attach_files" name="attach_files" type="file" multiple />
-                        <div id="attach_files_list"></div>
+                        <!--<label for="attach_files" class="h4">첨부 파일</label>
+                        <input id="attach_files" name="attach_files" type="file" multiple />-->
+                        <div id="f-table">
+                            <div class="wrap-table100">
+                                <div class="table100">
+                                    <table>
+                                         <thead>
+                                            <tr>
+                                                <th>
+                                                    첨부 파일
+                                                    <button id="add_files" type="button">추가</button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for attachment in attachments %}
+                                            <tr>
+                                                <td class="column1">
+                                                    <a href="/media/attached/board/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
+                                                    <input name="existing_files" type="hidden" value="{{attachment.id}}"/>
+                                                    <button name='delete_button' type='button'>삭제</button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            <tr>
+                                                <td class="column1">
+                                                    <input name="attach_files" type="file"/>
+                                                    <button name='delete_button' type='button'>삭제</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    -->
                 </div>
-            </div>
-            <br>
-            
-            <div class="float-sm-right">
-                <input type="button" class="btn btn-primary btn-lg" value="등록" onclick="writeArticle()">
+                <br>
+                <div class="float-sm-right">
+                    <input type="button" class="btn btn-primary btn-lg" value="등록" onclick="writeArticle()">
             </div>
             </form>
         </div>
@@ -69,6 +92,16 @@
     });
 
     $("#sidebar_notice").attr('class','nav-link active'); 
+
+    $("#add_files").click(function() {
+        $("table > tbody:last").append("<tr><td class='column1'><input name='attach_files' type='file'/>\
+            <button name='delete_button' type='button'>삭제</button></td>");
+    });
+
+    $('table').on('click', 'button[name="delete_button"]', function(e){
+        //alert($(this).closest('input').value)
+        $(this).closest('tr').remove()
+    });
 </script>
 <script src="/static/js/editor.js"></script>
 {% endblock %}
