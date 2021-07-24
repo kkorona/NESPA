@@ -82,8 +82,9 @@ def edit(request, article_id):
 
         files = request.FILES.getlist('attach_files')
         existing_files = request.POST.getlist('existing_files')
+        print(existing_files)
         for attach in article.attach_set.all():
-            if attach.id not in existing_files:
+            if str(attach.id) not in existing_files:
                 attach.delete()
         
         fs = FileSystemStorage()
