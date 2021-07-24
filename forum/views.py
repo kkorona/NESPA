@@ -34,7 +34,8 @@ class PostDV(FormMixin, DetailView):
             context['user'] = self.request.session['userid']
         else:
             context['user'] = 'anonymous'
-        context['comments'] = self.object.comment_set.all()
+        #context['comments'] = self.object.comment_set.all()
+        context['comments'] = sorted(list(self.object.comment_set.all()), key=lambda x: x.pub_date, reverse=False)
         context['attachments'] = self.object.attach_set.all()
         context['content'] = self.object.content
         context['content'] = self.object.content.replace('\\n', '\\\n')
