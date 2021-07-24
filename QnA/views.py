@@ -61,7 +61,9 @@ class PostDV(FormMixin, DetailView):
 
 def deleteComment(request, article_id, comment_id):
     comments = Comment.objects.filter(id = comment_id)
-    if len(comments): comments[0].delete()
+    if len(comments): 
+        comments[0].deleted = True
+        comments[0].save()
     return redirect('/qna/post/' + str(article_id))
 
 def edit(request, article_id):
