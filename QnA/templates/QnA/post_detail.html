@@ -83,39 +83,33 @@
       <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'qna:edit' object.id %}'"> 수정 </button>
       {% endif %}
       <button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'qna:post_list' %}'"> 목록으로 </button>      
-      </div>      
-      <div class="">
+      </div> 
 
-            <div>
-              <div >
-                  <div class="cards">
-                      <div class="card-body">
-                          <h4 class="card-title">댓글 목록</h4>
-                      </div>
-                      <div class="comment-widgets m-b-20">
-                        {% for comment in comments %}
-                          <div class="d-flex flex-row comment-row">
-                              <div class="p-2"><span class="round"><div width="50"></div></div>
-                              <div class="comment-text w-100">
-                                  <h5 class="mb-0">{{ comment.author }}</h5>
-                                  <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
-                                    <span class="action-icons"> 
-                                      <a href="#" data-abc="true"><i class="fa fa-pencil"></i></a> 
-                                      <a href="#" data-abc="true"><i class="fa fa-comment"></i></a> 
-                                      <a href="#" data-abc="true"><i class="fa fa-trash"></i></a> 
-                                    </span> 
-                                    <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
-                                  </div>
-                                  <p class="pt-3 m-b-5 m-t-10">{{ comment.text }}</p>
-                              </div>
-                          </div>
-                        {% endfor %}
-                      </div>
+      <div class="cards">
+        <div class="card-body p-0">
+          <h4 class="card-title">댓글 목록</h4>
+          <div class="comment-widgets m-b-20">
+            {% for comment in comments %}
+              <div class="d-flex flex-row comment-row">
+                <div class="p-2"><span class="round"><div width="50"></div></div>
+                <div class="comment-text w-100">
+                  <h5 class="mb-0">{{ comment.author }}</h5>
+                  <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
+                    <span class="action-icons"> 
+                      <a href="#" data-abc="true"><i class="fa fa-pencil"></i></a> 
+                      <a href="#" data-abc="true"><i class="fa fa-comment"></i></a> 
+                      <a href="#" data-abc="true"><i class="fa fa-trash"></i></a> 
+                    </span> 
+                    <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
                   </div>
+                  <p class="pt-3 m-b-5 m-t-10">{{ comment.text }}</p>
+                </div>
               </div>
+            {% endfor %}
           </div>
-        
+        </div>
       </div>
+      
       {% if request.session.logged_in and request.session.usertype == 'unapproved' %}
       <div class=" border-top border-dark p-3">
         <form method="post" action="">
