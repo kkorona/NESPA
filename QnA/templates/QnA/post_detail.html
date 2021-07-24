@@ -49,10 +49,11 @@
         {% endfor %}
         </ul>
       </div>
+
       <div id="viewer" class=" border-dark"> 
         <!-- <pre class="content"></pre> -->
-        
       </div>
+
       <div>
       {% if page_obj.has_previous %}
         <a href="?page={{ object.get_previous.get_absolute_url}}" title="Prev">{{ object.get_previous</a>
@@ -63,26 +64,25 @@
       {% endif %}
       </div>
       <div id="f-table">
-          <div class="table100">
-            <table>
-              <tbody>
-        {% for attachment in attachments %}
-            <tr>
-              <td class="column1">
-                <a href="/media/attached/board/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
-              </td>
-            </tr>
-        {% endfor %}
-              </tbody>
-            </table>
-          </div>
+        <div class="table100">
+          <table>
+            <tbody>
+      {% for attachment in attachments %}
+          <tr>
+            <td class="column1">
+              <a href="/media/attached/board/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
+            </td>
+          </tr>
+      {% endfor %}
+            </tbody>
+          </table>
         </div>      
       </div>      
       <div class="text-right  p-3">
       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
       <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'qna:edit' object.id %}'"> 수정 </button>
       {% endif %}
-  <button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'qna:post_list' %}'"> 목록으로 </button>      
+      <button class="btn btn-secondary btn-lg pull-right" onclick="location.href='{% url 'qna:post_list' %}'"> 목록으로 </button>      
       </div>      
       <div class="">
         {% for comment in comments %}

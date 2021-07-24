@@ -114,3 +114,7 @@ body {
   min-height: 300px;
   margin-bottom: 50px;
 }
+
+#main_center{
+  max-width: 800px;
+}
