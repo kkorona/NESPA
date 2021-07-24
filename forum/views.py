@@ -59,6 +59,11 @@ class PostDV(FormMixin, DetailView):
         comment.save()
         return super(PostDV, self).form_valid(form)
 
+def deleteComment(request, article_id, comment_id):
+    comments = Comment.objects.filter(id = comment_id)
+    if len(comments): comments[0].delete()
+    return redirect('/forum/post/' + str(article_id))
+
 def edit(request, article_id):
     username = request.session['username']
     usertype = request.session['usertype']
