@@ -2,6 +2,8 @@ from django.contrib import admin
 from board.models import Post, Attach
 
 # Register your models here.
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
