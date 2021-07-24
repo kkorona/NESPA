@@ -5,7 +5,7 @@ $(document).ready( function() {
         
         var files = fileInput.files;
         var file;
-        var result = `<div class="wrap-table100"><div class="table100"><table><tbody>`;
+        var result = `<div class="wrap-table100"><div class="table100"><table><thead><tr><th>Files</th></tr></thead><tbody>`;
         
         for (var i = 0; i < files.length; i++) {
             file = files[i];

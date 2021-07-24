@@ -19,14 +19,17 @@
 <div class="container-fluid">
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom w-75 border-dark">
-        <h2 class="">공지사항 / Notices</h2>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom w-75 border-dark m-auto">
+        <h2>공지사항 / Notices</h2>
       </div>
-      <div class="pb-2 mb-3 w-75 border-dark">
-      <h3 class="font-weight-bold">{{ object.title }}</h4>
-      <h5>by <span class="text-primary">{{ object.author }}</span>, <span class="font-italic">{{ post.pub_date | date:"N j일, H:i" }}</span><br></h5>
+      <div class="pb-2 pt-4 mb-3 w-75 m-auto m-autoborder-dark post_info">
+        <h3 class="font-weight-bold">{{ object.title }}</h3>
+        <h5>
+          <span class="text-primary" style="font-weight: 500;">{{ object.author }}</span>
+          <span style="font-weight: 200;">{{ post.pub_date | date:"N j일 | H:i" }}</span>
+        </h5>
       </div>
-	<div class="w-75">
+      <div class="w-75 m-auto">
         <ul>
         {% for attachment in attachments %}
 	    {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
@@ -36,23 +39,29 @@
         </ul>
       </div>
 
-      <div id="viewer" class="w-75 border-dark"> 
+      
+      <div id="viewer" class="w-75 mh-5 pt-3 pb-4 m-auto border-dark"> 
         <!-- <pre class="content"></pre> -->
-        
       </div>
+
+      <hr class="w-75 m-auto"></hr>
+
       <div class="w-75">
       {% if page_obj.has_previous %}
-       <a href="?page={{ object.get_previous.get_absolute_url}}" title="Prev">{{ object.get_previous</a>
+       <a href="?page={{ object.get_previous.get_absolute_url}}" title="Prev">{{ object.get_previous}} </a>
       {% endif %}
       
       {% if page_obj.has_next %}
        <a href="?page={{ object.get_next.get_absolute_url }}" title="Next">{{ object.get_next }}</a>
       {% endif %}
       </div>
-      <div class="w-75">
+      <div class="w-75 m-auto">
         <div class="wrap-table100">
           <div class="table100">
             <table>
+              <thead>
+                <tr><th>첨부 파일</th></tr>
+              </thead>
               <tbody>
         {% for attachment in attachments %}
             <tr>
@@ -66,7 +75,7 @@
           </div>
         </div>      
       </div>
-      <div class="text-right w-75 p-3">
+      <div class="text-right w-75  m-auto p-3">
       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
       <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'board:edit' object.id %}'"> 수정 </button>
       {% endif %}
