@@ -28,7 +28,7 @@ class PostDV(FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(PostDV, self).get_context_data(**kwargs)
         context['form'] = CommentForm(initial={
-            'text' : '댓글을 입력해주세요.',
+            'text' : '',
         })
         if 'logged_in' in self.request.session:
             context['user'] = self.request.session['userid']
