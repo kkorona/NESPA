@@ -53,10 +53,16 @@ class PostDV(FormMixin, DetailView):
             return self.form_invalid(form)
             
     def form_valid(self, form):
-        comment = form.save(commit=False)
-        comment.parent = get_object_or_404(Post, pk=self.object.pk)
-        comment.author = self.request.session['userid']
-        comment.save()
+        comment_id = int(self.request.POST.get('comment_id'))
+        if comment_id == -1:
+            comment = form.save(commit=False)
+            comment.parent = get_object_or_404(Post, pk=self.object.pk)
+            comment.author = self.request.session['userid']
+            comment.save()
+        else:
+            comment = Comment.objects.filter(id=comment_id)[0]
+            comment.text = self.request.POST.get('text')
+            comment.save()
         return super(PostDV, self).form_valid(form)
 
 def deleteComment(request, article_id, comment_id):

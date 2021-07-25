@@ -1,0 +1,15 @@
+{% extends 'post_detail.html' %}
+<div class="w-100">
+  <form name="comment_form" method="post" action="">
+    {% csrf_token %}
+    <h5>댓글 달기</h5>
+    <div class="form-outline">
+      {{form.text}}
+    </div>
+    <input type="hidden" name="comment_id" value=-1>
+    <div class="d-flex justify-content-end mt-3">
+      <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">댓글 등록</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
