@@ -122,7 +122,7 @@
                   <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
                     <span class="action-icons">
                       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-                      <a href="#" data-abc="true"><i class="fa fa-pencil"></i></a>
+                      <a data-abc="true"><i id={{comment.id}} class="fa fa-pencil"></i></a>
                       <a onclick="deleteComment({{comment.id}})" data-abc="true"><i class="fa fa-trash"></i></a> 
                       {% endif %}
                       <a href="#" data-abc="true"><i class="fa fa-comment"></i></a> 
@@ -167,5 +167,20 @@
       location.href = `deleteComment/${comment_id}`; 
     }
   }
+
+  $('a').on('click', 'i[class="fa fa-pencil"]', function(e){
+    var comment = $(this).closest('div').parent().children().closest('p');
+    $('form').remove();
+    $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
+                                            {% csrf_token %}
+                                              {{form.text}}
+                                              <input type="hidden" name="comment_id" value=-1><br>
+                                              <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">수정</button>
+                                            </form>`);
+    $('textarea').val(comment.text());
+    $("input[name='comment_id']").val($(this).attr('id'));
+    comment.remove();
+    $(this).remove();
+  });
 </script>
 {% endblock %}
