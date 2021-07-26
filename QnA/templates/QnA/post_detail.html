@@ -30,8 +30,8 @@
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div id="main_center" class="w-75 m-auto">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom w-75 border-dark">
-        <h2 class="">질문 게시판 / Q&amp;A</h2>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom  border-dark">
+        <h2 class="">자유 게시판 / Forum</h2>
       </div>
       <div class="pb-4 pt-2 mb-3 m-autoborder-dark post_info">
         <h3 class="font-weight-bold">{{ object.title }}</h3>
@@ -40,27 +40,26 @@
           <span class="text-primary" style="font-weight: 500;">{{ object.author }}</span>
         </h5>
       </div>
-      <div class="w-75">
+      <div class="">
         <ul>
         {% for attachment in attachments %}
-	    {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
-            <img src="/media/attached/qna/{{object.id}}/{{attachment.name}}">
-	    {% endif %}
+      {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
+            <img src="/media/attached/forum/{{object.id}}/{{attachment.name}}">
+      {% endif %}
         {% endfor %}
         </ul>
       </div>
-
       <div id="viewer" class=" border-dark"> 
         <!-- <pre class="content"></pre> -->
+        
       </div>
-
-      <div>
+      <div >
       {% if page_obj.has_previous %}
-        <a href="?page={{ object.get_previous.get_absolute_url}}" title="Prev">{{ object.get_previous}}</a>
+       <a href="?page={{ object.get_previous.get_absolute_url}}" title="Prev">{{ object.get_previous</a>
       {% endif %}
       
       {% if page_obj.has_next %}
-        <a href="?page={{ object.get_next.get_absolute_url }}" title="Next">{{ object.get_next }}</a>
+       <a href="?page={{ object.get_next.get_absolute_url }}" title="Next">{{ object.get_next }}</a>
       {% endif %}
       </div>
       {% if attachments %}
@@ -84,14 +83,14 @@
           </div>
         </div>      
       </div>
-      {% endif %}  
-
+      {% endif %}
+      
       <div class="text-right p-3 d-flex justify-content-end">
         {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-        <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'qna:edit' object.id %}'"> 수정 </button>
+        <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'forum:edit' object.id %}';"> 수정 </button>
         {% endif %}
-        <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'qna:post_list' %}'"> 목록으로 </button>      
-      </div>
+        <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'forum:post_list' %}';"> 목록으로 </button>      
+      </div>  
 
       <div class="cards">
         <div class="card-body p-0">
@@ -100,13 +99,12 @@
             <form name="comment_form" method="post" action="">
               {% csrf_token %}
               <h5>댓글 달기</h5>
-              <div class="form-outline">
-                {{form.text}}
-                <input type="hidden" name="comment_id" value=-1>
-                <input type="hidden" name="retweet_id" value=-1>
-              </div>
+              <div id="comment_contents"></div>
+              <input type="hidden" name="text" value="">
+              <input type="hidden" name="comment_id" value=-1>
+              <input type="hidden" name="retweet_id" value=-1>
               <div class="d-flex justify-content-end mt-3">
-                <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">댓글 등록</button>
+                <button type="button" class="btn btn-primary btn-lg pull-right" id="add_comment" onclick="writeComment()">댓글 등록</button>
               </div>
             </form>
           </div>
@@ -121,35 +119,35 @@
                 <div class="comment-text w-100">
                   <h5 class="mb-0">{{ comment.author }}</h5>
                   <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
-                    <span class="action-icons">
+                    <span class="action-icons" id={{comment.id}} content="{{comment.text}}"> 
                       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-                      <a data-abc="true"><i id={{comment.id}} name="display" class="fa fa-pencil"></i></a>
-                      <a onclick="deleteComment({{comment.id}})" data-abc="true"><i class="fa fa-trash"></i></a> 
+                      <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
+                      <a data-abc="true"><i class="fa fa-trash"></i></a> 
                       {% endif %}
-                      <a data-abc="true"><i id={{comment.id}} name="display" class="fa fa-comment"></i></a> 
+                      <a data-abc="true"><i name="display" class="fa fa-comment"></i></a> 
                     </span> 
                     <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
                   </div>
-                  <p class="pt-3 m-b-5 m-t-10">{{ comment.text }}</p>
+                  <div content="{{comment.text}}" class="comment"></div>
                 </div>
               </div>
+
               {% for retweet in comment.comment_set.all|dictsort:"pub_date" %}
                 {% if not retweet.deleted %}
                 <div class="d-flex flex-row comment-row">
                   <div class="p-2"><span class="round"><div width="50"></div></div>
                   <div class="comment-text w-100">
-                    <h5 class="mb-0">{{ retweet.author }}</h5>
+                    <h5 class="mb-0">&#9; &#8627; {{ retweet.author }}</h5>
                     <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
-                      <span class="action-icons">
+                      <span class="action-icons" id={{retweet.id}} content="{{retweet.text}}"> 
                         {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-                        <a data-abc="true"><i id={{retweet.id}} name="display" class="fa fa-pencil"></i></a>
-                        <a onclick="deleteComment({{retweet.id}})" data-abc="true"><i class="fa fa-trash"></i></a> 
+                        <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
+                        <a data-abc="true"><i class="fa fa-trash"></i></a> 
                         {% endif %}
                       </span> 
                       <span class="date">{{ retweet.pub_date | date:"N j일, H:i" }}</span> 
                     </div>
-                      <re style="display:inline-block">&#9; &#8627; </re>
-                      <p style="display:inline-block" class="pt-3 m-b-5 m-t-10">{{ retweet.text }}</p>
+                      <div content="{{retweet.text}}" class="comment"></div>
                   </div>
                 </div>
                 {% endif %}
@@ -172,6 +170,18 @@
 <script>
   const { Editor } = toastui;
   const { codeSyntaxHighlight } = Editor.plugin;
+  const { colorSyntax } = Editor.plugin;
+
+  var editor = new Editor({
+      el: document.querySelector('#comment_contents'),
+      height: '300px',
+      initialEditType: 'wysiwyg',
+      previewStyle: 'vertical',
+      plugins: [
+          [codeSyntaxHighlight, { highlighter: Prism }],
+          [colorSyntax]
+      ]
+  });
 
   const viewer = new Editor.factory({
     el: document.querySelector('#viewer'),
@@ -180,90 +190,132 @@
     initialValue:  "{{ content|safe }}",
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   });
-  
-  $("#sidebar_qna").attr('class','nav-link active'); 
 
-  function deleteComment(comment_id) {
+  $(".comment").each(function() {
+      var tmp = Editor.factory({
+          el : this,
+          viewer: true ,
+          height: '300px',
+          initialValue:  $(this).attr('content'),
+          plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+      });
+  });
+
+  $("#sidebar_qna").attr('class','nav-link active');
+
+
+  $('a').on('click', 'i[class="fa fa-trash"]', function(e){
     var is_delete = confirm('선택한 댓글을 삭제하시겠습니까?');
     if (is_delete) {
-      location.href = `deleteComment/${comment_id}`; 
+      location.href = `deleteComment/${$(this).closest('span').attr('id')}`; 
     }
+  });
+
+  function writeComment() {
+    var writeForm = document.comment_form;
+    var content = editor.getMarkdown();
+    writeForm.text.value = content;
+    writeForm.submit();
   }
 
   $('a').on('click', 'i[class="fa fa-pencil"]', function(e){
-    $("p[hidden='hidden']").attr('hidden', false);
+    var content = ""
     if ($(this).attr('name') == 'display') {
-      $("p[hidden='hidden']").attr('hidden', false);
-      var comment = $(this).closest('div').parent().children().closest('p');
+      $(this).attr('name', 'modify');
       $('form').remove();
+      $(this).parent().parent().parent().siblings().find('div').empty();
       $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
                                               {% csrf_token %}
-                                              <div class="form-outline">
-                                                {{form.text}}
-                                                <input type="hidden" name="comment_id" value=-1>
-                                                <input type="hidden" name="retweet_id" value=-1>
-                                              </div>
+                                              <div id="comment_contents"></div>
+                                              <input type="hidden" name="text" value=-1>
+                                              <input type="hidden" name="comment_id" value=${$(this).closest('span').attr('id')}>
+                                              <input type="hidden" name="retweet_id" value=-1>
                                               <div class="d-flex justify-content-end mt-3">
-                                                <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">수정</button>
+                                                <button type="button" class="btn btn-primary btn-lg pull-right" id="add_comment" onclick="writeComment()">수정</button>
                                               </div>
                                             </form>`);
-      $('textarea').val(comment.text());
-      $("input[name='comment_id']").val($(this).attr('id'));
-      comment.attr('hidden', true);
-      $(this).attr('name', 'modify')
+      content = $(this).closest('span').attr('content');
     }
     else {
       $('form').remove();
       $(this).attr('name', 'display')
-      $("div[class='w-100']").append(`<form method="post" action="">
+      $("div[class='w-100']").append(`<form name="comment_form" method="post" action="">
                                       {% csrf_token %}
-                                        <h5>댓글 달기</h5>
-                                        <div class="form-outline">
-                                          {{form}}
-                                          <input type="hidden" name="comment_id" value=-1>
-                                          <input type="hidden" name="retweet_id" value=-1>
-                                        </div>
-                                        <div class="d-flex justify-content-end mt-3">
-                                          <button type="submit" class="btn btn-primary btn-lg pull-right">댓글 등록</button>
-                                        </div>
-                                      </form>`);};
+                                      <h5>댓글 달기</h5>
+                                      <div id="comment_contents"></div>
+                                      <input type="hidden" name="text" value=-1>
+                                      <input type="hidden" name="comment_id" value=-1>
+                                      <input type="hidden" name="retweet_id" value=-1>
+                                      <div class="d-flex justify-content-end mt-3">
+                                        <button type="button" class="btn btn-primary btn-lg pull-right" id="add_comment" onclick="writeComment()">댓글 등록</button>
+                                      </div>
+                                      </form>`);
+      $(".comment").each(function() {
+      var tmp = Editor.factory({
+          el : this,
+          viewer: true ,
+          height: '300px',
+          initialValue:  $(this).attr('content'),
+          plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+      });
+  });
+    };
+    editor = new Editor({
+        el: document.querySelector('#comment_contents'),
+        height: '300px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical',
+        initialValue: content,
+        plugins: [
+            [codeSyntaxHighlight, { highlighter: Prism }],
+            [colorSyntax]
+        ]
+    });
   });
 
   $('a').on('click', 'i[class="fa fa-comment"]', function(e){
-    $("p[hidden='hidden']").attr('hidden', false);
+    var content = ""
     if ($(this).attr('name') == 'display') {
-      $("p[hidden='hidden']").attr('hidden', false);
-      var comment = $(this).closest('div').parent().children().closest('p');
+      $(this).attr('name', 'modify');
       $('form').remove();
+      //$(this).parent().parent().parent().siblings().find('div').empty();
       $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
                                               {% csrf_token %}
-                                              <div class="form-outline">
-                                                {{form.text}}
-                                                <input type="hidden" name="comment_id" value=-1>
-                                                <input type="hidden" name="retweet_id" value=-1>
-                                              </div>
+                                              <div id="comment_contents"></div>
+                                              <input type="hidden" name="text" value=-1>
+                                              <input type="hidden" name="comment_id" value=-1>
+                                              <input type="hidden" name="retweet_id" value=${$(this).closest('span').attr('id')}>
                                               <div class="d-flex justify-content-end mt-3">
-                                                <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">대댓글 작성</button>
+                                                <button type="button" class="btn btn-primary btn-lg pull-right" id="add_comment" onclick="writeComment()">대댓글 등록</button>
                                               </div>
                                             </form>`);
-      $("input[name='retweet_id']").val($(this).attr('id'));
-      $(this).attr('name', 'retweet');
     }
     else {
       $('form').remove();
-      $(this).attr('name', 'display')
-      $("div[class='w-100']").append(`<form method="post" action="">
+      $(this).attr('name', 'display');
+      $("div[class='w-100']").append(`<form name="comment_form" method="post" action="">
                                       {% csrf_token %}
-                                        <h5>댓글 달기</h5>
-                                        <div class="form-outline">
-                                          {{form}}
-                                          <input type="hidden" name="comment_id" value=-1>
-                                          <input type="hidden" name="retweet_id" value=-1>
-                                        </div>
-                                        <div class="d-flex justify-content-end mt-3">
-                                          <button type="submit" class="btn btn-primary btn-lg pull-right">댓글 등록</button>
-                                        </div>
-                                      </form>`);};
+                                      <h5>댓글 달기</h5>
+                                      <div id="comment_contents"></div>
+                                      <input type="hidden" name="text" value=-1>
+                                      <input type="hidden" name="comment_id" value=-1>
+                                      <input type="hidden" name="retweet_id" value=-1>
+                                      <div class="d-flex justify-content-end mt-3">
+                                        <button type="button" class="btn btn-primary btn-lg pull-right" id="add_comment" onclick="writeComment()">댓글 등록</button>
+                                      </div>
+                                      </form>`);
+    }
+    editor = new Editor({
+        el: document.querySelector('#comment_contents'),
+        height: '300px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical',
+        initialValue: content,
+        plugins: [
+            [codeSyntaxHighlight, { highlighter: Prism }],
+            [colorSyntax]
+        ]
+    });
   });
 </script>
 {% endblock %}
