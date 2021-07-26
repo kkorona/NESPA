@@ -123,22 +123,6 @@ body {
   max-width: 800px;
 }
 
-
-.ganzi {
-  animation: ganzi 1s ease infinite;
-  -moz-animation: ganzi 1s ease infinite;
-  -webkit-animation: ganzi 1s ease infinite;
-  /* color: #ff00c8; */
-}
-
-@keyframes ganzi {
-  0%,
-  100% {
-    text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 .4vw #FED128, .1vw .1vw .1vw #806914;
-    color: #ff0000;
-  }
-  50% {
-    text-shadow: 0 0 .5vw white, 0 0 1.5vw white, 0 0 5vw white, 0 0 5vw white, 0 0 .2vw white, .1vw .1vw .1vw #40340A;
-    color: #a5a200;
-  }
+.admin {
+  color: #ce2121;
 }

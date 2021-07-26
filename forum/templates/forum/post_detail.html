@@ -15,14 +15,14 @@
     }
     pre.comment {
         white-space: pre-wrap;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	font-size : 14px;
-	width : 70%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size : 14px;
+  width : 70%;
     }
 
     .comment-info-border {
-	border-left : 4px solid red !important;
-	border-bottom : 1px solid blue !important;
+  border-left : 4px solid red !important;
+  border-bottom : 1px solid blue !important;
     }
 {% endblock %}
 {% block contents %}
@@ -43,9 +43,9 @@
       <div class="">
         <ul>
         {% for attachment in attachments %}
-	    {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
+      {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
             <img src="/media/attached/forum/{{object.id}}/{{attachment.name}}">
-	    {% endif %}
+      {% endif %}
         {% endfor %}
         </ul>
       </div>
@@ -87,26 +87,26 @@
       
       <div class="text-right p-3 d-flex justify-content-end">
         {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-        <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'forum:edit' object.id %}'"> 수정 </button>
+        <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'forum:edit' object.id %}';"> 수정 </button>
         {% endif %}
-        <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'forum:post_list' %}'"> 목록으로 </button>      
+        <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'forum:post_list' %}';"> 목록으로 </button>      
       </div>  
 
       <div class="cards">
         <div class="card-body p-0">
           {% if request.session.logged_in and request.session.usertype != 'unapproved' %}
           <div class="w-100">
-            <form name="comment_form" method="post" action="">
+            <form name="write_form" method="post" action="">
               {% csrf_token %}
               <h5>댓글 달기</h5>
-              <div class="form-outline">
-                {{form.text}}
-                <input type="hidden" name="comment_id" value=-1>
-                <input type="hidden" name="retweet_id" value=-1>
-              </div>
+
+              <div id="post_contents"></div>
+              <input id="post_content" name="post_contents" class="form-control" type="hidden">
+              
               <div class="d-flex justify-content-end mt-3">
-                <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">댓글 등록</button>
+                <input type="button" class="btn btn-primary btn-lg pull-right" id="add_comment" value="댓글 등록" onclick="writeArticle();"></input>
               </div>
+
             </form>
           </div>
           {% endif %}
@@ -129,9 +129,10 @@
                     </span> 
                     <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
                   </div>
-                  <p class="pt-3 m-b-5 m-t-10">{{ comment.text }}</p>
+                  <div content="{{comment.text}}" class="comment"></div>
                 </div>
               </div>
+
               {% for retweet in comment.comment_set.all|dictsort:"pub_date" %}
                 {% if not retweet.deleted %}
                 <div class="d-flex flex-row comment-row">
@@ -171,6 +172,7 @@
 <script>
   const { Editor } = toastui;
   const { codeSyntaxHighlight } = Editor.plugin;
+  const { colorSyntax } = Editor.plugin;
 
   const viewer = new Editor.factory({
     el: document.querySelector('#viewer'),
@@ -179,6 +181,29 @@
     initialValue:  "{{ content|safe }}",
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   });
+
+  const editor = new Editor({
+      el: document.querySelector('#post_contents'),
+      height: '300px',
+      initialEditType: 'wysiwyg',
+      previewStyle: 'vertical',
+      plugins: [
+          [codeSyntaxHighlight, { highlighter: Prism }],
+          [colorSyntax]
+      ]
+  });
+
+  $(".comment").each(function() {
+      var tmp = Editor.factory({
+          el : this,
+          viewer: true ,
+          height: '300px',
+          initialValue:  $(this).attr('content'),
+          plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+      });
+
+  });
+
 
   $("#sidebar_forum").attr('class','nav-link active'); 
 
