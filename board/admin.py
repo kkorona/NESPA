@@ -2,8 +2,9 @@ from django.contrib import admin
 from board.models import Post, Attach
 
 # Register your models here.
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
 
-#admin.site.register(Post)
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'author', 'pub_date', 'mod_date')

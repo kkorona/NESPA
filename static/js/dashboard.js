@@ -53,3 +53,12 @@
   })
   */
 }())
+
+
+
+
+// {% if request.session.usertype == "admin"}
+// $('#comment-author').css('color','rgb(25 63 255)');
+$('#comment-author').addClass("ganzi");
+// {% endif %}
+
