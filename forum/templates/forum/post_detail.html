@@ -101,8 +101,8 @@
               <h5>댓글 달기</h5>
               <div class="form-outline">
                 {{form.text}}
+                <input type="hidden" name="comment_id" value=-1>
               </div>
-              <input type="hidden" name="comment_id" value=-1>
               <div class="d-flex justify-content-end mt-3">
                 <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">댓글 등록</button>
               </div>
@@ -121,7 +121,7 @@
                   <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
                     <span class="action-icons">
                       {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-                      <a data-abc="true"><i id={{comment.id}} class="fa fa-pencil"></i></a>
+                      <a data-abc="true"><i id={{comment.id}} name="display" class="fa fa-pencil"></i></a>
                       <a onclick="deleteComment({{comment.id}})" data-abc="true"><i class="fa fa-trash"></i></a> 
                       {% endif %}
                       <a href="#" data-abc="true"><i class="fa fa-comment"></i></a> 
@@ -168,18 +168,36 @@
   }
 
   $('a').on('click', 'i[class="fa fa-pencil"]', function(e){
-    var comment = $(this).closest('div').parent().children().closest('p');
-    $('form').remove();
-    $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
+    $("p[hidden='hidden']").attr('hidden', false);
+    if ($(this).attr('name') == 'display') {
+      $("p[hidden='hidden']").attr('hidden', false);
+      var comment = $(this).closest('div').parent().children().closest('p');
+      $('form').remove();
+      $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
                                             {% csrf_token %}
                                               {{form.text}}
                                               <input type="hidden" name="comment_id" value=-1><br>
                                               <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">수정</button>
                                             </form>`);
-    $('textarea').val(comment.text());
-    $("input[name='comment_id']").val($(this).attr('id'));
-    comment.remove();
-    $(this).remove();
+      $('textarea').val(comment.text());
+      $("input[name='comment_id']").val($(this).attr('id'));
+      comment.attr('hidden', true);
+      $(this).attr('name', 'modify')
+    }
+    else {
+      $('form').remove();
+      $(this).attr('name', 'display')
+      $("div[class='w-100']").append(`<form method="post" action="">
+                                      {% csrf_token %}
+                                        <h5>댓글 달기</h5>
+                                        <div class="form-outline">
+                                          {{form}}
+                                          <input type="hidden" name="comment_id" value=-1><br>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-3">
+                                          <button type="submit" class="btn btn-primary btn-lg pull-right">댓글 등록</button>
+                                        </div>
+                                      </form>`);};
   });
 </script>
 {% endblock %}
