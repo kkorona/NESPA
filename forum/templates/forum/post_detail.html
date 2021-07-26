@@ -133,7 +133,7 @@
                 </div>
               </div>
               {% for retweet in comment.comment_set.all|dictsort:"pub_date" %}
-                {% if not comment.deleted %}
+                {% if not retweet.deleted %}
                 <div class="d-flex flex-row comment-row">
                   <div class="p-2"><span class="round"><div width="50"></div></div>
                   <div class="comment-text w-100">
