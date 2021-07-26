@@ -53,23 +53,31 @@ class PostDV(FormMixin, DetailView):
             
     def form_valid(self, form):
         comment_id = int(self.request.POST.get('comment_id'))
+        retweet_id = int(self.request.POST.get('retweet_id'))
+        if retweet_id != -1 and comment_id == -1:
+            comment = form.save(commit=False)
+            comment.parent = get_object_or_404(Post, pk=self.object.pk)
+            comment.author = self.request.session['userid']
+            comment.retweet = get_object_or_404(Comment, pk=retweet_id)
+            comment.save()
+            return super(PostDV, self).form_valid(form)
+
         if comment_id == -1:
             comment = form.save(commit=False)
             comment.parent = get_object_or_404(Post, pk=self.object.pk)
             comment.author = self.request.session['userid']
             comment.save()
         else:
-            comment = Comment.objects.filter(id=comment_id)[0]
+            comment = get_object_or_404(Comment, pk=comment_id)
             comment.text = self.request.POST.get('text')
             comment.save()
         return super(PostDV, self).form_valid(form)
 
 
 def deleteComment(request, article_id, comment_id):
-    comments = Comment.objects.filter(id = comment_id)
-    if len(comments): 
-        comments[0].deleted = True
-        comments[0].save()
+    comment = get_object_or_404(Comment, pk=comment_id)
+    comment.deleted = True
+    comment.save()
     return redirect('/qna/post/' + str(article_id))
 
 def edit(request, article_id):
