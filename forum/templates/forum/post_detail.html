@@ -102,6 +102,7 @@
               <div class="form-outline">
                 {{form.text}}
                 <input type="hidden" name="comment_id" value=-1>
+                <input type="hidden" name="retweet_id" value=-1>
               </div>
               <div class="d-flex justify-content-end mt-3">
                 <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">댓글 등록</button>
@@ -113,7 +114,7 @@
           <h4 class="card-title">댓글 목록</h4>
           <div class="comment-widgets m-b-20">
             {% for comment in comments %}
-              {% if not comment.deleted %}
+              {% if not comment.deleted and not comment.retweet %}
               <div class="d-flex flex-row comment-row">
                 <div class="p-2"><span class="round"><div width="50"></div></div>
                 <div class="comment-text w-100">
@@ -124,13 +125,34 @@
                       <a data-abc="true"><i id={{comment.id}} name="display" class="fa fa-pencil"></i></a>
                       <a onclick="deleteComment({{comment.id}})" data-abc="true"><i class="fa fa-trash"></i></a> 
                       {% endif %}
-                      <a href="#" data-abc="true"><i class="fa fa-comment"></i></a> 
+                      <a data-abc="true"><i id={{comment.id}} name="display" class="fa fa-comment"></i></a> 
                     </span> 
                     <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
                   </div>
                   <p class="pt-3 m-b-5 m-t-10">{{ comment.text }}</p>
                 </div>
               </div>
+              {% for retweet in comment.comment_set.all|dictsort:"pub_date" %}
+                {% if not comment.deleted %}
+                <div class="d-flex flex-row comment-row">
+                  <div class="p-2"><span class="round"><div width="50"></div></div>
+                  <div class="comment-text w-100">
+                    <h5 class="mb-0">{{ retweet.author }}</h5>
+                    <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
+                      <span class="action-icons">
+                        {% if request.session.usertype == "admin" or request.session.userid == object.author %}
+                        <a data-abc="true"><i id={{retweet.id}} name="display" class="fa fa-pencil"></i></a>
+                        <a onclick="deleteComment({{retweet.id}})" data-abc="true"><i class="fa fa-trash"></i></a> 
+                        {% endif %}
+                      </span> 
+                      <span class="date">{{ retweet.pub_date | date:"N j일, H:i" }}</span> 
+                    </div>
+                      <re style="display:inline-block">&#9; &#8627; </re>
+                      <p style="display:inline-block" class="pt-3 m-b-5 m-t-10">{{ retweet.text }}</p>
+                  </div>
+                </div>
+                {% endif %}
+              {% endfor %}
               {% endif %}
             {% endfor %}
           </div>
@@ -174,10 +196,15 @@
       var comment = $(this).closest('div').parent().children().closest('p');
       $('form').remove();
       $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
-                                            {% csrf_token %}
-                                              {{form.text}}
-                                              <input type="hidden" name="comment_id" value=-1><br>
-                                              <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">수정</button>
+                                              {% csrf_token %}
+                                              <div class="form-outline">
+                                                {{form.text}}
+                                                <input type="hidden" name="comment_id" value=-1>
+                                                <input type="hidden" name="retweet_id" value=-1>
+                                              </div>
+                                              <div class="d-flex justify-content-end mt-3">
+                                                <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">수정</button>
+                                              </div>
                                             </form>`);
       $('textarea').val(comment.text());
       $("input[name='comment_id']").val($(this).attr('id'));
@@ -192,7 +219,45 @@
                                         <h5>댓글 달기</h5>
                                         <div class="form-outline">
                                           {{form}}
-                                          <input type="hidden" name="comment_id" value=-1><br>
+                                          <input type="hidden" name="comment_id" value=-1>
+                                          <input type="hidden" name="retweet_id" value=-1>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-3">
+                                          <button type="submit" class="btn btn-primary btn-lg pull-right">댓글 등록</button>
+                                        </div>
+                                      </form>`);};
+  });
+
+  $('a').on('click', 'i[class="fa fa-comment"]', function(e){
+    $("p[hidden='hidden']").attr('hidden', false);
+    if ($(this).attr('name') == 'display') {
+      $("p[hidden='hidden']").attr('hidden', false);
+      var comment = $(this).closest('div').parent().children().closest('p');
+      $('form').remove();
+      $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
+                                              {% csrf_token %}
+                                              <div class="form-outline">
+                                                {{form.text}}
+                                                <input type="hidden" name="comment_id" value=-1>
+                                                <input type="hidden" name="retweet_id" value=-1>
+                                              </div>
+                                              <div class="d-flex justify-content-end mt-3">
+                                                <button type="submit" class="btn btn-primary btn-lg pull-right" id="add_comment">대댓글 작성</button>
+                                              </div>
+                                            </form>`);
+      $("input[name='retweet_id']").val($(this).attr('id'));
+      $(this).attr('name', 'retweet');
+    }
+    else {
+      $('form').remove();
+      $(this).attr('name', 'display')
+      $("div[class='w-100']").append(`<form method="post" action="">
+                                      {% csrf_token %}
+                                        <h5>댓글 달기</h5>
+                                        <div class="form-outline">
+                                          {{form}}
+                                          <input type="hidden" name="comment_id" value=-1>
+                                          <input type="hidden" name="retweet_id" value=-1>
                                         </div>
                                         <div class="d-flex justify-content-end mt-3">
                                           <button type="submit" class="btn btn-primary btn-lg pull-right">댓글 등록</button>
