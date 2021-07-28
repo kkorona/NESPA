@@ -95,8 +95,8 @@
       <div class="cards">
         <div class="card-body p-0">
           {% if request.session.logged_in and request.session.usertype != 'unapproved' %}
-          <div class="w-100">
-            <form name="write_form" method="post" action="">
+          <div id="add-comment" class="w-100">
+            <form name="comment_form" method="post" action="">
               {% csrf_token %}
               <h5>댓글 달기</h5>
               <div id="comment_contents"></div>
@@ -106,7 +106,6 @@
               <div class="d-flex justify-content-end mt-3">
                 <button type="button" class="btn btn-primary btn-lg pull-right" id="add_comment" onclick="writeComment()">댓글 등록</button>
               </div>
-
             </form>
           </div>
           {% endif %}
@@ -128,11 +127,9 @@
                     {% endif %}
 
                     {% if comment.deleted %}
-                      {% if request.session.usertype == "admin" %}
                       <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Comment</i></a>
-                      {% endif %}
                     {% else %} 
-                      {% if request.session.logged_in and request.session.usertype != 'unapproved' or request.session.usertype == "admin" %}
+                      {% if request.session.usertype == "admin" or request.session.userid == comment.author %}
                       <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
                       <a data-abc="true"><i class="fa fa-trash"></i></a> 
                       {% endif %}
@@ -169,18 +166,12 @@
                       {% endif %}
 
                         {% if comment.deleted %}
-                          {% if request.session.usertype == "admin" %}
                           <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Retweet</i></a>
-                          {% endif %}
                         {% else %} 
-                          {% if request.session.logged_in and request.session.usertype != 'unapproved' or request.session.usertype == "admin" %}
+                          {% if request.session.usertype == "admin" or request.session.userid == comment.author %}
                           <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
                           <a data-abc="true"><i class="fa fa-trash"></i></a> 
                           {% endif %}
-                        {% endif %}
-
-                        {% if request.session.logged_in and request.session.usertype != 'unapproved' and not comment.deleted %}
-                        <a data-abc="true"><i name="display" class="fa fa-comment"></i></a> 
                         {% endif %}
                       </span> 
                       <span class="date">{{ retweet.pub_date | date:"N j일, H:i" }}</span> 
@@ -227,7 +218,7 @@
           [codeSyntaxHighlight, { highlighter: Prism }],
           [colorSyntax]
       ]
-  });
+    });
   }
 
   const viewer = new Editor.factory({
@@ -287,7 +278,7 @@
     else {
       $('form').remove();
       $(this).attr('name', 'display')
-      $("div[class='w-100']").append(`<form name="comment_form" method="post" action="">
+      $("div#add-comment").append(`<form name="comment_form" method="post" action="">
                                       {% csrf_token %}
                                       <h5>댓글 달기</h5>
                                       <div id="comment_contents"></div>
@@ -299,15 +290,16 @@
                                       </div>
                                       </form>`);
       $(".comment").each(function() {
-      var tmp = Editor.factory({
-          el : this,
-          viewer: true ,
-          height: '300px',
-          initialValue:  $(this).attr('content'),
-          plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+        var tmp = Editor.factory({
+            el : this,
+            viewer: true ,
+            height: '300px',
+            initialValue:  $(this).attr('content'),
+            plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+        });
       });
-  });
     };
+
     editor = new Editor({
         el: document.querySelector('#comment_contents'),
         height: '300px',
@@ -341,7 +333,7 @@
     else {
       $('form').remove();
       $(this).attr('name', 'display');
-      $("div[class='w-100']").append(`<form name="comment_form" method="post" action="">
+      $("div#add-comment").append(`<form name="comment_form" method="post" action="">
                                       {% csrf_token %}
                                       <h5>댓글 달기</h5>
                                       <div id="comment_contents"></div>

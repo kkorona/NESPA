@@ -127,11 +127,9 @@
                     {% endif %}
 
                     {% if comment.deleted %}
-                      {% if request.session.usertype == "admin" %}
                       <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Comment</i></a>
-                      {% endif %}
                     {% else %} 
-                      {% if request.session.logged_in and request.session.usertype != 'unapproved' or request.session.usertype == "admin" %}
+                      {% if request.session.usertype == "admin" or request.session.userid == comment.author %}
                       <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
                       <a data-abc="true"><i class="fa fa-trash"></i></a> 
                       {% endif %}
@@ -168,18 +166,12 @@
                       {% endif %}
 
                         {% if comment.deleted %}
-                          {% if request.session.usertype == "admin" %}
                           <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Retweet</i></a>
-                          {% endif %}
                         {% else %} 
-                          {% if request.session.logged_in and request.session.usertype != 'unapproved' or request.session.usertype == "admin" %}
+                          {% if request.session.usertype == "admin" or request.session.userid == comment.author %}
                           <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
                           <a data-abc="true"><i class="fa fa-trash"></i></a> 
                           {% endif %}
-                        {% endif %}
-
-                        {% if request.session.logged_in and request.session.usertype != 'unapproved' and not comment.deleted %}
-                        <a data-abc="true"><i name="display" class="fa fa-comment"></i></a> 
                         {% endif %}
                       </span> 
                       <span class="date">{{ retweet.pub_date | date:"N j일, H:i" }}</span> 
