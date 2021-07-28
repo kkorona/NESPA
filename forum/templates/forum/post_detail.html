@@ -117,8 +117,13 @@
               <div class="d-flex flex-row comment-row">
                 <div class="p-2"><span class="round"><div width="50"></div></div>
                 <div class="comment-text w-100">
+                  {% if comment.author.user_id == "admin" %}
+                  <i name="display" style="color:red" class="fa fa-ban"></i>
+                  {% else %}
+                  <i name="display" class="fa fa-user"></i>
+                  {% endif %}
 
-                  <h5 class="mb-0">{{ comment.author }}</h5>
+                  <span class="comment-author mb-0">{{ comment.author }}</span>
                   <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
                     {% if comment.deleted %}
                     <span class="action-icons" id={{comment.id}} content="deleted comment">
@@ -130,13 +135,13 @@
                       <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Comment</i></a>
                     {% else %} 
                       {% if request.session.usertype == "admin" or request.session.userid == comment.author %}
-                      <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
-                      <a data-abc="true"><i class="fa fa-trash"></i></a> 
+                      <a data-abc="true"><i name="display" class="fa fa-pencil"> 수정</i></a>
+                      <a data-abc="true"><i class="fa fa-trash"> 삭제</i></a> 
                       {% endif %}
                     {% endif %}
 
                     {% if request.session.logged_in and request.session.usertype != 'unapproved' and not comment.deleted %}
-                    <a data-abc="true"><i name="display" class="fa fa-comment"></i></a> 
+                    <a data-abc="true"><i name="display" class="fa fa-comment"> 답글</i></a> 
                     {% endif %}
                     </span> 
                     <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
@@ -157,7 +162,8 @@
                 <div class="d-flex flex-row comment-row">
                   <div class="p-2"><span class="round"><div width="50"></div></div>
                   <div class="comment-text w-100">
-                    <h5 class="mb-0">&#9; &#8627; {{ retweet.author }}</h5>
+                    <i name="display" class="fa fa-user"></i>
+                    <span class="retweet-author mb-0">&#9; &#8627; {{ retweet.author }}</span>
                     <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
                       {% if comment.deleted %}
                       <span class="action-icons" id={{retweet.id}} content="deleted retweet">
@@ -168,9 +174,9 @@
                         {% if comment.deleted %}
                           <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Retweet</i></a>
                         {% else %} 
-                          {% if request.session.usertype == "admin" or request.session.userid == comment.author %}
-                          <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
-                          <a data-abc="true"><i class="fa fa-trash"></i></a> 
+                          {% if request.session.usertype == "admin" or request.session.userid == retweet.author %}
+                          <a data-abc="true"><i name="display" class="fa fa-pencil"> 수정</i></a>
+                          <a data-abc="true"><i class="fa fa-trash"> 삭제</i></a> 
                           {% endif %}
                         {% endif %}
                       </span> 
