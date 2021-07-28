@@ -95,7 +95,7 @@
       <div class="cards">
         <div class="card-body p-0">
           {% if request.session.logged_in and request.session.usertype != 'unapproved' %}
-          <div class="w-100">
+          <div id="add-comment" class="w-100">
             <form name="comment_form" method="post" action="">
               {% csrf_token %}
               <h5>댓글 달기</h5>
@@ -152,20 +152,18 @@
               </div>
 
               {% for retweet in comment.comment_set.all|dictsort:"pub_date" %}
-                {% if not retweet.deleted %}
-
                 <div class="d-flex flex-row comment-row">
                   <div class="p-2"><span class="round"><div width="50"></div></div>
                   <div class="comment-text w-100">
                     <h6 class="mb-0">&#9; &#8627; {{ retweet.author }}</h6>
                     <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
-                      {% if comment.deleted %}
+                      {% if retweet.deleted %}
                       <span class="action-icons" id={{retweet.id}} content="deleted retweet">
                       {% else %}
                       <span class="action-icons" id={{retweet.id}} content="{{retweet.text}}">
                       {% endif %}
 
-                        {% if comment.deleted %}
+                        {% if retweet.deleted %}
                           <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Retweet</i></a>
                         {% else %} 
                           {% if request.session.usertype == "admin" or request.session.userid == retweet.author %}
@@ -176,14 +174,13 @@
                       </span> 
                       <span class="date">{{ retweet.pub_date | date:"N j일, H:i" }}</span> 
                     </div>
-                      {% if comment.deleted %}
+                      {% if retweet.deleted %}
                         <p class="pt-3 m-b-5 m-t-10" style="color: gray;">삭제된 댓글입니다</p>
                       {% else %}
                         <div content="{{retweet.text}}" class="comment"></div>
                       {% endif %}
                   </div>
                 </div>
-                {% endif %}
               {% endfor %}
               {% endif %}
             {% endfor %}
