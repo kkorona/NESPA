@@ -99,21 +99,12 @@
             <form name="write_form" method="post" action="">
               {% csrf_token %}
               <h5>댓글 달기</h5>
-<<<<<<< HEAD
-
-              <div id="post_contents"></div>
-              <input id="post_content" name="post_contents" class="form-control" type="hidden">
-              
-              <div class="d-flex justify-content-end mt-3">
-                <input type="button" class="btn btn-primary btn-lg pull-right" id="add_comment" value="댓글 등록" onclick="writeArticle();"></input>
-=======
               <div id="comment_contents"></div>
               <input type="hidden" name="text" value="">
               <input type="hidden" name="comment_id" value=-1>
               <input type="hidden" name="retweet_id" value=-1>
               <div class="d-flex justify-content-end mt-3">
                 <button type="button" class="btn btn-primary btn-lg pull-right" id="add_comment" onclick="writeComment()">댓글 등록</button>
->>>>>>> master
               </div>
 
             </form>
@@ -127,43 +118,69 @@
               <div class="d-flex flex-row comment-row">
                 <div class="p-2"><span class="round"><div width="50"></div></div>
                 <div class="comment-text w-100">
+
                   <h5 class="mb-0">{{ comment.author }}</h5>
                   <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
-                    <span class="action-icons" id={{comment.id}} content="{{comment.text}}"> 
-                      {% if request.session.usertype == "admin" or request.session.userid == object.author %}
+                    {% if comment.deleted %}
+                    <span class="action-icons" id={{comment.id}} content="deleted comment">
+                    {% else %}
+                    <span class="action-icons" id={{comment.id}} content={{comment.text}}> 
+                    {% endif %}
+
+                    {% if comment.deleted %}
+                      {% if request.session.usertype == "admin" %}
+                      <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Comment</i></a>
+                      {% endif %}
+                    {% else %} 
+                      {% if request.session.logged_in and request.session.usertype != 'unapproved' or request.session.usertype == "admin" %}
                       <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
                       <a data-abc="true"><i class="fa fa-trash"></i></a> 
                       {% endif %}
-                      {% if request.session.logged_in and request.session.usertype != 'unapproved' %}
-                      <a data-abc="true"><i name="display" class="fa fa-comment"></i></a> 
-                      {% endif %}
+                    {% endif %}
+
+                    {% if request.session.logged_in and request.session.usertype != 'unapproved' and not comment.deleted %}
+                    <a data-abc="true"><i name="display" class="fa fa-comment"></i></a> 
+                    {% endif %}
                     </span> 
                     <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
                   </div>
-<<<<<<< HEAD
-                  <div content="{{comment.text}}" class="comment"></div>
-=======
+                  
                   {% if comment.deleted %}
-                     <p class="pt-3 m-b-5 m-t-10" style="color: gray;">삭제된 댓글입니다</p>
+                    <p class="pt-3 m-b-5 m-t-10" style="color: gray;">삭제된 댓글입니다</p>
                   {% else %}
                     <div content="{{comment.text}}" class="comment"></div>
                   {% endif %}
 
->>>>>>> master
                 </div>
               </div>
 
               {% for retweet in comment.comment_set.all|dictsort:"pub_date" %}
                 {% if not retweet.deleted %}
+
                 <div class="d-flex flex-row comment-row">
                   <div class="p-2"><span class="round"><div width="50"></div></div>
                   <div class="comment-text w-100">
                     <h5 class="mb-0">&#9; &#8627; {{ retweet.author }}</h5>
                     <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
-                      <span class="action-icons" id={{retweet.id}} content="{{retweet.text}}"> 
-                        {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-                        <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
-                        <a data-abc="true"><i class="fa fa-trash"></i></a> 
+                      {% if comment.deleted %}
+                      <span class="action-icons" id={{retweet.id}} content="deleted retweet">
+                      {% else %}
+                      <span class="action-icons" id={{retweet.id}} content="{{retweet.text}}">
+                      {% endif %}
+
+                        {% if comment.deleted %}
+                          {% if request.session.usertype == "admin" %}
+                          <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Retweet</i></a>
+                          {% endif %}
+                        {% else %} 
+                          {% if request.session.logged_in and request.session.usertype != 'unapproved' or request.session.usertype == "admin" %}
+                          <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
+                          <a data-abc="true"><i class="fa fa-trash"></i></a> 
+                          {% endif %}
+                        {% endif %}
+
+                        {% if request.session.logged_in and request.session.usertype != 'unapproved' and not comment.deleted %}
+                        <a data-abc="true"><i name="display" class="fa fa-comment"></i></a> 
                         {% endif %}
                       </span> 
                       <span class="date">{{ retweet.pub_date | date:"N j일, H:i" }}</span> 
@@ -197,8 +214,6 @@
   const { Editor } = toastui;
   const { codeSyntaxHighlight } = Editor.plugin;
   const { colorSyntax } = Editor.plugin;
-<<<<<<< HEAD
-=======
 
   var editor;
 
@@ -214,7 +229,6 @@
       ]
   });
   }
->>>>>>> master
 
   const viewer = new Editor.factory({
     el: document.querySelector('#viewer'),
@@ -224,20 +238,6 @@
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   });
 
-<<<<<<< HEAD
-  const editor = new Editor({
-      el: document.querySelector('#post_contents'),
-      height: '300px',
-      initialEditType: 'wysiwyg',
-      previewStyle: 'vertical',
-      plugins: [
-          [codeSyntaxHighlight, { highlighter: Prism }],
-          [colorSyntax]
-      ]
-  });
-
-=======
->>>>>>> master
   $(".comment").each(function() {
       var tmp = Editor.factory({
           el : this,
@@ -246,18 +246,10 @@
           initialValue:  $(this).attr('content'),
           plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
       });
-<<<<<<< HEAD
-
-  });
-
-
-  $("#sidebar_forum").attr('class','nav-link active'); 
-=======
   });
 
   $("#sidebar_forum").attr('class','nav-link active');
 
->>>>>>> master
 
   $('a').on('click', 'i[class="fa fa-trash"]', function(e){
     var is_delete = confirm('선택한 댓글을 삭제하시겠습니까?');
@@ -265,6 +257,7 @@
       location.href = `deleteComment/${$(this).closest('span').attr('id')}`; 
     }
   });
+
 
   function writeComment() {
     var writeForm = document.comment_form;
