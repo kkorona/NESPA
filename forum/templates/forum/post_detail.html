@@ -115,64 +115,84 @@
             {% for comment in comments %}
               {% if not comment.retweet %}
               <div class="d-flex flex-row comment-row">
-                <div class="p-2"><span class="round"><div width="50"></div></div>
+                <div class="p-2"></div>
                 <div class="comment-text w-100">
-
-                  <h5 class="mb-0">{{ comment.author }}</h5>
                   <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
-                    {% if comment.deleted %}
-                    <span class="action-icons" id={{comment.id}} content="deleted comment">
-                    {% else %}
-                    <span class="action-icons" id={{comment.id}} content={{comment.text}}> 
-                    {% endif %}
-
-                    {% if comment.deleted %}
-                      <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Comment</i></a>
-                    {% else %} 
-                      {% if request.session.usertype == "admin" or request.session.userid == comment.author %}
-                      <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
-                      <a data-abc="true"><i class="fa fa-trash"></i></a> 
+                  <span>
+                    <div>
+                      <i name="display" class="fa fa-user"></i>
+                      <span class="comment-author mb-0">{{ comment.author }}</span>
+                    </div>
+                    <div>
+                      {% if comment.deleted %}
+                      <span class="action-icons" id={{comment.id}} content="deleted comment">
+                      {% else %}
+                      <span class="action-icons" id={{comment.id}} content={{comment.text}}>
                       {% endif %}
-                    {% endif %}
 
-                    {% if request.session.logged_in and request.session.usertype != 'unapproved' and not comment.deleted %}
-                    <a data-abc="true"><i name="display" class="fa fa-comment"></i></a> 
-                    {% endif %}
-                    </span> 
-                    <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
-                  </div>
-                  
-                  {% if comment.deleted %}
-                    <p class="pt-3 m-b-5 m-t-10" style="color: gray;">삭제된 댓글입니다</p>
-                  {% else %}
-                    <div content="{{comment.text}}" class="comment"></div>
-                  {% endif %}
+                        {% if comment.deleted %}
+                          <a data-abc="true"> <i name="display" class="fa fa-ban"> Deleted Comment</i></a>
+                        {% else %} 
+                          {% if request.session.usertype == "admin" or request.session.userid == comment.author %}
+                          <a data-abc="true"><i name="display" class="fa fa-pencil"> 수정</i></a>
+                          <a data-abc="true"><i class="fa fa-trash"> 삭제</i></a> 
+                          {% endif %}
+                        {% endif %}
 
+                        {% if request.session.logged_in and request.session.usertype != 'unapproved' and not comment.deleted %}
+                        <a data-abc="true"><i name="display" class="fa fa-comment"> 답글</i></a> 
+                        {% endif %}
+                      </span>
+                    </div>
+                  </span> 
+                  <span>
+                    <div class="date">{{ comment.pub_date | date:"N j일" }}</div> 
+                    <div class="date text-right">{{ comment.pub_date | date:"H:i" }}</div> 
+                  </span>
                 </div>
+                  
+                {% if comment.deleted %}
+                <p class="pt-3 m-b-5 m-t-10" style="color: gray;">삭제된 댓글입니다</p>
+                {% else %}
+                <div content="{{comment.text}}" class="comment"></div>
+                {% endif %}
+
               </div>
+            </div>
 
               {% for retweet in comment.comment_set.all|dictsort:"pub_date" %}
                 <div class="d-flex flex-row comment-row">
-                  <div class="p-2"><span class="round"><div width="50"></div></div>
+                  <div class="p-4"><i name="display" class="fa fa-reply m-auto rotate180"></i></div>
                   <div class="comment-text w-100">
-                    <h5 class="mb-0">&#9; &#8627; {{ retweet.author }}</h5>
                     <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
-                      {% if retweet.deleted %}
-                      <span class="action-icons" id={{retweet.id}} content="deleted retweet">
-                      {% else %}
-                      <span class="action-icons" id={{retweet.id}} content="{{retweet.text}}">
-                      {% endif %}
-
+                    
+                    <span>
+                      <div>
+                      <i name="display" class="fa fa-user"></i>
+                      <span class="retweet-author mb-0">{{ retweet.author }}</span>
+                      </div>
+                      <div>
                         {% if retweet.deleted %}
-                          <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Retweet</i></a>
-                        {% else %} 
-                          {% if request.session.usertype == "admin" or request.session.userid == retweet.author %}
-                          <a data-abc="true"><i name="display" class="fa fa-pencil"></i></a>
-                          <a data-abc="true"><i class="fa fa-trash"></i></a> 
-                          {% endif %}
+                        <span class="action-icons" id={{retweet.id}} content="deleted retweet">
+                        {% else %}
+                        <span class="action-icons" id={{retweet.id}} content="{{retweet.text}}">
                         {% endif %}
-                      </span> 
-                      <span class="date">{{ retweet.pub_date | date:"N j일, H:i" }}</span> 
+
+                          {% if retweet.deleted %}
+                            <a data-abc="true"><i name="display" class="fa fa-ban"> Deleted Retweet</i></a>
+                          {% else %} 
+                            {% if request.session.usertype == "admin" or request.session.userid == retweet.author %}
+                            <a data-abc="true"><i name="display" class="fa fa-pencil"> 수정</i></a>
+                            <a data-abc="true"><i class="fa fa-trash"> 삭제</i></a> 
+                            {% endif %}
+                          {% endif %}
+                        </span>
+                      </div> 
+                    </span>
+                      <span>
+                        <div class="date">{{ retweet.pub_date | date:"N j일" }}</div> 
+                        <div class="date text-right">{{ comment.pub_date | date:"H:i" }}</div> 
+                      </span>
                     </div>
                       {% if retweet.deleted %}
                         <p class="pt-3 m-b-5 m-t-10" style="color: gray;">삭제된 댓글입니다</p>
@@ -203,10 +223,10 @@
   const { codeSyntaxHighlight } = Editor.plugin;
   const { colorSyntax } = Editor.plugin;
 
-  var editor;
+  var retweetditor;
 
   if ($('#comment_contents').length) {
-    editor = new Editor({
+    var editor = new Editor({
       el: document.querySelector('#comment_contents'),
       height: '300px',
       initialEditType: 'wysiwyg',
@@ -259,7 +279,7 @@
     if ($(this).attr('name') == 'display') {
       $(this).attr('name', 'modify');
       $('form').remove();
-      $(this).parent().parent().parent().siblings().find('div').empty();
+      $(this).parent().parent().parent().parent().parent().siblings().find('div').empty();
       $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
                                               {% csrf_token %}
                                               <div id="comment_contents"></div>
@@ -316,7 +336,7 @@
       $(this).attr('name', 'modify');
       $('form').remove();
       //$(this).parent().parent().parent().siblings().find('div').empty();
-      $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
+      $(this).closest('div').parent().parent().parent().append(`<form name="comment_form" method="post" action="">
                                               {% csrf_token %}
                                               <div id="comment_contents"></div>
                                               <input type="hidden" name="text" value=-1>

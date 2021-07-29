@@ -55,6 +55,3 @@
 }())
 
 
-// $('.author').addClass("admin");
-
-

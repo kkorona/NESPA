@@ -23,6 +23,9 @@
 #f-table  table * {
     position: relative;
   }
+#f-table table th {
+    padding-left: 20px;
+  }
 #f-table  table td, table th {
     padding-left: 20px;
   }
@@ -66,3 +69,14 @@
     background-color: #dce8ec79;
     cursor: pointer;
   } 
+
+ #attach-file { 
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
