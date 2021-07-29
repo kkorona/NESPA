@@ -144,7 +144,10 @@
                     <a data-abc="true"><i name="display" class="fa fa-comment"> 답글</i></a> 
                     {% endif %}
                     </span> 
-                    <span class="date">{{ comment.pub_date | date:"N j일, H:i" }}</span> 
+                    <span>
+                      <div class="date">{{ comment.pub_date | date:"N j일" }}</div> 
+                      <div class="date text-right">{{ comment.pub_date | date:"H:i" }}</div> 
+                    </span>
                   </div>
                   
                   {% if comment.deleted %}
@@ -158,10 +161,10 @@
 
               {% for retweet in comment.comment_set.all|dictsort:"pub_date" %}
                 <div class="d-flex flex-row comment-row">
-                  <div class="p-2"><span class="round"><div width="50"></div></div>
+                  <div class="p-4"><i name="display" class="fa fa-reply m-auto rotate180"></i></div>
                   <div class="comment-text w-100">
                     <i name="display" class="fa fa-user"></i>
-                    <span class="retweet-author mb-0">&#9; &#8627; {{ retweet.author }}</span>
+                    <span class="retweet-author mb-0">{{ retweet.author }}</span>
                     <div class="comment-footer" style="display:flex; justify-content: space-between;"> 
                       {% if retweet.deleted %}
                       <span class="action-icons" id={{retweet.id}} content="deleted retweet">
@@ -178,7 +181,10 @@
                           {% endif %}
                         {% endif %}
                       </span> 
-                      <span class="date">{{ retweet.pub_date | date:"N j일, H:i" }}</span> 
+                      <span>
+                        <div class="date">{{ retweet.pub_date | date:"N j일" }}</div> 
+                        <div class="date text-right">{{ comment.pub_date | date:"H:i" }}</div> 
+                      </span>
                     </div>
                       {% if retweet.deleted %}
                         <p class="pt-3 m-b-5 m-t-10" style="color: gray;">삭제된 댓글입니다</p>
