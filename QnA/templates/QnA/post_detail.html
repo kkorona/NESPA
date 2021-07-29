@@ -145,20 +145,20 @@
                       </span>
                     </div>
                   </span> 
-                    <span>
-                      <div class="date">{{ comment.pub_date | date:"N j일" }}</div> 
-                      <div class="date text-right">{{ comment.pub_date | date:"H:i" }}</div> 
-                    </span>
-                  </div>
-                  
-                  {% if comment.deleted %}
-                    <p class="pt-3 m-b-5 m-t-10" style="color: gray;">삭제된 댓글입니다</p>
-                  {% else %}
-                    <div content="{{comment.text}}" class="comment"></div>
-                  {% endif %}
-
+                  <span>
+                    <div class="date">{{ comment.pub_date | date:"N j일" }}</div> 
+                    <div class="date text-right">{{ comment.pub_date | date:"H:i" }}</div> 
+                  </span>
                 </div>
+                  
+                {% if comment.deleted %}
+                <p class="pt-3 m-b-5 m-t-10" style="color: gray;">삭제된 댓글입니다</p>
+                {% else %}
+                <div content="{{comment.text}}" class="comment"></div>
+                {% endif %}
+
               </div>
+            </div>
 
               {% for retweet in comment.comment_set.all|dictsort:"pub_date" %}
                 <div class="d-flex flex-row comment-row">
@@ -277,7 +277,7 @@
     if ($(this).attr('name') == 'display') {
       $(this).attr('name', 'modify');
       $('form').remove();
-      $(this).parent().parent().parent().siblings().find('div').empty();
+      $(this).parent().parent().parent().parent().parent().siblings().find('div').empty();
       $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
                                               {% csrf_token %}
                                               <div id="comment_contents"></div>
@@ -333,7 +333,7 @@
       $(this).attr('name', 'modify');
       $('form').remove();
       //$(this).parent().parent().parent().siblings().find('div').empty();
-      $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
+      $(this).closest('div').parent().parent().parent().append(`<form name="comment_form" method="post" action="">
                                               {% csrf_token %}
                                               <div id="comment_contents"></div>
                                               <input type="hidden" name="text" value=-1>
