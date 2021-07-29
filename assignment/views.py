@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.conf import settings
 from django.utils import timezone
@@ -42,20 +42,15 @@ def submission(request):
         
     if request.method == "POST":
         if 'source_code' in request.FILES:
-            prob_ID = request.POST.get('problem_id')
             language = request.POST.get('language')
             source_code = request.FILES['source_code']
-            user_id = request.session['userid']
-            fs = FileSystemStorage()
-            filename = fs.save(source_code.name,source_code)
-            uploaded_file_url = fs.url(filename)      
-            departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
-            
-            prob = ProblemModel.objects.get(prob_id = prob_ID)
+
+            user = vespaUser.objects.get(user_id=request.session['userid'])
+            prob = ProblemModel.objects.get(prob_id = request.POST.get('problem_id'))
             
             if request.session['usertype'] == 'normal':
 
-                my_submissions = SubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user_id).count()
+                my_submissions = SubmissionModel.objects.filter(problem=prob, user=user).count()
                 if my_submissions >= prob.try_limit:
                     return HttpResponse('제출 횟수가 초과되었습니다. ')
                 
@@ -63,18 +58,24 @@ def submission(request):
                 
                 if prob.starts_at >= now or prob.ends_at <= now:
                     return HttpResponse('제출 기간이 아닙니다.')
-                
-                request.session['code_size'] = os.path.getsize(departure_path)
-                if int(request.session['code_size']) > prob.size_limit:
-                    os.remove(departure_path)
+
+                if len(request.FILES['source_code'].read()) > prob.size_limit:
                     return HttpResponse('코드 크기가 초과되었습니다.')
             
-            request.session['problem_id'] = prob_ID
             request.session['language'] = LANGDICT[language]
-            request.session['langext'] = EXTDICT[language]
-            request.session['uploaded_file_url'] = uploaded_file_url
+
             now = time.localtime()
             request.session['updated_time'] = "%04d/%02d/%02d %02d:%02d:%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+
+            submission = SubmissionModel(client_ID=user.user_id, client_number=user.studentNumber, prob_ID=prob.prob_id, score=0,exec_time=999.0, code_size=0, lang=EXTDICT[language], prob_name=prob.prob_name)
+            submission.user = user
+            submission.problem = prob
+            submission.save()
+            submission.sub_file = request.FILES['source_code']
+            submission.code_size = submission.sub_file.size
+            submission.save()
+
+            request.session['submission_id'] = submission.id
             
             return redirect('submission_check')
             
@@ -84,47 +85,39 @@ def submission(request):
 
 def submission_check(request):
     if request.method == "POST":    
-        uploaded_file_url = request.session['uploaded_file_url']
-        prob_ID = request.session['problem_id']
-        prob = ProblemModel.objects.get(prob_id = prob_ID)  
+
+        submission = SubmissionModel.objects.get(id = int(request.session['submission_id']))
+
+        prob = submission.problem
+        prob_ID = prob.prob_id
 
         client = vespaUser.objects.get(user_id = request.session['userid'])
         studentNumber = client.studentNumber
-        ext = request.session['langext']
         
-        departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
-        destination_path = os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID)
-        subfile_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID, 'subs')
-        header_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID, 'header')
-        
-        submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, lang=ext, prob_name = prob.prob_name)
-        submission.save()
-        submission_id = str(submission.id)
-        
-        target_name = submission_id + '.' + ext
-        target_path = os.path.join(destination_path,target_name)
-        target_title = os.path.join(destination_path, submission_id) 
+        ext = submission.lang
+
+        destination_path = os.path.join(settings.BASE_DIR, 'data', 'submission', studentNumber, prob_ID)
+        subfile_path = os.path.join(settings.BASE_DIR, 'data', 'assignment', prob_ID, 'subs')
+        header_path = os.path.join(settings.BASE_DIR, 'data', 'assignment', prob_ID, 'header')
+
+        target_name = submission.filename()
+        target_path = os.path.join(destination_path, target_name)
+        target_title = os.path.join(destination_path, str(submission.id)) 
         eval_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID,'eval')
-        
-        if not os.path.exists(destination_path):
-            os.makedirs(destination_path)
-        shutil.move(departure_path,target_path)
         
         if os.path.exists(subfile_path):
             subfiles = os.listdir(subfile_path)
             for subfile in subfiles:
                 shutil.copyfile(os.path.join(subfile_path,subfile),os.path.join(destination_path,subfile))
         
-        code_size = os.path.getsize(target_path)        
-        
-        submission.code_size = code_size
-        
+        code_size = submission.sub_file.size
+
         compile_result = compile.compiles(target_title, ext)
         
         if compile_result == 1:
             return render(request, "compile_error.html", {'error_msg' : '컴파일 에러가 발생하였습니다. 소스코드를 확인해주시고, 해결이 안될 경우 조교에게 문의하세요.'})
         
-        execute_result = execute.executes(destination_path, eval_path, submission_id, ext, str(prob.time_limit))
+        execute_result = execute.executes(destination_path, eval_path, str(submission.id), ext, str(prob.time_limit))
         
         total_tc = len(execute_result)
         scored_tc = 0
@@ -166,19 +159,10 @@ def submission_list(request):
     return render(request, "submission_list.html", {'prob_list':prob_list})
     
 def watch_code(request):
-    prob_ID = request.GET.get('prob_id', None)
-    student_number = request.GET.get('student_number', None)
     submission_ID = request.GET.get('submission_id', None)
-    ext = request.GET.get('ext', None)
-    if not prob_ID:
-        return HttpResponse("Wrong prob_id")
-    if not student_number:
-        return HttpResponse("Wrong student_number")
-    if not submission_ID:
-        return HttpResponse("Wrong submission_id")
-    if not ext:
-        return HttpResponse("Wrong ext")
-    code_path = os.path.join("/opt/vespa/data/submission",student_number,prob_ID,submission_ID+'.'+ext)
+    if submission_ID == "None": submission_ID = -1
+    submission = get_object_or_404(SubmissionModel, id=submission_ID)
+    code_path = submission.sub_file.path
     code_content = ""
     if os.path.isfile(code_path) :
         try:
