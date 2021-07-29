@@ -123,3 +123,7 @@ body {
 .admin {
   color: #ce2121;
 }
+
+.comment-author, .retweet-author {
+  font-size: 1.2em !important;
+}
