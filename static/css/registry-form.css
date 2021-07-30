@@ -438,9 +438,10 @@
   }
   
   #assignment-form .input-file {
-    display: none;
+    opacity: 0;
+    width: 1px;
   }
-  
+
   #assignment-form .input-file + label {
     font-size: 15px;
     color: #fff;

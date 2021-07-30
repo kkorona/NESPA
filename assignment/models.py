@@ -5,7 +5,7 @@ from accounts.models import vespaUser
 import os
 # Create your models here.
 
-problem_upload_storage = FileSystemStorage(location=PROBLEM_UPLOAD_ROOT, base_url='/problems')
+problem_upload_storage = FileSystemStorage(location=PROBLEM_UPLOAD_ROOT, base_url='/assignment')
 submission_upload_storage = FileSystemStorage(location=SUBMISSION_UPLOAD_ROOT, base_url='/submission')
 
 def document_upload_path(instance, filename):
@@ -14,15 +14,28 @@ def document_upload_path(instance, filename):
 def sample_data_upload_path(instance, filename):
     return 'assignment/sampledata/{}/{}'.format(instance.prob_id, filename)
 
+def sub_data_upload_path(instance, filename):
+    return '{}/subs/{}'.format(instance.prob_id, filename)
+
+def header_data_upload_path(instance, filename):
+    return '{}/header/{}'.format(instance.prob_id, filename)
+
+def grade_data_upload_path(instance, filename):
+    return '{}/eval/{}'.format(instance.problem.prob_id,filename)
+
 def submission_upload_path(instance, filename):
     filename = '{}.{}'.format(instance.id, instance.lang)
     return '{}/{}/{}'.format(instance.user.studentNumber, instance.problem.prob_id, filename)
+
+
 
 class ProblemModel(models.Model):
     prob_id = models.CharField(max_length=20)
     prob_name = models.CharField(max_length=20)
     document = models.FileField(upload_to=document_upload_path, blank=True, null=True)
     sample_data = models.FileField(upload_to=sample_data_upload_path, blank=True, null=True)
+    sub_data = models.FileField(upload_to=sub_data_upload_path, storage=problem_upload_storage, blank=True, null=True)
+    header_data = models.FileField(upload_to=header_data_upload_path, storage=problem_upload_storage, blank=True, null=True)
     starts_at = models.DateTimeField()
     ends_at = models.DateTimeField()
     size_limit = models.IntegerField()
@@ -36,6 +49,19 @@ class ProblemModel(models.Model):
     class Meta:
         db_table = "problems"
         ordering = ('prob_id',)
+
+class GradeModel(models.Model):
+    problem = models.ForeignKey(ProblemModel, on_delete=models.CASCADE, null=True)
+    grade_input = models.FileField(upload_to=grade_data_upload_path, storage=problem_upload_storage, null=True)
+    grade_output = models.FileField(upload_to=grade_data_upload_path, storage=problem_upload_storage, null=True)
+
+    def __str__(self):
+        return '{}({})'.format(str(self.problem.prob_id), str(self.grade_input.name))
+
+    def problem_ID(self):
+        return str(self.problem.prob_id)
+
+    problem_ID.short_description = 'PROBLEM ID'
 
 
 class SubmissionModel(models.Model):

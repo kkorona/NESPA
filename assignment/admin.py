@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SubmissionModel, ProblemModel
+from .models import SubmissionModel, ProblemModel, GradeModel
 
 @admin.register(SubmissionModel)
 
@@ -11,6 +11,9 @@ class submissionAdmin(admin.ModelAdmin) :
 class submissionAdmin(admin.ModelAdmin) :
     list_display = ('id', 'prob_name','starts_at','ends_at','size_limit', 'try_limit', 'time_limit', 'eval')
     
-
+@admin.register(GradeModel)
+    
+class gradeAdmin(admin.ModelAdmin) :
+    list_display = ('id', 'problem_ID')
 # Register your models here.
 
