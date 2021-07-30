@@ -4,17 +4,21 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.utils import timezone
 from django.core.files.storage import FileSystemStorage
+from django.contrib import messages
+
+from django.core.files import File as DjangoFile
 # Create your views here.
 
 from . import validation
 from . import compile
 from . import execute
-from assignment.models import SubmissionModel, ProblemModel
+from assignment.models import SubmissionModel, ProblemModel, GradeModel
 from accounts.models import vespaUser
 from collections import OrderedDict
 import shutil
 import os
 import time
+import zipfile
 
 LANGDICT = {
 '01':'C++14',
@@ -229,6 +233,39 @@ def submission_detail(request):
 
 
 def assignment_registry(request):
+    if request.method == "POST":
+        prob_id = request.POST["prob_id"]
+        prob_name = request.POST["prob_name"]
+        try_limit = int(request.POST["try_limit"])
+        time_limit = float(request.POST["time_limit"])
+        size_limit = int(request.POST["size_limit"])
+        start_date = request.POST["start_date"]
+        start_time = request.POST["start_time"]
+        end_date = request.POST["end_date"]
+        end_time = request.POST["end_time"]
+        eval_std = request.POST["eval"]
+        files = request.FILES
+
+        new_problem = ProblemModel(prob_id=prob_id, prob_name=prob_name, try_limit=try_limit, time_limit=time_limit, size_limit=size_limit, eval=eval_std)
+        new_problem.starts_at = start_date + ' ' + start_time
+        new_problem.ends_at = end_date + ' ' + end_time
+        for filename in files:
+            if filename == "document": new_problem.document = files['document']
+            if filename == "sample_data": new_problem.sample_data = files['sample_data']
+            if filename == "sub_data": new_problem.sub_data = files['sub_data']
+            if filename == "header_data": new_problem.header_data = files['header_data']
+        new_problem.save()
+        if "grade_data" in files:
+                grade_data = files['grade_data']
+                zf = zipfile.ZipFile(grade_data)
+                file_list = zf.namelist()
+                for i in range(0, len(file_list), 2):
+                    gradeModel = GradeModel(problem=new_problem)
+                    gradeModel.grade_input = DjangoFile(zf.open(file_list[i]), name=file_list[i])
+                    gradeModel.grade_output = DjangoFile(zf.open(file_list[i+1]), name=file_list[i+1])
+                    gradeModel.save()
+        #problemModel.starts_at = start_date + ' ' + start_time
+
     return render(request, "assignment_registry.html");
 def assignment_manage(request):
     return render(request, "assignment_manage.html");

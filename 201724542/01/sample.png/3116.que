@@ -1,1 +1,0 @@
-/opt/rh/devtoolset-8/root/usr/bin/g++ 201724542/01/sample.png/3116.cpp -o 201724542/01/sample.png/3116 -O2 -Wall -lm -static -std=gnu++14
