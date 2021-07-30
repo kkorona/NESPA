@@ -1,0 +1,70 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div id="main_center" class="w-75 m-auto">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">과제물 등록/ Assignment Registry</h1>
+      </div>
+      <div id="assignment-form">
+        <div class="card card-6">
+                <div class="card-heading">
+                    <h2 class="title">과제물 등록</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-row">
+                            <div class="name">Full name</div>
+                            <div class="value">
+                                <input class="input--style-6" type="text" name="full_name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Email address</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-6" type="email" name="email" placeholder="example@email.com">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Message</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <textarea class="textarea--style-6" name="message" placeholder="Message sent to the employer"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Upload CV</div>
+                            <div class="value">
+                                <div class="input-group js-input-file">
+                                    <input class="input-file" type="file" name="file_cv" id="file">
+                                    <label class="label--file" for="file">Choose file</label>
+                                    <span class="input-file__info">No file chosen</span>
+                                </div>
+                                <div class="label--desc">Upload your CV/Resume or any other relevant file. Max file size 50 MB</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn--radius-2 btn--blue-2" type="submit">Send Application</button>
+                </div>
+            </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_result").attr('class','nav-link active'); 
+</script>
+{% endblock %}
+

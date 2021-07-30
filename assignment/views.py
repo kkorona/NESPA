@@ -226,3 +226,15 @@ def submission_detail(request):
                     key_list.append(key)
                     score_list.append(score)
                 return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list, "prob":prob})
+
+
+def assignment_registry(request):
+    return render(request, "assignment_registry.html");
+def assignment_manage(request):
+    return render(request, "assignment_manage.html");
+def user_approval(request):
+    return render(request, "user_approval.html");
+def user_manage(request):
+    return render(request, "user_manage.html");
+def settings(request):
+    return render(request, "settings.html");
