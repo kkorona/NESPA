@@ -60,23 +60,18 @@
     -moz-box-align: start;
     -ms-flex-align: start;
     align-items: flex-start;
-    padding: 24px 55px;
+    padding: 15px 20px;
     border-bottom: 1px solid #e5e5e5;
   }
   
   #assignment-form .form-row .name {
-    width: 188px;
+    width: 110px;
     color: #333;
     font-size: 15px;
     font-weight: 700;
     margin-top: 11px;
   }
   
-  #assignment-form .form-row .value {
-    width: -webkit-calc(100% - 188px);
-    width: -moz-calc(100% - 188px);
-    width: calc(100% - 188px);
-  }
   
   #assignment-form @media (max-width: 767px) {
     #assignment-form .form-row {
@@ -275,6 +270,10 @@
   #assignment-form input[type="date" i] {
     padding: 14px;
   }
+
+  #assignment-form input[type="time" i] {
+    padding: 14px;
+}
   
   #assignment-form .table-condensed td, .table-condensed th {
     font-size: 14px;
@@ -297,7 +296,7 @@
     margin-top: 5px;
   }
   
-  #assignment-form .daterangepicker::after, .daterangepicker::before {
+  #assignment-form .daterangepicker::after, #assignment-form .daterangepicker::before {
     display: none;
   }
   
@@ -318,7 +317,7 @@
   /* ==========================================================================
      #FORM
      ========================================================================== */
-  input,
+     #assignment-form input,
   #assignment-form textarea {
     outline: none;
     margin: 0;
@@ -340,7 +339,7 @@
     margin: 0;
   }
   
-  .input--style-6,
+  #assignment-form .input--style-6,
   #assignment-form .textarea--style-6 {
     background: transparent;
     line-height: 38px;
@@ -355,41 +354,60 @@
     -moz-transition: all 0.4s ease;
     transition: all 0.4s ease;
     padding: 0 20px;
+    width: 80px;
+  }
+
+  #assignment-form .input--style-12,
+  #assignment-form .textarea--style-12 {
+    background: transparent;
+    line-height: 38px;
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #666;
+    font-size: 15px;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    padding: 0 20px;
+    width: 350px;
   }
   
-  .input--style-6::-webkit-input-placeholder,
+  #assignment-form .input--style-6::-webkit-input-placeholder,
   #assignment-form .textarea--style-6::-webkit-input-placeholder {
     /* WebKit, Blink, Edge */
     color: #999;
   }
   
-  .input--style-6:-moz-placeholder,
+  #assignment-form .input--style-6:-moz-placeholder,
   #assignment-form .textarea--style-6:-moz-placeholder {
     /* Mozilla Firefox 4 to 18 */
     color: #999;
     opacity: 1;
   }
   
-  .input--style-6::-moz-placeholder,
+  #assignment-form .input--style-6::-moz-placeholder,
   #assignment-form .textarea--style-6::-moz-placeholder {
     /* Mozilla Firefox 19+ */
     color: #999;
     opacity: 1;
   }
   
-  .input--style-6:-ms-input-placeholder,
+  #assignment-form .input--style-6:-ms-input-placeholder,
   #assignment-form .textarea--style-6:-ms-input-placeholder {
     /* Internet Explorer 10-11 */
     color: #999;
   }
   
-  .input--style-6:-ms-input-placeholder,
+  #assignment-form .input--style-6:-ms-input-placeholder,
   #assignment-form .textarea--style-6:-ms-input-placeholder {
     /* Microsoft Edge */
     color: #999;
   }
   
-  .input--style-6:focus,
+  #assignment-form .input--style-6:focus,
   #assignment-form .textarea--style-6:focus {
     -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
@@ -467,7 +485,6 @@
     font-size: 36px;
     font-weight: 700;
     text-align: left;
-    color: #fff;
     margin-bottom: 24px;
   }
   
