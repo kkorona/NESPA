@@ -9,50 +9,141 @@
         <h1 class="h2">과제물 등록/ Assignment Registry</h1>
       </div>
       <div id="assignment-form">
-        <div class="card card-6">
-                <div class="card-heading">
-                    <h2 class="title">과제물 등록</h2>
-                </div>
-                <div class="card-body">
+                <div id="main_center" class="card-body">
                     <form method="POST">
-                        <div class="form-row">
-                            <div class="name">Full name</div>
+                        <div class=" d-flex flex-row ">
+                          <div class="form-row" style="width:33%">
+                            <div class="name" style="width:90px">과제 번호</div>
                             <div class="value">
                                 <input class="input--style-6" type="text" name="full_name">
+                                <span>번</span>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Email address</div>
+                          </div>
+                          <div class="form-row" style="width:66%">
+                            <div class="name" style="width:90px">과제 이름</div>
                             <div class="value">
-                                <div class="input-group">
-                                    <input class="input--style-6" type="email" name="email" placeholder="example@email.com">
-                                </div>
+                                <input class="input--style-12" type="text" name="full_name">
                             </div>
+                          </div>
                         </div>
-                        <div class="form-row">
-                            <div class="name">Message</div>
+
+                        <div class=" d-flex flex-row">
+                          <div class="form-row" style="width:33%">
+                            <div class="name" style="width:90px">제한 회수</div>
                             <div class="value">
-                                <div class="input-group">
-                                    <textarea class="textarea--style-6" name="message" placeholder="Message sent to the employer"></textarea>
-                                </div>
+                                <input class="input--style-6" type="text" name="full_name"> 
+                                <span>회</span>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Upload CV</div>
+                          </div>
+                          <div class="form-row" style="width:33%">
+                            <div class="name" style="width:90px">제한 시간</div>
                             <div class="value">
-                                <div class="input-group js-input-file">
-                                    <input class="input-file" type="file" name="file_cv" id="file">
-                                    <label class="label--file" for="file">Choose file</label>
-                                    <span class="input-file__info">No file chosen</span>
-                                </div>
-                                <div class="label--desc">Upload your CV/Resume or any other relevant file. Max file size 50 MB</div>
+                                <input class="input--style-6" type="text" name="full_name">
+                                <span>초</span>
                             </div>
+                          </div>
+                          <div class="form-row" style="width:33%">
+                            <div class="name" style="width:90px">제한 크기</div>
+                            <div class="value">
+                                <input class="input--style-6" type="text" name="full_name">
+                                <span>바이트</span>
+                            </div>
+                          </div>
                         </div>
+
+                        <div class="p-3"></div>
+
+                        <div class="form-row">
+                          <div class="name">제출시작시간</div>
+                          <div class="value">
+                            <input type="date" id="startdate" name="assignment-start-date">
+                          </div>
+                          <div class="value">
+                            <input type="time" name="assignment-start-time" value="00:00" required>
+                          </div>
+                        </div>
+                        
+                        <div class="form-row">
+                          <div class="name">제출마감시간</div>
+                          <div class="value">
+                            <input type="date" id="enddate" name="assignment-start-date">
+                          </div>
+                          <div class="value">
+                            <input type="time" name="assignment-start-time" value="22:00" required>
+                          </div>
+                        </div>
+
+                        <div class="p-3"></div>
+
+                        <div class="form-row">
+                          <div class="name">과제 내용</div>
+                          <div class="value">
+                            <div class="input-group js-input-file">
+                              <input class="input-file" type="file" name="file_cv" id="file1">
+                              <label class="label--file" for="file1">파일 선택</label>
+
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-row">
+                          <div class="name">추가 파일 1</div>
+                          <div class="value">
+                            <div class="input-group js-input-file">
+                              <input class="input-file" type="file" name="file_cv" id="file2">
+                              <label class="label--file" for="file2">파일 선택</label>
+
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-row">
+                          <div class="name">추가 파일 2</div>
+                          <div class="value">
+                            <div class="input-group js-input-file">
+                              <input class="input-file" type="file" name="file_cv" id="file3">
+                              <label class="label--file" for="file3">파일 선택</label>
+
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="p-3"></div>
+
+                        <div class="form-row">
+                          <div class="name">샘플 데이터</div>
+                          <div class="value">
+                            <div class="input-group js-input-file">
+                              <input class="input-file" type="file" name="file_cv" id="file4">
+                              <label class="label--file" for="file4">파일 선택</label>
+
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-row">
+                          <div class="name">채점 데이터</div>
+                          <div class="value">
+                            <div class="input-group js-input-file">
+                              <input class="input-file" type="file" name="file_cv" id="file5">
+                              <label class="label--file" for="file5">파일 선택</label>
+
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                            </div>
+                          </div>
+                        </div>
+
+
                     </form>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn--radius-2 btn--blue-2" type="submit">Send Application</button>
+                <div class="d-flex justify-content-center mt-5">
+                  <button class="btn btn--radius-2 btn--blue-2 pl-5 pr-5 mr-0" type="submit">과제 등록</button>
                 </div>
+
             </div>
       </div>
       </div>
@@ -64,7 +155,12 @@
 
 {% block scripts %}
 <script>
-    $("#sidebar_result").attr('class','nav-link active'); 
+  $("#sidebar_result").attr('class','nav-link active'); 
+  $('#startdate').val(new Date().toISOString().substring(0, 10));
+  var enddate = new Date();
+  enddate.setDate(enddate.getDate() + 4);
+  $('#enddate').val(enddate.toISOString().substring(0, 10));
+
 </script>
 {% endblock %}
 
