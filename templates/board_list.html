@@ -93,6 +93,49 @@
             {% endif %}
           
         </ul>
+
+      {% if request.session.usertype == "admin" %}
+       <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <span>관리자 항목</span>
+        <a class="d-flex align-items-center text-muted" href="#" aria-label="Page for Admin">
+          <span data-feather="chevrons-left"></span>
+        </a>
+      </h6>
+
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_assignment_registry" href="/assignment_registry">
+            <span data-feather="upload"></span>
+            과제물 등록
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_assignment_manage" href="/assignment_manage">
+            <span data-feather="briefcase"></span>
+            과제물 관리
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_user_approval" href="/user_approval">
+            <span data-feather="user-check"></span>
+            사용자 승인
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_user_manage" href="/user_manage">
+            <span data-feather="user"></span>
+            사용자 관리
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_settings" href="/settings">
+            <span data-feather="settings"></span>
+            시스템 설정
+          </a>
+        </li>
+      </ul>
+       
+      {% endif %}
       
       <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>강의 정보</span>
