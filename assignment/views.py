@@ -161,6 +161,8 @@ def assignment_list(request):
 def submission_list(request):
     prob_list = ProblemModel.objects.all()
     return render(request, "submission_list.html", {'prob_list':prob_list})
+
+    
     
 def watch_code(request):
     submission_ID = request.GET.get('submission_id', None)
@@ -267,11 +269,15 @@ def assignment_registry(request):
         #problemModel.starts_at = start_date + ' ' + start_time
 
     return render(request, "assignment_registry.html");
+
 def assignment_manage(request):
     return render(request, "assignment_manage.html");
 def user_approval(request):
     return render(request, "user_approval.html");
+
 def user_manage(request):
-    return render(request, "user_manage.html");
+    users = vespaUser.objects.filter(usertype="normal")
+    return render(request, "user_manage.html", {'users':users});
+    
 def settings(request):
     return render(request, "settings.html");
