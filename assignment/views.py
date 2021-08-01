@@ -276,7 +276,8 @@ def assignment_registry(request):
 def assignment_manage(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
-    return render(request, "assignment_manage.html");
+    prob_list = ProblemModel.objects.all()
+    return render(request, "assignment_manage.html",  {'prob_list':prob_list});
 
 def user_approval(request):
     if request.session['usertype'] != 'admin':

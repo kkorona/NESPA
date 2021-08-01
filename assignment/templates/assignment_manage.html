@@ -10,33 +10,27 @@
       </div>
       <div >
         <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Problem</th>
-                    <th scope="col">Max Size</th>
-                    <th scope="col">Timeout</th>
-                    <th scope="col">Max Try</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                    <th scope="col">Evaluation</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for prob in prob_list %}
-                <tr>
-                    <th score="row">{{ prob.prob_id }}
-                    <td><a href="/assignment/submission_detail?prob_id={{prob.prob_id}}">{{prob.prob_name}}</a></td>
-                    <td>{{ prob.size_limit}}</td>
-                    <td>{{ prob.time_limit }}</td>
-                    <td>{{ prob.try_limit }}</td>
-                    <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
-                    <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
-                    <td>{{ prob.eval }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+          <thead class="thead-dark">
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Problem</th>
+                  <th scope="col"></th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for prob in prob_list %}
+              <tr>
+                  <th score="row">{{ prob.prob_id }}
+                  <td class="pr-5"><a href="/assignment/submission_detail?prob_id={{prob.prob_id}}">{{prob.prob_name}}</a></td>
+                  <td class="d-flex justify-content-center">
+                    <button class="btn btn-primary btn-sm mr-3" >수정</button>
+                    <button class="btn btn-secondary btn-sm " >삭제</button>
+
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
       </div>
       </div>
     </main>
