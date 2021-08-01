@@ -9,34 +9,68 @@
         <h1 class="h2">시스템 설정/ settings</h1>
       </div>
       <div >
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Problem</th>
-                    <th scope="col">Max Size</th>
-                    <th scope="col">Timeout</th>
-                    <th scope="col">Max Try</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                    <th scope="col">Evaluation</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for prob in prob_list %}
-                <tr>
-                    <th score="row">{{ prob.prob_id }}
-                    <td><a href="/assignment/submission_detail?prob_id={{prob.prob_id}}">{{prob.prob_name}}</a></td>
-                    <td>{{ prob.size_limit}}</td>
-                    <td>{{ prob.time_limit }}</td>
-                    <td>{{ prob.try_limit }}</td>
-                    <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
-                    <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
-                    <td>{{ prob.eval }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="container">
+          <div style="height: 100px;"></div>
+          <div class="card m-auto w-50 pl-3 pt-2">
+            <div class="card-title pl-3 pt-3 m-0" style="font-size: large;font-weight: 700;">
+                <span data-feather="lock"></span> 잠금여부</div>
+            <div class="card-body">
+              <div class="form-check-1">
+                <input class="settings-lock" type="radio" name="settings-lock" id="settings-lock-1">
+                <label class="settings-lock-label" for="settings-lock-1">
+                  잠금
+                </label>
+              </div>
+              <div class="form-check-1">
+                <input class="settings-lock" type="radio" name="settings-lock" id="settings-lock-2" checked>
+                <label class="settings-lock-label" for="settings-lock-2">
+                  잠금해제
+                </label>
+              </div>
+            </div>
+
+            <div class="card-title pl-3 pt-3 m-0" style="font-size: large;font-weight: 700">
+              <span data-feather="eye"></span> 채점결과 데이터번호표시</div>
+            <div class="card-body">
+              <div class="form-check-2">
+                <input class="settings-view" type="radio" name="settings-view" id="settings-view-1">
+                <label class="settings-view-label" for="settings-view-1">
+                  보임
+                </label>
+              </div>
+              <div class="form-check-2">
+                <input class="settings-view" type="radio" name="settings-view" id="settings-view-2" checked>
+                <label class="settings-view-label" for="settings-view-2">
+                  보이지 않음
+                </label>
+              </div>
+            </div>
+            <button class="btn btn-secondary w-25 m-auto" >변경</button>
+            <br>
+
+          </div>
+          <br>
+
+          <div  class="card m-auto w-50 pl-3">
+            <div id="assignment-form" class="pt-3 pl-3">
+              <div class="name" style="font-size: large;font-weight: 700;"> <span data-feather="image"></span> 배너선택</div>
+              <br>
+              <div class="value">
+                <div class="input-group js-input-file">
+                  <input class="input-file" type="file" name="grade_data" id="file5" required>
+                  <label class="label--file" for="file5">파일 선택</label>
+                  <span class="input-file__info">선택된 파일이 없습니다</span>
+                </div>
+              </div>
+            </div>
+            <div style="height: 20px;"></div>
+            <button class="btn btn-secondary w-25  m-auto">변경</button>
+            <br>
+          </div>
+          
+
+          
+        </div>
       </div>
       </div>
     </main>
