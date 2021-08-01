@@ -8,35 +8,62 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">사용자 관리/ User Manage</h1>
       </div>
-      <div >
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Problem</th>
-                    <th scope="col">Max Size</th>
-                    <th scope="col">Timeout</th>
-                    <th scope="col">Max Try</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                    <th scope="col">Evaluation</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for prob in prob_list %}
-                <tr>
-                    <th score="row">{{ prob.prob_id }}
-                    <td><a href="/assignment/submission_detail?prob_id={{prob.prob_id}}">{{prob.prob_name}}</a></td>
-                    <td>{{ prob.size_limit}}</td>
-                    <td>{{ prob.time_limit }}</td>
-                    <td>{{ prob.try_limit }}</td>
-                    <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
-                    <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
-                    <td>{{ prob.eval }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+      <div class="row row-cols-2">
+
+        {% for user in users %}
+
+        <div class="col mt-5">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title d-flex justify-content-between">
+                <span class="pl-2" style="font-size: 24px;font-weight:700;"># {{forloop.counter}}</span>
+                <button class="btn btn-outline-danger" >삭제</button>
+              </div>
+              <div class="card-text">
+                <table  class="table table-borderless btn-sm">
+                  <tbody>
+                    <tr>
+                      <th>학번</th>
+                      <td>{{ user.studentNumber }}</td>
+                    </tr>
+                    <tr>
+                      <th>이름</th>
+                      <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                      <th>아이디</th>
+                      <td>{{ user.user_id }}</td>
+                    </tr>
+                    <tr>
+                      <th>학년</th>
+                      <td>{{ user.grade }}</td>
+                    </tr>
+                    <tr>
+                      <th>전공</th>
+                      <td>{{ user.major }}</td>
+                    </tr>
+                    <tr>
+                      <th>이메일</th>
+                      <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                      <th>전화번호</th>
+                      <td>{{ user.phone }}</td>
+                    </tr>
+                    <tr>
+                      <th>등록일자</th>
+                      <td>{{ user.created_at }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+        
       </div>
       </div>
     </main>
