@@ -235,6 +235,9 @@ def submission_detail(request):
 
 
 def assignment_registry(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
+
     if request.method == "POST":
         prob_id = request.POST["prob_id"]
         prob_name = request.POST["prob_name"]
@@ -271,13 +274,24 @@ def assignment_registry(request):
     return render(request, "assignment_registry.html");
 
 def assignment_manage(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
     return render(request, "assignment_manage.html");
+
 def user_approval(request):
-    return render(request, "user_approval.html");
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
+
+    newuser = vespaUser.objects.filter(usertype="unapproved")
+    return render(request, "user_approval.html",{'newusers' : newuser});
 
 def user_manage(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
     users = vespaUser.objects.filter(usertype="normal")
     return render(request, "user_manage.html", {'users':users});
-    
+
 def settings(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
     return render(request, "settings.html");
