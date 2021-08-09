@@ -169,6 +169,7 @@ td.table_idx {
   line-height: 60px;
   outline: transparent;
   position: relative;
+  background: linear-gradient(45deg, transparent 5%, #003ab6 5%);">관리자 항목
   text-decoration: none;
 }
 
