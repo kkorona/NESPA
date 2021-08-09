@@ -109,10 +109,10 @@ def submission_check(request):
         target_title = os.path.join(destination_path, str(submission.id)) 
         eval_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID,'eval')
         
-        '''if os.path.exists(subfile_path):
+        if os.path.exists(subfile_path):
             subfiles = os.listdir(subfile_path)
             for subfile in subfiles:
-                shutil.copyfile(os.path.join(subfile_path,subfile),os.path.join(destination_path,subfile))'''
+                shutil.copyfile(os.path.join(subfile_path,subfile),os.path.join(destination_path,subfile))
         
         code_size = submission.sub_file.size
 
