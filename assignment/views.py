@@ -273,13 +273,23 @@ def assignment_registry(request):
                     gradeModel.grade_input = DjangoFile(zf.open(file_list[i]), name=file_list[i])
                     gradeModel.grade_output = DjangoFile(zf.open(file_list[i+1]), name=file_list[i+1])
                     gradeModel.save()
-        #problemModel.starts_at = start_date + ' ' + start_time
-
     return render(request, "assignment_registry.html");
 
 def assignment_manage(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
+    if request.method == "POST":
+        prob_id = int(request.POST["prob_id"])
+        problem = ProblemModel.objects.get(id=prob_id)
+        start_date = problem.starts_at.strftime('%Y-%m-%d')
+        start_time = problem.starts_at.strftime('%H:%M')
+        end_date = problem.ends_at.strftime('%Y-%m-%d')
+        end_time = problem.ends_at.strftime('%H:%M')
+        return render(request, "assignment_registry.html", {'problem':problem,
+                                                            'start_date':start_date,
+                                                            'start_time':start_time,
+                                                            'end_date':end_date,
+                                                            'end_time':end_time,});
     prob_list = ProblemModel.objects.all()
     return render(request, "assignment_manage.html",  {'prob_list':prob_list});
 

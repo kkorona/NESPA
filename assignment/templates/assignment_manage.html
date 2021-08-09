@@ -8,7 +8,11 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">과제물 관리/ Assignment Manage</h1>
       </div>
-      <div >
+      <div>
+        <form method="POST" enctype="multipart/form-data" action="" name="assignment_manage">
+          {% csrf_token %}
+          <input type="hidden" name="prob_id" value="">
+        </form>
         <table class="table table-hover">
           <thead class="thead-dark">
               <tr>
@@ -23,9 +27,8 @@
                   <th score="row">{{ prob.prob_id }}
                   <td class="pr-5"><a href="/assignment/submission_detail?prob_id={{prob.prob_id}}">{{prob.prob_name}}</a></td>
                   <td class="d-flex justify-content-center">
-                    <button class="btn btn-primary btn-sm mr-3" >수정</button>
-                    <button class="btn btn-secondary btn-sm " >삭제</button>
-
+                    <button class="btn btn-primary btn-sm mr-3" name="manage" id="{{ prob.id }}">수정</button>
+                    <button class="btn btn-secondary btn-sm">삭제</button>
                   </td>
               </tr>
               {% endfor %}
@@ -41,7 +44,11 @@
 
 {% block scripts %}
 <script>
-    $("#sidebar_assignment_manage").attr('class','nav-link active'); 
+    $("#sidebar_assignment_manage").attr('class','nav-link active');
+    $("button[name='manage']").on('click', function() {
+       $('input[name="prob_id"]').val($(this).attr('id'));
+       $('form[name="assignment_manage"]').submit();
+    });
 </script>
 {% endblock %}
 
