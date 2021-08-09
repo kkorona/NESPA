@@ -259,7 +259,7 @@
             <img  class="m-auto" src="/static/miscs/banner.png">
            </div> 
             
-          <div id="main_center" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75 m-auto">
+          <div id="main_center" class="board-title d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75 m-auto">
             {% block board_title %}
             {% endblock %}
           </div>
@@ -269,7 +269,7 @@
             <thead class="thead-light">
             <tr>
                 <th class="w-5 text-center">#</th>
-                <th class="w-50">제목</th>
+                <th class="w-50 table_title">제목</th>
                 <th class="w-10 text-center">작성자</th>
                 <th class="w-10 text-center">게시날짜</th>
                 <th class="w-5 text-center">조회수</th>
@@ -279,7 +279,7 @@
                 {% for post in posts %}
                 <tr>
                 <td class="text-center">{{ post.id }}</td>
-                <td><a href="{{ post.get_absolute_url }}">{{ post.title }}
+                <td class="table_title"><a href="{{ post.get_absolute_url }}">{{ post.title }}
                 {% if post.comments_count > 0 %}
                 <span class="text-comment-info">
                 [{{ post.comments_count }}]
@@ -287,7 +287,7 @@
                 {% endif %}
                 </a></td>
                 <td class="text-center">{{ post.author }}</td>
-                <td class="text-center">{{ post.pub_date|date:"N j일, H:i" }}</td>
+                <td class="text-center">{{ post.pub_date|date:"N j일" }}</td>
                 <td class="text-center">
                 {% if post.post_hit %}
                 {{ post.post_hit }}

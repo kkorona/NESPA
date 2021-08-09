@@ -117,7 +117,17 @@ body {
 }
 
 #main_center{
-  max-width: 800px;
+  max-width: 1000px;
+}
+
+#main_center > table td,
+#main_center > table th {
+  white-space: nowrap;
+}
+
+th.table_title,
+td.table_title {
+  min-width: 700px;
 }
 
 .admin {
@@ -127,3 +137,30 @@ body {
 .comment-author, .retweet-author {
   font-size: 1.2em !important;
 }
+
+@font-face {
+  font-family: 'BMHANNAPro';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.title-container {
+  width: fit-content;
+}
+
+.title-box, .title-box::after, .title-box:hover {
+  font-family: 'BMHANNAPro';
+  font-size: 28px;
+  background: linear-gradient(45deg, transparent 5%, #003ab6 5%);
+  padding: 10px 20px;
+  border: 0;
+  color: #fff;
+  letter-spacing: 2px;
+  line-height: 88px;
+  outline: transparent;
+  position: relative;
+  text-decoration: none;
+}
+
+
