@@ -109,10 +109,10 @@ def submission_check(request):
         target_title = os.path.join(destination_path, str(submission.id)) 
         eval_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID,'eval')
         
-        if os.path.exists(subfile_path):
+        '''if os.path.exists(subfile_path):
             subfiles = os.listdir(subfile_path)
             for subfile in subfiles:
-                shutil.copyfile(os.path.join(subfile_path,subfile),os.path.join(destination_path,subfile))
+                shutil.copyfile(os.path.join(subfile_path,subfile),os.path.join(destination_path,subfile))'''
         
         code_size = submission.sub_file.size
 
@@ -234,6 +234,10 @@ def submission_detail(request):
                 return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list, "prob":prob})
 
 
+
+'''
+    여기서부터 관리자 항목 함수
+'''
 def assignment_registry(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
@@ -282,13 +286,22 @@ def assignment_manage(request):
 def user_approval(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
-
+    if request.method == "POST":
+        user_id = int(request.POST["approve_user"])
+        approve_user = vespaUser.objects.get(id=user_id)
+        approve_user.usertype = "normal"
+        approve_user.save()
     newuser = vespaUser.objects.filter(usertype="unapproved")
-    return render(request, "user_approval.html",{'newusers' : newuser});
+    return render(request, "user_approval.html",{'newusers' : newuser})
 
 def user_manage(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
+    if request.method == "POST":
+        if "delete_user" in request.POST:
+            user_id = int(request.POST["delete_user"])
+            delete_user = vespaUser.objects.get(id=user_id)
+            delete_user.delete()
     users = vespaUser.objects.filter(usertype="normal")
     return render(request, "user_manage.html", {'users':users});
 

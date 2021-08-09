@@ -10,7 +10,10 @@
       </div>
 
       <div class="row row-cols-2">
-        
+        <form method="post" action="" name="delete_user" style="display: none;">
+          {% csrf_token %}
+          <input type="hidden" name="delete_user" value="">
+        </form>
 
         {% for user in users %}
 
@@ -19,7 +22,7 @@
             <div class="card-body">
               <div class="card-title d-flex justify-content-between">
                 <span class="pl-2" style="font-size: 24px;font-weight:700;"># {{forloop.counter}}</span>
-                <button class="btn btn-outline-danger" >삭제</button>
+                <button class="btn btn-outline-danger" name="delete_button" id="{{ user.id }}">삭제</button>
               </div>
               <div class="card-text">
                 <table  class="table table-borderless btn-sm">
@@ -76,6 +79,12 @@
 {% block scripts %}
 <script>
     $("#sidebar_user_manage").attr('class','nav-link active'); 
+    $('button[name="delete_button"]').on("click", function() {
+      if (confirm('선택하신 사용자를 삭제하시겠습니까?')) {
+        $('input[name="delete_user"]').val($(this).attr('id'));
+        $('form[name="delete_user"]').submit();
+      }
+    })
 </script>
 {% endblock %}
 
