@@ -13,7 +13,7 @@
                     <form method="POST" enctype="multipart/form-data" action="">
                       {% csrf_token %}
                         <div class=" d-flex flex-row ">
-                          <div class="form-row" style="width:33%">
+                          <div class="form-row" style="width:32%">
                             <div class="name" style="width:90px">과제 번호</div>
                             <div class="value">
                               {% if problem %}
@@ -24,7 +24,7 @@
                                 <span>번</span>
                             </div>
                           </div>
-                          <div class="form-row" style="width:66%">
+                          <div class="form-row" style="width:65%">
                             <div class="name" style="width:90px">과제 이름</div>
                             <div class="value">
                               {% if problem %}
@@ -84,8 +84,6 @@
                           </div>
                         </div>
 
-                        <div class="p-3"></div>
-
                         <div class="form-row">
                           <div class="name">제출시작시간</div>
                           {% if problem %}
@@ -123,8 +121,6 @@
                             </div>
                           {% endif %}
                         </div>
-
-                        <div class="p-3"></div>
 
                         <div class="form-row">
                           <div class="name">과제 내용</div>
@@ -177,8 +173,6 @@
                           </div>
                         </div>
 
-                        <div class="p-3"></div>
-
                         <div class="form-row">
                           <div class="name">샘플 데이터</div>
                           <div class="value">
@@ -212,12 +206,13 @@
                             </div>
                           </div>
                         </div>
-                        <div class="d-flex justify-content-center mt-5">
+                        <div class="d-flex justify-content-center mt-3">
                           <button class="btn btn--radius-2 btn--blue-2 pl-5 pr-5 mr-0" type="submit">과제 등록</button>
                         </div>
-                    </form>
-                </div>
-            </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="p-3"></div>
       </div>
       </div>
     </main>
