@@ -10,6 +10,10 @@
       </div>
 
       <div class="row">
+        <form method="post" action="" name="approve_user" style="display: none;">
+          {% csrf_token %}
+          <input type="hidden" name="approve_user" value="">
+        </form>
 
         {% for newuser in newusers %}
 
@@ -19,8 +23,8 @@
               <div class="card-title d-flex justify-content-between">
                 <span class="pl-2" style="font-size: 24px;font-weight:700;"># {{forloop.counter}}</span>
                 <span>
-                  <button class="btn btn-warning mr-3" >보류</button>
-                  <button class="btn btn-success" >승인</button>
+                  <button class="btn btn-warning mr-3">보류</button>
+                  <button class="btn btn-success" name="approve_button" id="{{ newuser.id }}">승인</button>
                 </span>
               </div>
               <div class="card-text">
@@ -67,7 +71,6 @@
 
         {% endfor %}
 
-        
       </div>
       </div>
     </main>
@@ -78,7 +81,13 @@
 
 {% block scripts %}
 <script>
-    $("#sidebar_user_approval").attr('class','nav-link active'); 
+    $("#sidebar_user_approval").attr('class','nav-link active');
+    $('button[name="approve_button"]').on("click", function() {
+      if (confirm('선택하신 사용자를 승인하시겠습니까?')) {
+        $('input[name="approve_user"]').val($(this).attr('id'));
+        $('form[name="approve_user"]').submit();
+      }
+    })
 </script>
 {% endblock %}
 

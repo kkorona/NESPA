@@ -1,0 +1,95 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <div id="main_center" class="w-75 m-auto">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">회원가입 / Sign up</h1>
+      </div>
+      <div>
+        <form method='POST' action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="user_name">이름 / Name</label>
+                    <input id="user_name" name="user_name" class="form-control" type="text">
+                    <small id="student_number_help" class="form-text text-muted">본명을 입력하세요.<br>Enter your real name in Korean.</small>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    <label for="student_number">학번 / Student Number</label>
+                    <input id="student_number" name="student_number" class="form-control" type="text" placeholder = "2020XXXXX" aria-describedby="student_number_help">
+                    <small id="student_number_help" class="form-text text-muted">학번은 9자리입니다.<br>Length of student number is 9.</small>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="user_id">ID</label>
+                    <input id="user_id" name="user_id" class="form-control" type="text">
+                    <small id="id_help" class="form-text text-muted">ID는 길이 4 이상 10 이하이며, 영문 및 숫자만 사용가능합니다.<br> ID length must between 4-10, and be composed of alphabet & numbers only.</small>
+                </div>
+            </div>
+            <div class="form-row">           
+                <div class="form-group">
+                    <label for="password1">비밀번호 / Password</label>
+                    <input id="password1" name="password1" class="form-control" type="password">
+                    <small id="password1_help" class="form-text text-muted">비밀번호는 길이 8 이상이며, 대소문자가 구분됩니다. <br> Password length must over 8, and case sensitive.<br>아이디를 비밀번호로 사용할 수 없습니다.<br>ID and password must be different.</small>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    <label for="password2">비밀번호 확인 / Confirm Password</label>
+                    <input id="password2" name="password2" class="form-control" type="password">
+                    <small id="password2_help" class="form-text text-muted">비밀번호를 다시 한번 입력해주세요.<br>Fill the same password again.</small>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    <label for="grade">학년 / Grade</label>
+                    <select id="grade" name="grade" class="form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="major">전공 / Major</label>
+                    <input id="major" name="major" class="form-control" type="text">
+                    <small id="major_help" class="form-text text-muted">한글로 전공명을 완전히 입력해주세요.<br>Fill the major with Korean.</small>
+                </div>
+            </div>
+            <div class="form-row">        
+                <div class="form-group">
+                    <label for="email">이메일 / e-mail</label>
+                    <input id="email" name="email" class="form-control" type="e-mail" placeholder = "example@pusan.ac.kr">
+                    <small id="major_help" class="form-text text-muted">언제든지 개별 연락을 수신 확인 가능한 이메일 주소를 입력해주세요.<br>Enter the e-mail address that you can receive individual contact at anytime.</small>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">개인연락처 / Phone</label>
+                    <input id="phone" name="phone" class="form-control" type="text" placeholder="010XXXXXXXX">
+                    <small id="major_help" class="form-text text-muted">개인 전화번호가 없을 경우 카카오톡 / 텔레그램 ID를 작성해주세요. <br>Fill out KakaoTalk / Telegram ID if you don't have a personal phone number.</small>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="회원가입 / Sign Up">
+        </form>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_signup").attr('class','nav-link active'); 
+</script>
+{% endblock %}
