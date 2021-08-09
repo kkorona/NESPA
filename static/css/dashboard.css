@@ -1,3 +1,25 @@
+@font-face {
+  font-family: 'BMHANNAPro';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'twayair';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: '양진체';
+  src: url('https://cdn.jsdelivr.net/gh/supernovice-lab/font@0.9/yangjin.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   font-size: .875rem;
 }
@@ -125,6 +147,12 @@ body {
   white-space: nowrap;
 }
 
+#main_center > div > h1 {
+  font-family: '양진체';
+  font-weight: 700;
+  font-size: 2.3rem;
+}
+
 th.table_title,
 td.table_title {
   width: 70%;
@@ -148,12 +176,7 @@ td.table_idx {
   font-size: 1.2em !important;
 }
 
-@font-face {
-  font-family: 'BMHANNAPro';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
+
 
 .title-container {
   width: fit-content;
@@ -173,12 +196,6 @@ td.table_idx {
   text-decoration: none;
 }
 
-@font-face {
-  font-family: 'twayair';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
 
 .sidebar-box, .sidebar-box::after, .sidebar-box:hover {
   width: 500px;
