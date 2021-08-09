@@ -95,11 +95,8 @@
         </ul>
 
       {% if request.session.usertype == "admin" %}
-       <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-        <span>관리자 항목</span>
-        <a class="d-flex align-items-center text-muted" href="#" aria-label="Page for Admin">
-          <span data-feather="chevrons-left"></span>
-        </a>
+       <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+        <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #003ab6 5%);">관리자 항목</span>
       </h6>
 
       <ul class="nav flex-column mb-2">
@@ -137,11 +134,8 @@
        
       {% endif %}
       
-      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>강의 정보</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #168500 5%);">강의 정보</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -164,11 +158,8 @@
           </li>
         </ul>
         
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>과제</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #962a00 5%);">과제</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -197,11 +188,8 @@
           </li>
         </ul>
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>게시판</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #009191 5%);">게시판</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -224,11 +212,8 @@
           </li>
         </ul>
     
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>About</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #8f0070 5%);">About</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -259,7 +244,7 @@
             <img  class="m-auto" src="/static/miscs/banner.png">
            </div> 
             
-          <div id="main_center" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75 m-auto">
+          <div id="main_center" class="board-title d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75 m-auto">
             {% block board_title %}
             {% endblock %}
           </div>
@@ -268,27 +253,27 @@
         <table class="table table-hover table-bordered border">
             <thead class="thead-light">
             <tr>
-                <th class="w-5 text-center">#</th>
-                <th class="w-50">제목</th>
-                <th class="w-10 text-center">작성자</th>
-                <th class="w-10 text-center">게시날짜</th>
-                <th class="w-5 text-center">조회수</th>
+                <th class="w-5 table_idx text-center">#</th>
+                <th class="w-50 table_title">제목</th>
+                <th class="w-10 table_info text-center">작성자</th>
+                <th class="w-10 table_info text-center">게시날짜</th>
+                <th class="w-5 table_info text-center">조회수</th>
             </tr>
             </thead>
                 <tbody>
                 {% for post in posts %}
                 <tr>
-                <td class="text-center">{{ post.id }}</td>
-                <td><a href="{{ post.get_absolute_url }}">{{ post.title }}
+                <td class="table_idx text-center">{{ post.id }}</td>
+                <td class="table_title"><a href="{{ post.get_absolute_url }}">{{ post.title }}
                 {% if post.comments_count > 0 %}
                 <span class="text-comment-info">
                 [{{ post.comments_count }}]
                 </span>
                 {% endif %}
                 </a></td>
-                <td class="text-center">{{ post.author }}</td>
-                <td class="text-center">{{ post.pub_date|date:"N j일, H:i" }}</td>
-                <td class="text-center">
+                <td class="text-center table_info">{{ post.author }}</td>
+                <td class="text-center table_info">{{ post.pub_date|date:"N j일" }}</td>
+                <td class="text-center table_info">
                 {% if post.post_hit %}
                 {{ post.post_hit }}
                 {% else %}

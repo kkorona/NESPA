@@ -228,7 +228,7 @@
   if ($('#comment_contents').length) {
     var editor = new Editor({
       el: document.querySelector('#comment_contents'),
-      height: '300px',
+      height: '200px',
       initialEditType: 'wysiwyg',
       previewStyle: 'vertical',
       plugins: [
@@ -250,7 +250,7 @@
       var tmp = Editor.factory({
           el : this,
           viewer: true ,
-          height: '300px',
+          height: '200px',
           initialValue:  $(this).attr('content'),
           plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
       });
@@ -310,7 +310,7 @@
         var tmp = Editor.factory({
             el : this,
             viewer: true ,
-            height: '300px',
+            height: '200px',
             initialValue:  $(this).attr('content'),
             plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
         });
@@ -319,7 +319,7 @@
 
     editor = new Editor({
         el: document.querySelector('#comment_contents'),
-        height: '300px',
+        height: '200px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical',
         initialValue: content,
@@ -364,7 +364,7 @@
     }
     editor = new Editor({
         el: document.querySelector('#comment_contents'),
-        height: '300px',
+        height: '200px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical',
         initialValue: content,

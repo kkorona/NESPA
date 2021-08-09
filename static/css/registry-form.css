@@ -2,6 +2,10 @@
   /* ==========================================================================
      #GRID
      ========================================================================== */
+  #assignment-form {
+    border: 2px solid rgba(129, 129, 129, 0.267);
+  }
+
   #assignment-form .row {
     display: -webkit-box;
     display: -webkit-flex;
@@ -60,7 +64,7 @@
     -moz-box-align: start;
     -ms-flex-align: start;
     align-items: flex-start;
-    padding: 15px 20px;
+    padding: 9px 20px;
     border-bottom: 1px solid #e5e5e5;
   }
   
