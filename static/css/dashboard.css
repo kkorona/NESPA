@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: 'BMHANNAPro';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
   font-weight: normal;
@@ -18,10 +18,23 @@
   src: url('https://cdn.jsdelivr.net/gh/supernovice-lab/font@0.9/yangjin.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+} */
+
+/* @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+.nanumgothic * {
+  font-family: 'Nanum Gothic', sans-serif;
+} */
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {
   font-size: .875rem;
+  font-family: 'Pretendard-Regular';
 }
 
 .feather {
@@ -152,8 +165,8 @@ body {
 }
 
 #main_center > div > h1 {
-  font-family: '양진체';
-  font-weight: 700;
+  font-family: 'Pretendard-Regular';
+  font-weight: 900;
   font-size: 2.3rem;
 }
 
@@ -180,15 +193,14 @@ td.table_idx {
   font-size: 1.2em !important;
 }
 
-
-
 .title-container {
   width: fit-content;
 }
 
 .title-box, .title-box::after, .title-box:hover {
-  font-family: 'BMHANNAPro';
+  font-family: 'Pretendard-Regular';
   font-size: 28px;
+  font-weight: 900;
   padding: 10px 20px;
   border: 0;
   color: #fff;
@@ -203,10 +215,11 @@ td.table_idx {
 
 .sidebar-box, .sidebar-box::after, .sidebar-box:hover {
   width: 500px;
-  font-family: 'twayair';
+  font-family: 'Pretendard-Regular';
+  font-weight: 900;
   font-size: 15px;
   background: linear-gradient(45deg, transparent 5%, #2e2e2e 5%);
-  padding: 6px 20px;
+  padding: 8px 20px;
   border: 0;
   color: #fff;
   letter-spacing: 1px;
