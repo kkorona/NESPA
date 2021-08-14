@@ -182,19 +182,28 @@
                            </div>
                         </div>
                      </div>
-                     <div class="form-row">
+                     <div class="form-row" style="flex-direction: column;">
                         <div class="name">채점 데이터</div>
-                        <div class="value">
+                        <div class="value w-75 p-5 mt-3">
                            <div class="input-group js-input-file">
                               {% if problem %}
-                                {% for grade_model in grade_model_list %}
-                                  <input class="input-file" type="file" name="{{ grade_model.grade_input.name }}" id="file5">
-                                  <label class="label--file" for="file5">파일 선택</label>
-                                  <span class="input-file__info">{{ grade_model.grade_input.name }}</span>
-                                  <input class="input-file" type="file" name="{{ grade_model.grade_output.name }}" id="file5">
-                                  <label class="label--file" for="file5">파일 선택</label>
-                                  <span class="input-file__info">{{ grade_model.grade_output.name }}</span>
+                              <div class="col">
+                                 {% for grade_model in grade_model_list %}
+                                 <div class="row  justify-content-between">
+                                    <div class="w-50">
+                                       <input class="input-file" type="file" name="{{ grade_model.grade_input.name }}" id="file-in">
+                                       <label class="label--file" for="file-in">파일 선택</label>
+                                       <span class="input-file__info">{{ grade_model.grade_input.name }}</span>
+                                    </div>
+                                    <div class="w-50">
+                                       <input class="input-file" type="file" name="{{ grade_model.grade_output.name }}" id="file-out">
+                                       <label class="label--file" for="file-out">파일 선택</label>
+                                       <span class="input-file__info">{{ grade_model.grade_output.name }}</span>
+                                    </div>
+                                 </div>
                                 {% endfor %}
+
+                              </div>
                               {% else %}
                               <input class="input-file" type="file" name="grade_data" id="file5" required>
                               <label class="label--file" for="file5">파일 선택</label>
