@@ -254,36 +254,64 @@ def assignment_registry(request):
         end_time = request.POST["end_time"]
         eval_std = request.POST["eval"]
         files = request.FILES
+        
+        new_problem = ProblemModel(prob_id=prob_id, prob_name=prob_name, try_limit=try_limit, time_limit=time_limit, size_limit=size_limit, eval=eval_std)
+        new_problem.starts_at = start_date + ' ' + start_time
+        new_problem.ends_at = end_date + ' ' + end_time
+        for filename in files:
+            if filename == "document": new_problem.document = files['document']
+            if filename == "sample_data": new_problem.sample_data = files['sample_data']
+            if filename == "sub_data": new_problem.sub_data = files['sub_data']
+            if filename == "header_data": new_problem.header_data = files['header_data']
+        new_problem.save()
 
-        if "grade_data" in files: # 새로운 과제를 추가하는 경우
-            new_problem = ProblemModel(prob_id=prob_id, prob_name=prob_name, try_limit=try_limit, time_limit=time_limit, size_limit=size_limit, eval=eval_std)
-            new_problem.starts_at = start_date + ' ' + start_time
-            new_problem.ends_at = end_date + ' ' + end_time
-            for filename in files:
-                if filename == "document": new_problem.document = files['document']
-                if filename == "sample_data": new_problem.sample_data = files['sample_data']
-                if filename == "sub_data": new_problem.sub_data = files['sub_data']
-                if filename == "header_data": new_problem.header_data = files['header_data']
-            new_problem.save()
-            if "grade_data" in files:
-                    grade_data = files['grade_data']
-                    zf = zipfile.ZipFile(grade_data)
-                    file_list = zf.namelist()
-                    for i in range(0, len(file_list), 2):
-                        gradeModel = GradeModel(problem=new_problem)
-                        gradeModel.grade_input = DjangoFile(zf.open(file_list[i]), name=file_list[i])
-                        gradeModel.grade_output = DjangoFile(zf.open(file_list[i+1]), name=file_list[i+1])
-                        gradeModel.save()
-            return render(request, "assignment_registry.html");
+        if "grade_data" in files:
+            grade_data = files['grade_data']
+            zf = zipfile.ZipFile(grade_data)
+            file_list = zf.namelist()
+            for i in range(0, len(file_list), 2):
+                gradeModel = GradeModel(problem=new_problem)
+                gradeModel.grade_input = DjangoFile(zf.open(file_list[i]), name=file_list[i])
+                gradeModel.grade_output = DjangoFile(zf.open(file_list[i+1]), name=file_list[i+1])
+                gradeModel.save()
+        return render(request, "assignment_registry.html");
 
-        else: # 기존 과제를 수정하는 경우
-            pass    
     return render(request, "assignment_registry.html");
 
 def assignment_manage(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
+    
     if request.method == "POST":
+        if "prob_name" in request.POST:
+            prob_id = request.POST["prob_id"]
+            prob_name = request.POST["prob_name"]
+            try_limit = int(request.POST["try_limit"])
+            time_limit = float(request.POST["time_limit"])
+            size_limit = int(request.POST["size_limit"])
+            start_date = request.POST["start_date"]
+            start_time = request.POST["start_time"]
+            end_date = request.POST["end_date"]
+            end_time = request.POST["end_time"]
+            eval_std = request.POST["eval"]
+            files = request.FILES
+
+            problem = ProblemModel.objects.get(prob_id=prob_id, prob_name=prob_name)
+            problem.starts_at = start_date + ' ' + start_time
+            problem.ends_at = end_date + ' ' + end_time
+            for filename in files:
+                print(filename)
+                if filename == "document": problem.document = files['document']
+                elif filename == "sample_data": problem.sample_data = files['sample_data']
+                elif filename == "sub_data": problem.sub_data = files['sub_data']
+                elif filename == "header_data": problem.header_data = files['header_data']
+                else:
+                    grade_index = filename.split()[0]
+                    print(grade_index)
+                    pass
+            #problem.save()
+            return redirect('assignment_manage')
+
         prob_id = int(request.POST["prob_id"])
         problem = ProblemModel.objects.get(id=prob_id)
         start_date = problem.starts_at.strftime('%Y-%m-%d')
