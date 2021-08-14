@@ -146,7 +146,7 @@
                               {% if problem %}
                                 <input class="input-file" type="file" name="header_data" id="file2">
                                 <label class="label--file" for="file2">파일 선택</label>
-                                <span class="input-file__info">선택된 파일이 없습니다</span>
+                                <span class="input-file__info">{{ problem.header_data.name }}</span>
                               {% else %}
                                 <input class="input-file" type="file" name="header_data" id="file2">
                                 <label class="label--file" for="file2">파일 선택</label>
@@ -163,7 +163,7 @@
                               {% if problem %}
                                 <input class="input-file" type="file" name="sub_data" id="file3">
                                 <label class="label--file" for="file3">파일 선택</label>
-                                <span class="input-file__info">선택된 파일이 없습니다</span>
+                                <span class="input-file__info">{{ problem.sub_data.name }}</span>
                               {% else %}
                                 <input class="input-file" type="file" name="sub_data" id="file3">
                                 <label class="label--file" for="file3">파일 선택</label>
@@ -180,7 +180,7 @@
                               {% if problem %}
                                 <input class="input-file" type="file" name="sample_data" id="file4">
                                 <label class="label--file" for="file4">파일 선택</label>
-                                <span class="input-file__info">선택된 파일이 없습니다</span>
+                                <span class="input-file__info">{{ problem.sample_data.name }}</span>
                               {% else %}
                                 <input class="input-file" type="file" name="sample_data" id="file4" required>
                                 <label class="label--file" for="file4">파일 선택</label>
