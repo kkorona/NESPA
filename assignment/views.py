@@ -285,11 +285,13 @@ def assignment_manage(request):
         start_time = problem.starts_at.strftime('%H:%M')
         end_date = problem.ends_at.strftime('%Y-%m-%d')
         end_time = problem.ends_at.strftime('%H:%M')
+        grade_model_list = GradeModel.objects.filter(problem = problem)
         return render(request, "assignment_registry.html", {'problem':problem,
                                                             'start_date':start_date,
                                                             'start_time':start_time,
                                                             'end_date':end_date,
-                                                            'end_time':end_time,});
+                                                            'end_time':end_time,
+                                                            'grade_model_list':grade_model_list});
     prob_list = ProblemModel.objects.all()
     return render(request, "assignment_manage.html",  {'prob_list':prob_list});
 
