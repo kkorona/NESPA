@@ -191,14 +191,14 @@
                                  {% for grade_model in grade_model_list %}
                                  <div class="row  justify-content-between">
                                     <div class="w-50">
-                                       <input class="input-file" type="file" name="{{ grade_model.grade_input.name }}" id="file-in">
-                                       <label class="label--file" for="file-in">파일 선택</label>
-                                       <span class="input-file__info">{{ grade_model.grade_input.name }}</span>
+                                       <input class="input-file" type="file" name="{{ grade_model.input_filename }}" id="{{ grade_model.input_filename }}">
+                                       <label class="label--file" for="{{ grade_model.input_filename }}">파일 선택</label>
+                                       <span class="input-file__info">{{ grade_model.input_filename }}</span>
                                     </div>
                                     <div class="w-50">
-                                       <input class="input-file" type="file" name="{{ grade_model.grade_output.name }}" id="file-out">
-                                       <label class="label--file" for="file-out">파일 선택</label>
-                                       <span class="input-file__info">{{ grade_model.grade_output.name }}</span>
+                                       <input class="input-file" type="file" name="{{ grade_model.output_filename }}" id="{{ grade_model.output_filename }}">
+                                       <label class="label--file" for="{{ grade_model.output_filename }}">파일 선택</label>
+                                       <span class="input-file__info">{{ grade_model.output_filename }}</span>
                                     </div>
                                  </div>
                                 {% endfor %}

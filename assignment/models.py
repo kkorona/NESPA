@@ -58,8 +58,15 @@ class GradeModel(models.Model):
     def __str__(self):
         return '{}({})'.format(str(self.problem.prob_id), str(self.grade_input.name))
 
+    def input_filename(self):
+        return os.path.basename(self.grade_input.name)
+
+    def output_filename(self):
+        return os.path.basename(self.grade_output.name)
+
     def problem_ID(self):
         return str(self.problem.prob_id)
+
 
     problem_ID.short_description = 'PROBLEM ID'
 
