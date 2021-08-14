@@ -43,7 +43,7 @@ body {
   padding: 48px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   width: 200px;
-  margin-left: 80px;
+  /* margin-left: 80px; */
 }
 
 @media (max-width: 767.98px) {
@@ -196,7 +196,7 @@ td.table_idx {
   line-height: 60px;
   outline: transparent;
   position: relative;
-  background: linear-gradient(45deg, transparent 5%, #003ab6 5%);">관리자 항목
+  background: linear-gradient(45deg, transparent 5%, #003ab6 5%);
   text-decoration: none;
 }
 
