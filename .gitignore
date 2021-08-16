@@ -7,4 +7,6 @@ vespa/settings.py
 *.cpp
 data/submission
 data/exam_submission
+data/assignment
 media/attached
+/data
