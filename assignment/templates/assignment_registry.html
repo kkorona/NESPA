@@ -28,7 +28,7 @@
                            <div class="name" style="width:90px">과제 이름</div>
                            <div class="value">
                               {% if problem %}
-                              <input class="input--style-12" type="text" name="prob_name" value="{{ problem.prob_name }}"required>
+                              <input class="input--style-12" type="text" name="prob_name" value="{{ problem.prob_name }}" readonly required>
                               {% else %}
                               <input class="input--style-12" type="text" name="prob_name" required>
                               {% endif %}
@@ -213,7 +213,13 @@
                         </div>
                      </div>
                      <div class="d-flex justify-content-center mt-3">
-                        <button class="btn btn--radius-2 btn--blue-2 pl-5 pr-5 mr-0" type="submit">과제 등록</button>
+                        <button class="btn btn--radius-2 btn--blue-2 pl-5 pr-5 mr-0" type="submit">
+                           {% if problem %}
+                           과제 수정
+                           {% else %}
+                           과제 등록
+                           {% endif %}
+                        </button>
                      </div>
                   </form>
                </div>
