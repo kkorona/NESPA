@@ -185,19 +185,19 @@
                      <div class="form-row" style="flex-direction: column;">
                         <div class="name">채점 데이터</div>
                         <div class="value w-75 p-5 mt-3">
-                           <div class="input-group js-input-file">
+                           <div class="input-group">
                               {% if problem %}
                               <div class="col">
                                  {% for grade_model in grade_model_list %}
                                  <div class="row  justify-content-between">
-                                    <div class="w-50">
+                                    <div class="w-50 js-input-file">
                                        <input class="input-file" type="file" name="{{ grade_model.input_filename }}" id="{{ grade_model.input_filename }}">
-                                       <label class="label--file" for="{{ grade_model.input_filename }}">파일 선택</label>
+                                       <label class="label--file" for="{{ grade_model.input_filename }}">파일선택</label>
                                        <span class="input-file__info">{{ grade_model.input_filename }}</span>
                                     </div>
-                                    <div class="w-50">
+                                    <div class="w-50 js-input-file">
                                        <input class="input-file" type="file" name="{{ grade_model.output_filename }}" id="{{ grade_model.output_filename }}">
-                                       <label class="label--file" for="{{ grade_model.output_filename }}">파일 선택</label>
+                                       <label class="label--file" for="{{ grade_model.output_filename }}">파일선택</label>
                                        <span class="input-file__info">{{ grade_model.output_filename }}</span>
                                     </div>
                                  </div>

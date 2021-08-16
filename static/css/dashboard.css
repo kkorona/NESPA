@@ -55,7 +55,10 @@ body {
   z-index: 100; /* Behind the navbar */
   padding: 48px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-  width: 200px;
+  width: 10%;
+  max-width: 250px;
+  min-width: 150px;
+  /* width: 200px; */
   /* margin-left: 80px; */
 }
 
@@ -153,6 +156,11 @@ body {
 
 #viewer .toastui-editor-contents p, toastui-editor-main p{
   font-size: 15px !important;
+}
+
+main[role="main"] {
+  flex: 0 0 90% !important;
+  max-width: 90% !important;
 }
 
 #main_center{
