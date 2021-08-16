@@ -278,6 +278,7 @@ def assignment_registry(request):
 
     return render(request, "assignment_registry.html");
 
+
 def assignment_manage(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
@@ -299,17 +300,24 @@ def assignment_manage(request):
             problem = ProblemModel.objects.get(prob_id=prob_id, prob_name=prob_name)
             problem.starts_at = start_date + ' ' + start_time
             problem.ends_at = end_date + ' ' + end_time
+            problem.prob_name = prob_name
+            problem.try_limit = try_limit
+            problem.size_limit = size_limit
+            problem.time_limit = time_limit
+            problem.eval = eval_std
+            
             for filename in files:
-                print(filename)
                 if filename == "document": problem.document = files['document']
                 elif filename == "sample_data": problem.sample_data = files['sample_data']
                 elif filename == "sub_data": problem.sub_data = files['sub_data']
                 elif filename == "header_data": problem.header_data = files['header_data']
                 else:
-                    grade_index = filename.split()[0]
-                    print(grade_index)
-                    pass
-            #problem.save()
+                    for gradeModel in GradeModel.objects.filter(problem=problem):
+                        curr_filename = gradeModel.grade_input.name.split('/')[-1]
+                        if filename == curr_filename:
+                            gradeModel.grade_input = files[filename]
+                            gradeModel.save()
+            problem.save()
             return redirect('assignment_manage')
 
         prob_id = int(request.POST["prob_id"])
