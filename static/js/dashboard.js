@@ -78,5 +78,29 @@ $(document).ready( function() {
           })
       });
   }
+
+  /* post와 comment의 모델의 author가 forienkey가 아니므로 무지성 admin 계정 구별 */
+  var admin_list = ["조교", "prof","assist"];
+  var admin_color = "#AF143C"
+
+  admin_list.forEach((admin_id) => {
+    $("td.table_info:nth-child(3)").each((idx, el) => {
+        if(el.innerText.indexOf(admin_id)!==-1)
+          $(el).css('color',admin_color);
+    });
+  
+    var user_name = $("div.post_info > h5 > span:last-child").text();
+    if(user_name.indexOf(admin_id)!==-1)
+      $("div.post_info > h5 > span:last-child").html(`<i name="display" class="fa fa-medium"> ` + user_name + `</i>`);
+
+    $("i.fa.fa-user + span").each((idx, el) => {
+      if(el.innerText.indexOf(admin_id)!==-1){
+        $(el).css('color',admin_color);
+        $(el).prev().css('color',admin_color);;
+        $(el).prev().addClass("fa-medium");
+      }
+    });
+  });
 });
+
 
