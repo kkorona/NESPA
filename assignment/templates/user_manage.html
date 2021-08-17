@@ -1,0 +1,90 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div id="main_center" class="w-75 m-auto">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">사용자 관리/ User Manage</h1>
+      </div>
+
+      <div class="row row-cols-2">
+        <form method="post" action="" name="delete_user" style="display: none;">
+          {% csrf_token %}
+          <input type="hidden" name="delete_user" value="">
+        </form>
+
+        {% for user in users %}
+
+        <div class="col mt-5">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title d-flex justify-content-between">
+                <span class="pl-2" style="font-size: 24px;font-weight:700;"># {{forloop.counter}}</span>
+                <button class="btn btn-outline-danger" name="delete_button" id="{{ user.id }}">삭제</button>
+              </div>
+              <div class="card-text">
+                <table  class="table table-borderless btn-sm">
+                  <tbody>
+                    <tr>
+                      <th>학번</th>
+                      <td>{{ user.studentNumber }}</td>
+                    </tr>
+                    <tr>
+                      <th>이름</th>
+                      <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                      <th>아이디</th>
+                      <td>{{ user.user_id }}</td>
+                    </tr>
+                    <tr>
+                      <th>학년</th>
+                      <td>{{ user.grade }}</td>
+                    </tr>
+                    <tr>
+                      <th>전공</th>
+                      <td>{{ user.major }}</td>
+                    </tr>
+                    <tr>
+                      <th>이메일</th>
+                      <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                      <th>전화번호</th>
+                      <td>{{ user.phone }}</td>
+                    </tr>
+                    <tr>
+                      <th>등록일자</th>
+                      <td>{{ user.created_at }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+        
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_user_manage").attr('class','nav-link active'); 
+    $('button[name="delete_button"]').on("click", function() {
+      if (confirm('선택하신 사용자를 삭제하시겠습니까?')) {
+        $('input[name="delete_user"]').val($(this).attr('id'));
+        $('form[name="delete_user"]').submit();
+      }
+    })
+</script>
+{% endblock %}
+

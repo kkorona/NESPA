@@ -1,20 +1,24 @@
 from django.shortcuts import render
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.conf import settings
 from django.utils import timezone
 from django.core.files.storage import FileSystemStorage
+from django.contrib import messages
+
+from django.core.files import File as DjangoFile
 # Create your views here.
 
 from . import validation
 from . import compile
 from . import execute
-from assignment.models import SubmissionModel, ProblemModel
+from assignment.models import SubmissionModel, ProblemModel, GradeModel
 from accounts.models import vespaUser
 from collections import OrderedDict
 import shutil
 import os
 import time
+import zipfile
 
 LANGDICT = {
 '01':'C++14',
@@ -42,20 +46,15 @@ def submission(request):
         
     if request.method == "POST":
         if 'source_code' in request.FILES:
-            prob_ID = request.POST.get('problem_id')
             language = request.POST.get('language')
             source_code = request.FILES['source_code']
-            user_id = request.session['userid']
-            fs = FileSystemStorage()
-            filename = fs.save(source_code.name,source_code)
-            uploaded_file_url = fs.url(filename)      
-            departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
-            
-            prob = ProblemModel.objects.get(prob_id = prob_ID)
+
+            user = vespaUser.objects.get(user_id=request.session['userid'])
+            prob = ProblemModel.objects.get(prob_id = request.POST.get('problem_id'))
             
             if request.session['usertype'] == 'normal':
 
-                my_submissions = SubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user_id).count()
+                my_submissions = SubmissionModel.objects.filter(problem=prob, user=user).count()
                 if my_submissions >= prob.try_limit:
                     return HttpResponse('제출 횟수가 초과되었습니다. ')
                 
@@ -63,18 +62,24 @@ def submission(request):
                 
                 if prob.starts_at >= now or prob.ends_at <= now:
                     return HttpResponse('제출 기간이 아닙니다.')
-                
-                request.session['code_size'] = os.path.getsize(departure_path)
-                if int(request.session['code_size']) > prob.size_limit:
-                    os.remove(departure_path)
+
+                if len(request.FILES['source_code'].read()) > prob.size_limit:
                     return HttpResponse('코드 크기가 초과되었습니다.')
             
-            request.session['problem_id'] = prob_ID
             request.session['language'] = LANGDICT[language]
-            request.session['langext'] = EXTDICT[language]
-            request.session['uploaded_file_url'] = uploaded_file_url
+
             now = time.localtime()
             request.session['updated_time'] = "%04d/%02d/%02d %02d:%02d:%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+
+            submission = SubmissionModel(client_ID=user.user_id, client_number=user.studentNumber, prob_ID=prob.prob_id, score=0,exec_time=999.0, code_size=0, lang=EXTDICT[language], prob_name=prob.prob_name)
+            submission.user = user
+            submission.problem = prob
+            submission.save()
+            submission.sub_file = request.FILES['source_code']
+            submission.code_size = submission.sub_file.size
+            submission.save()
+
+            request.session['submission_id'] = submission.id
             
             return redirect('submission_check')
             
@@ -84,47 +89,39 @@ def submission(request):
 
 def submission_check(request):
     if request.method == "POST":    
-        uploaded_file_url = request.session['uploaded_file_url']
-        prob_ID = request.session['problem_id']
-        prob = ProblemModel.objects.get(prob_id = prob_ID)  
+
+        submission = SubmissionModel.objects.get(id = int(request.session['submission_id']))
+
+        prob = submission.problem
+        prob_ID = prob.prob_id
 
         client = vespaUser.objects.get(user_id = request.session['userid'])
         studentNumber = client.studentNumber
-        ext = request.session['langext']
         
-        departure_path = os.path.join(settings.BASE_DIR,uploaded_file_url[1:])
-        destination_path = os.path.join(settings.BASE_DIR,'data','submission',studentNumber,prob_ID)
-        subfile_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID, 'subs')
-        header_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID, 'header')
-        
-        submission = SubmissionModel(client_ID = request.session['userid'], client_number = studentNumber, prob_ID = prob_ID, score=0, exec_time=999.0, code_size=0, lang=ext, prob_name = prob.prob_name)
-        submission.save()
-        submission_id = str(submission.id)
-        
-        target_name = submission_id + '.' + ext
-        target_path = os.path.join(destination_path,target_name)
-        target_title = os.path.join(destination_path, submission_id) 
+        ext = submission.lang
+
+        destination_path = os.path.join(settings.BASE_DIR, 'data', 'submission', studentNumber, prob_ID)
+        subfile_path = os.path.join(settings.BASE_DIR, 'data', 'assignment', prob_ID, 'subs')
+        header_path = os.path.join(settings.BASE_DIR, 'data', 'assignment', prob_ID, 'header')
+
+        target_name = submission.filename()
+        target_path = os.path.join(destination_path, target_name)
+        target_title = os.path.join(destination_path, str(submission.id)) 
         eval_path = os.path.join(settings.BASE_DIR,'data','assignment',prob_ID,'eval')
-        
-        if not os.path.exists(destination_path):
-            os.makedirs(destination_path)
-        shutil.move(departure_path,target_path)
         
         if os.path.exists(subfile_path):
             subfiles = os.listdir(subfile_path)
             for subfile in subfiles:
                 shutil.copyfile(os.path.join(subfile_path,subfile),os.path.join(destination_path,subfile))
         
-        code_size = os.path.getsize(target_path)        
-        
-        submission.code_size = code_size
-        
+        code_size = submission.sub_file.size
+
         compile_result = compile.compiles(target_title, ext)
         
         if compile_result == 1:
             return render(request, "compile_error.html", {'error_msg' : '컴파일 에러가 발생하였습니다. 소스코드를 확인해주시고, 해결이 안될 경우 조교에게 문의하세요.'})
         
-        execute_result = execute.executes(destination_path, eval_path, submission_id, ext, str(prob.time_limit))
+        execute_result = execute.executes(destination_path, eval_path, str(submission.id), ext, str(prob.time_limit))
         
         total_tc = len(execute_result)
         scored_tc = 0
@@ -164,21 +161,14 @@ def assignment_list(request):
 def submission_list(request):
     prob_list = ProblemModel.objects.all()
     return render(request, "submission_list.html", {'prob_list':prob_list})
+
+    
     
 def watch_code(request):
-    prob_ID = request.GET.get('prob_id', None)
-    student_number = request.GET.get('student_number', None)
     submission_ID = request.GET.get('submission_id', None)
-    ext = request.GET.get('ext', None)
-    if not prob_ID:
-        return HttpResponse("Wrong prob_id")
-    if not student_number:
-        return HttpResponse("Wrong student_number")
-    if not submission_ID:
-        return HttpResponse("Wrong submission_id")
-    if not ext:
-        return HttpResponse("Wrong ext")
-    code_path = os.path.join("/opt/vespa/data/submission",student_number,prob_ID,submission_ID+'.'+ext)
+    if submission_ID == "None": submission_ID = -1
+    submission = get_object_or_404(SubmissionModel, id=submission_ID)
+    code_path = submission.sub_file.path
     code_content = ""
     if os.path.isfile(code_path) :
         try:
@@ -242,3 +232,137 @@ def submission_detail(request):
                     key_list.append(key)
                     score_list.append(score)
                 return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list, "prob":prob})
+
+
+
+'''
+    여기서부터 관리자 항목 함수
+'''
+def assignment_registry(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
+
+    if request.method == "POST":
+        prob_id = request.POST["prob_id"]
+        prob_name = request.POST["prob_name"]
+        try_limit = int(request.POST["try_limit"])
+        time_limit = float(request.POST["time_limit"])
+        size_limit = int(request.POST["size_limit"])
+        start_date = request.POST["start_date"]
+        start_time = request.POST["start_time"]
+        end_date = request.POST["end_date"]
+        end_time = request.POST["end_time"]
+        eval_std = request.POST["eval"]
+        files = request.FILES
+        
+        new_problem = ProblemModel(prob_id=prob_id, prob_name=prob_name, try_limit=try_limit, time_limit=time_limit, size_limit=size_limit, eval=eval_std)
+        new_problem.starts_at = start_date + ' ' + start_time
+        new_problem.ends_at = end_date + ' ' + end_time
+        for filename in files:
+            if filename == "document": new_problem.document = files['document']
+            if filename == "sample_data": new_problem.sample_data = files['sample_data']
+            if filename == "sub_data": new_problem.sub_data = files['sub_data']
+            if filename == "header_data": new_problem.header_data = files['header_data']
+        new_problem.save()
+
+        if "grade_data" in files:
+            grade_data = files['grade_data']
+            zf = zipfile.ZipFile(grade_data)
+            file_list = zf.namelist()
+            for i in range(0, len(file_list), 2):
+                gradeModel = GradeModel(problem=new_problem)
+                gradeModel.grade_input = DjangoFile(zf.open(file_list[i]), name=file_list[i])
+                gradeModel.grade_output = DjangoFile(zf.open(file_list[i+1]), name=file_list[i+1])
+                gradeModel.save()
+        return render(request, "assignment_registry.html");
+
+    return render(request, "assignment_registry.html");
+
+
+def assignment_manage(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
+    
+    if request.method == "POST":
+        if "prob_name" in request.POST:
+            prob_id = request.POST["prob_id"]
+            prob_name = request.POST["prob_name"]
+            try_limit = int(request.POST["try_limit"])
+            time_limit = float(request.POST["time_limit"])
+            size_limit = int(request.POST["size_limit"])
+            start_date = request.POST["start_date"]
+            start_time = request.POST["start_time"]
+            end_date = request.POST["end_date"]
+            end_time = request.POST["end_time"]
+            eval_std = request.POST["eval"]
+            files = request.FILES
+
+            problem = ProblemModel.objects.get(prob_id=prob_id, prob_name=prob_name)
+            problem.starts_at = start_date + ' ' + start_time
+            problem.ends_at = end_date + ' ' + end_time
+            problem.prob_name = prob_name
+            problem.try_limit = try_limit
+            problem.size_limit = size_limit
+            problem.time_limit = time_limit
+            problem.eval = eval_std
+            
+            for filename in files:
+                if filename == "document": problem.document = files['document']
+                elif filename == "sample_data": problem.sample_data = files['sample_data']
+                elif filename == "sub_data": problem.sub_data = files['sub_data']
+                elif filename == "header_data": problem.header_data = files['header_data']
+                else:
+                    for gradeModel in GradeModel.objects.filter(problem=problem):
+                        curr_input_filename = gradeModel.grade_input.name.split('/')[-1]
+                        curr_output_filename = gradeModel.grade_output.name.split('/')[-1]
+                        if filename == curr_input_filename:
+                            gradeModel.grade_input = files[filename]
+                            gradeModel.save()
+                        if filename == curr_output_filename:
+                            gradeModel.grade_output = files[filename]
+                            gradeModel.save()
+            problem.save()
+            return redirect('assignment_manage')
+
+        prob_id = int(request.POST["prob_id"])
+        problem = ProblemModel.objects.get(id=prob_id)
+        start_date = problem.starts_at.strftime('%Y-%m-%d')
+        start_time = problem.starts_at.strftime('%H:%M')
+        end_date = problem.ends_at.strftime('%Y-%m-%d')
+        end_time = problem.ends_at.strftime('%H:%M')
+        grade_model_list = GradeModel.objects.filter(problem = problem)
+        return render(request, "assignment_registry.html", {'problem':problem,
+                                                            'start_date':start_date,
+                                                            'start_time':start_time,
+                                                            'end_date':end_date,
+                                                            'end_time':end_time,
+                                                            'grade_model_list':grade_model_list});
+    prob_list = ProblemModel.objects.all()
+    return render(request, "assignment_manage.html",  {'prob_list':prob_list});
+
+def user_approval(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
+    if request.method == "POST":
+        user_id = int(request.POST["approve_user"])
+        approve_user = vespaUser.objects.get(id=user_id)
+        approve_user.usertype = "normal"
+        approve_user.save()
+    newuser = vespaUser.objects.filter(usertype="unapproved")
+    return render(request, "user_approval.html",{'newusers' : newuser})
+
+def user_manage(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
+    if request.method == "POST":
+        if "delete_user" in request.POST:
+            user_id = int(request.POST["delete_user"])
+            delete_user = vespaUser.objects.get(id=user_id)
+            delete_user.delete()
+    users = vespaUser.objects.filter(usertype="normal")
+    return render(request, "user_manage.html", {'users':users});
+
+def settings(request):
+    if request.session['usertype'] != 'admin':
+            return HttpResponse('허용되지 않은 기능입니다.')
+    return render(request, "settings.html");

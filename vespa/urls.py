@@ -19,6 +19,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 import dev2020.views
 
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', dev2020.views.index, name='index'),

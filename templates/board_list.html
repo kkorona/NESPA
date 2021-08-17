@@ -13,9 +13,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.css" rel="stylesheet">
-
+    <link href="/static/css/dashboard.css" rel="stylesheet">
     <style>
-      .bd-placeholder-img {
+      .bd-placeholder- {
         font-size: 1.125rem;
         text-anchor: middle;
         -webkit-user-select: none;
@@ -25,7 +25,7 @@
       }
 
       @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
+        .bd-placeholder--lg {
           font-size: 3.5rem;
         }
       }
@@ -34,11 +34,13 @@
             color: #cc3300;
             font-weight: bold;
         }
+	img {
+		width: 800px;
+	}
       {% block styles %}
       {% endblock %}
     </style>
     <!-- Custom styles for this template -->
-    <link href="/static/css/dashboard.css" rel="stylesheet">
         
     </head>
     <body>
@@ -93,12 +95,49 @@
             {% endif %}
           
         </ul>
-      
-      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>강의 정보</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
+
+      {% if request.session.usertype == "admin" %}
+       <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+        <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #003ab6 5%);">관리자 항목</span>
+      </h6>
+
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_assignment_registry" href="/assignment/assignment_registry">
+            <span data-feather="upload"></span>
+            과제물 등록
           </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_assignment_manage" href="/assignment/assignment_manage">
+            <span data-feather="briefcase"></span>
+            과제물 관리
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_user_approval" href="/assignment/user_approval">
+            <span data-feather="user-check"></span>
+            사용자 승인
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_user_manage" href="/assignment/user_manage">
+            <span data-feather="user"></span>
+            사용자 관리
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_settings" href="/assignment/settings">
+            <span data-feather="settings"></span>
+            시스템 설정
+          </a>
+        </li>
+      </ul>
+       
+      {% endif %}
+      
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #168500 5%);">강의 정보</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -121,11 +160,8 @@
           </li>
         </ul>
         
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>과제</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #962a00 5%);">과제</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -154,11 +190,8 @@
           </li>
         </ul>
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>게시판</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #009191 5%);">게시판</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -181,11 +214,8 @@
           </li>
         </ul>
     
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>About</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #8f0070 5%);">About</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -212,37 +242,40 @@
     <div class="container-fluid">
       <div class="row">
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            <img src="/static/miscs/banner.png">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75">
+           <div class="w-100 form-inline">
+            <img  class="m-auto" src="/static/miscs/banner.png">
+           </div> 
+            
+          <div id="main_center" class="board-title d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75 m-auto">
             {% block board_title %}
             {% endblock %}
           </div>
     
-    <div class="w-75">
+    <div id="main_center" class="w-75 m-auto">
         <table class="table table-hover table-bordered border">
             <thead class="thead-light">
             <tr>
-                <th class="w-5 text-center">#</th>
-                <th class="w-50">제목</th>
-                <th class="w-10 text-center">작성자</th>
-                <th class="w-10 text-center">게시날짜</th>
-                <th class="w-5 text-center">조회수</th>
+                <th class="w-5 table_idx text-center">#</th>
+                <th class="w-50 table_title">제목</th>
+                <th class="w-10 table_info text-center">작성자</th>
+                <th class="w-10 table_info text-center">게시날짜</th>
+                <th class="w-5 table_info text-center">조회수</th>
             </tr>
             </thead>
                 <tbody>
                 {% for post in posts %}
                 <tr>
-                <td class="text-center">{{ post.id }}</td>
-                <td><a href="{{ post.get_absolute_url }}">{{ post.title }}
-                {% if post.comment_set.count > 0 %}
+                <td class="table_idx text-center">{{ post.id }}</td>
+                <td class="table_title"><a href="{{ post.get_absolute_url }}">{{ post.title }}
+                {% if post.comments_count > 0 %}
                 <span class="text-comment-info">
-                [{{ post.comment_set.count }}]
+                [{{ post.comments_count }}]
                 </span>
                 {% endif %}
                 </a></td>
-                <td class="text-center">{{ post.author }}</td>
-                <td class="text-center">{{ post.pub_date|date:"N j일, H:i" }}</td>
-                <td class="text-center">
+                <td class="text-center table_info">{{ post.author }}</td>
+                <td class="text-center table_info">{{ post.pub_date|date:"N j일" }}</td>
+                <td class="text-center table_info">
                 {% if post.post_hit %}
                 {{ post.post_hit }}
                 {% else %}
@@ -255,25 +288,92 @@
             </table>
             {% block write_button %}
             {% endblock %}
-            <nav>
-                <div class="text-center">
-                    <ul class="pagination justify-content-center">
-                      <li class="page-item">
-                      {% if page_obj.has_previous %}
-                       <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
-                      {% endif %}
-                      </li>
-                      <li  class="page-item">
-                      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                      </li>
-                      <li class="page-item">
-                      {% if page_obj.has_next %}
-                       <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-                      {% endif %}
-                      </li>
-                    </ul>
-                </div>
-            </nav>    
+            <nav class="text-center">
+              <ul class="pagination justify-content-center d-flex justify-content-center">
+                  {% if page_obj.number > 1 %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><span aria-hidden="true">&laquo;</span></a>
+                  </li>
+                  {% else %}
+                  <li class="page-item">
+                    <a class="page-link"  tabindex="-1" disabled><span aria-hidden="true"  disabled>&laquo;</span></a>
+                  </li>
+                  {% endif %}
+
+                  {% if page_obj.number > 9 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number|add:-8 }}">{{ page_obj.number|add:-9 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number > 8 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number|add:-7 }}">{{ page_obj.number|add:-8 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number > 7 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number|add:-6 }}">{{ page_obj.number|add:-7 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number > 6 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number|add:-5 }}">{{ page_obj.number|add:-6 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number > 5 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number|add:-4 }}">{{ page_obj.number|add:-5 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number > 4 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number|add:-3 }}">{{ page_obj.number|add:-4 }}</a></li>
+                  {% endif %}
+
+                  {% if page_obj.number > 3 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number|add:-2 }}">{{ page_obj.number|add:-3 }}</a></li>
+                  {% endif %}
+
+                  {% if page_obj.number > 2 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number|add:-1 }}">{{ page_obj.number|add:-2 }}</a></li>
+                  {% endif %}
+
+                  {% if page_obj.number > 1 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.number|add:-1 }}</a></li>
+                  {% endif %}
+
+                  <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">{{ page_obj.number }}</a>
+                  </li>
+
+                  {% if page_obj.number < page_obj.paginator.num_pages %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.number|add:+1 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number < page_obj.paginator.num_pages|add:-1 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number|add:+1 }}">{{ page_obj.number|add:+2 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number < page_obj.paginator.num_pages|add:-2 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number|add:+2 }}">{{ page_obj.number|add:+3 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number < page_obj.paginator.num_pages|add:-3 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number|add:+3 }}">{{ page_obj.number|add:+4 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number < page_obj.paginator.num_pages|add:-4 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number|add:+4 }}">{{ page_obj.number|add:+5 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number < page_obj.paginator.num_pages|add:-5 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number|add:+5 }}">{{ page_obj.number|add:+6 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number < page_obj.paginator.num_pages|add:-6 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number|add:+6 }}">{{ page_obj.number|add:+7 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number < page_obj.paginator.num_pages|add:-7 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number|add:+7 }}">{{ page_obj.number|add:+8 }}</a></li>
+                  {% endif %}
+                  {% if page_obj.number < page_obj.paginator.num_pages|add:-8 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number|add:+8 }}">{{ page_obj.number|add:+9 }}</a></li>
+                  {% endif %}
+
+                  {% if page_obj.number < page_obj.paginator.num_pages %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}"><span aria-hidden="true">&raquo;</span></a>
+                  </li>
+                  {% else %}
+                  <li class="page-item">
+                    <a class="page-link"  tabindex="-1" disabled><span aria-hidden="true"  disabled>&raquo;</span></a>
+                  </li>
+                  {% endif %}
+                </ul>
+            </nav>
         </div>
       </div>
     </div>

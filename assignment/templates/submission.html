@@ -4,6 +4,7 @@
 <div class="container-fluid">
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div id="main_center" class="w-75 m-auto">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">과제물 제출 / Submission</h1>
       </div>
@@ -57,6 +58,7 @@
         {% elif not request.session.logged_in  %}
         <span>로그인이 필요한 기능입니다.</span>
         {% endif %}
+      </div>
       </div>
     </main>
   </div>

@@ -13,10 +13,15 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Toast UI editor & plugins CSS -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" />
     <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css"/>
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
     <style>
       .bd-placeholder-img {
@@ -38,6 +43,9 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="/static/css/dashboard.css" rel="stylesheet">
+    <link href="/static/css/file-attach.css" rel="stylesheet">
+    <link href="/static/css/comment.css" rel="stylesheet">
+    <link href="/static/css/registry-form.css" rel="stylesheet">
         
     </head>
     <body>
@@ -92,12 +100,49 @@
             {% endif %}
           
         </ul>
-      
-      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>강의 정보</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
+
+      {% if request.session.usertype == "admin" %}
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+        <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #003ab6 5%);">관리자 항목</span>
+      </h6>
+
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_assignment_registry" href="/assignment/assignment_registry">
+            <span data-feather="upload"></span>
+            과제물 등록
           </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_assignment_manage" href="/assignment/assignment_manage">
+            <span data-feather="briefcase"></span>
+            과제물 관리
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_user_approval" href="/assignment/user_approval">
+            <span data-feather="user-check"></span>
+            사용자 승인
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_user_manage" href="/assignment/user_manage">
+            <span data-feather="user"></span>
+            사용자 관리
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="sidebar_settings" href="/assignment/settings">
+            <span data-feather="settings"></span>
+            시스템 설정
+          </a>
+        </li>
+      </ul>
+       
+      {% endif %}
+      
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #168500 5%);">강의 정보</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -120,11 +165,8 @@
           </li>
         </ul>
         
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>과제</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #962a00 5%);">과제</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -153,11 +195,8 @@
           </li>
         </ul>
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>게시판</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #009191 5%);">게시판</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -180,11 +219,8 @@
           </li>
         </ul>
     
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>About</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="chevrons-left"></span>
-          </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #8f0070 5%);">About</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -218,6 +254,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+    <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.js"></script>
+    <script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
     <script src="/static/js/dashboard.js"></script>
     {% block scripts %}
     

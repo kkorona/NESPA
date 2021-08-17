@@ -1,0 +1,246 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block contents %}
+<div class="container-fluid">
+   <div class="row">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+         <div id="main_center" class="w-75 m-auto">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+               <h1 class="h2">과제물 등록/ Assignment Registry</h1>
+            </div>
+            <div id="assignment-form">
+               <div id="main_center" class="card-body">
+                  <form method="POST" enctype="multipart/form-data" action="">
+                     {% csrf_token %}
+                     <div class=" d-flex flex-row ">
+                        <div class="form-row" style="width:32%">
+                           <div class="name" style="width:90px">과제 번호</div>
+                           <div class="value">
+                              {% if problem %}
+                              <input class="input--style-6" type="text" name="prob_id"  value="{{ problem.prob_id }}" readonly required>
+                              {% else %}
+                              <input class="input--style-6" type="text" name="prob_id" required>
+                              {% endif %}
+                              <span>번</span>
+                           </div>
+                        </div>
+                        <div class="form-row" style="width:65%">
+                           <div class="name" style="width:90px">과제 이름</div>
+                           <div class="value">
+                              {% if problem %}
+                              <input class="input--style-12" type="text" name="prob_name" value="{{ problem.prob_name }}" readonly required>
+                              {% else %}
+                              <input class="input--style-12" type="text" name="prob_name" required>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                     <div class=" d-flex flex-row">
+                        <div class="form-row" style="width:32%">
+                           <div class="name" style="width:90px">제한 회수</div>
+                           <div class="value">
+                              {% if problem %}
+                              <input class="input--style-6" type="text" name="try_limit" value="{{ problem.try_limit }}" required>
+                              {% else %}
+                              <input class="input--style-6" type="text" name="try_limit" placeholder="15" required>
+                              {% endif %}
+                              <span>회</span>
+                           </div>
+                        </div>
+                        <div class="form-row" style="width:32%">
+                           <div class="name" style="width:90px">제한 시간</div>
+                           <div class="value">
+                              {% if problem %}
+                              <input class="input--style-6" type="text" name="time_limit" value="{{ problem.time_limit }}" required>
+                              {% else %}
+                              <input class="input--style-6" type="text" name="time_limit" placeholder="1.0" required>
+                              {% endif %}
+                              <span>초</span>
+                           </div>
+                        </div>
+                        <div class="form-row" style="width:32%">
+                           <div class="name" style="width:90px">제한 크기</div>
+                           <div class="value">
+                              {% if problem %}
+                              <input class="input--style-6" type="text" name="size_limit" value="{{ problem.size_limit }}" required>
+                              {% else %}
+                              <input class="input--style-6" type="text" name="size_limit" placeholder="3000" required>
+                              {% endif %}
+                              <span>바이트</span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class=" d-flex flex-row ">
+                        <div class="form-row" style="width:100%">
+                           <div class="name" style="width:90px">채점 기준</div>
+                           <div class="value">
+                              {% if problem %}
+                              <input class="input--style-12" type="text" name="eval" value="{{ problem.eval }}">
+                              {% else %}
+                              <input class="input--style-12" type="text" name="eval" placeholder="Normal">
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-row">
+                        <div class="name">제출시작시간</div>
+                        {% if problem %}
+                        <div class="value">
+                           <input type="date" id="startdate" name="start_date" value="{{ start_date }}">
+                        </div>
+                        <div class="value">
+                           <input type="time" name="start_time" value="{{ start_time }}" required>
+                        </div>
+                        {% else %}
+                        <div class="value">
+                           <input type="date" id="startdate" name="start_date">
+                        </div>
+                        <div class="value">
+                           <input type="time" name="start_time" value="00:00" required>
+                        </div>
+                        {% endif %}
+                     </div>
+                     <div class="form-row">
+                        <div class="name">제출마감시간</div>
+                        {% if problem %}
+                        <div class="value">
+                           <input type="date" id="enddate" name="end_date" value="{{ end_date }}">
+                        </div>
+                        <div class="value">
+                           <input type="time" name="end_time" value="{{ end_time }}" required>
+                        </div>
+                        {% else %}
+                        <div class="value">
+                           <input type="date" id="enddate" name="end_date">
+                        </div>
+                        <div class="value">
+                           <input type="time" name="end_time" value="22:00" required>
+                        </div>
+                        {% endif %}
+                     </div>
+                     <div class="form-row">
+                        <div class="name">과제 내용</div>
+                        <div class="value">
+                           <div class="input-group js-input-file">
+                              {% if problem and problem.document.name %}
+                              <input class="input-file" type="file" name="document" id="file1" value="">
+                              <label class="label--file" for="file1">파일 선택</label>
+                              <span class="input-file__info">{{ problem.document.name }}</span>
+                              {% else %}
+                              <input class="input-file" type="file" name="document" id="file1" required>
+                              <label class="label--file" for="file1">파일 선택</label>
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-row">
+                        <div class="name">헤더 파일</div>
+                        <div class="value">
+                           <div class="input-group js-input-file">
+                              {% if problem and problem.header_data.name %}
+                              <input class="input-file" type="file" name="header_data" id="file2">
+                              <label class="label--file" for="file2">파일 선택</label>
+                              <span class="input-file__info">{{ problem.header_data.name }}</span>
+                              {% else %}
+                              <input class="input-file" type="file" name="header_data" id="file2">
+                              <label class="label--file" for="file2">파일 선택</label>
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-row">
+                        <div class="name">추가 파일</div>
+                        <div class="value">
+                           <div class="input-group js-input-file">
+                              {% if problem and problem.sub_data.name %}
+                              <input class="input-file" type="file" name="sub_data" id="file3">
+                              <label class="label--file" for="file3">파일 선택</label>
+                              <span class="input-file__info">{{ problem.sub_data.name }}</span>
+                              {% else %}
+                              <input class="input-file" type="file" name="sub_data" id="file3">
+                              <label class="label--file" for="file3">파일 선택</label>
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-row">
+                        <div class="name">샘플 데이터</div>
+                        <div class="value">
+                           <div class="input-group js-input-file">
+                              {% if problem and problem.sample_data.name %}
+                              <input class="input-file" type="file" name="sample_data" id="file4">
+                              <label class="label--file" for="file4">파일 선택</label>
+                              <span class="input-file__info">{{ problem.sample_data.name }}</span>
+                              {% else %}
+                              <input class="input-file" type="file" name="sample_data" id="file4" required>
+                              <label class="label--file" for="file4">파일 선택</label>
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-row" style="flex-direction: column;">
+                        <div class="name">채점 데이터</div>
+                        <div class="value w-75 p-5 mt-3">
+                           <div class="input-group">
+                              {% if problem %}
+                              <div class="col">
+                                 {% for grade_model in grade_model_list %}
+                                 <div class="row  justify-content-between">
+                                    <div class="w-50 js-input-file">
+                                       <input class="input-file" type="file" name="{{ grade_model.input_filename }}" id="{{ grade_model.input_filename }}">
+                                       <label class="label--file" for="{{ grade_model.input_filename }}">파일선택</label>
+                                       <span class="input-file__info">{{ grade_model.input_filename }}</span>
+                                    </div>
+                                    <div class="w-50 js-input-file">
+                                       <input class="input-file" type="file" name="{{ grade_model.output_filename }}" id="{{ grade_model.output_filename }}">
+                                       <label class="label--file" for="{{ grade_model.output_filename }}">파일선택</label>
+                                       <span class="input-file__info">{{ grade_model.output_filename }}</span>
+                                    </div>
+                                 </div>
+                                {% endfor %}
+
+                              </div>
+                              {% else %}
+                              <input class="input-file" type="file" name="grade_data" id="file5" required>
+                              <label class="label--file" for="file5">파일 선택</label>
+                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="d-flex justify-content-center mt-3">
+                        <button class="btn btn--radius-2 btn--blue-2 pl-5 pr-5 mr-0" type="submit">
+                           {% if problem %}
+                           과제 수정
+                           {% else %}
+                           과제 등록
+                           {% endif %}
+                        </button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+            <div class="p-3"></div>
+         </div>
+   </div>
+   </main>
+</div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% if not problem %}
+<script>
+   $('#startdate').val(new Date().toISOString().substring(0, 10));
+   var enddate = new Date();
+   enddate.setDate(enddate.getDate() + 4);
+   $('#enddate').val(enddate.toISOString().substring(0, 10));
+</script>
+{% endif %}
+<script>
+   $("#sidebar_assignment_registry").attr('class','nav-link active'); 
+</script>
+{% endblock %}

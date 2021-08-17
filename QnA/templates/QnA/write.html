@@ -4,12 +4,13 @@
 <div class="container-fluid">
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <div id="main_center" class="w-75 m-auto">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">질문 게시판 / Q&amp;A</h1>
         </div>
         <div>
-            <div class="w-75">
-            <form method='POST' enctype="multipart/form-data" action="">
+            <div class="w-100">
+            <form method='POST' enctype="multipart/form-data" name="write_form" action="">
             {% csrf_token %}
             <div class="form-row w-100">            
                 <div class="form-group w-100">
@@ -20,20 +21,50 @@
 
                     <!-- new 에디터 부 -->
                     <div id="post_contents"></div>
-
+                    <input id="post_content" name="post_contents" class="form-control" type="hidden">
                     <br>
+                    
+                    <div id="f-table">
                     <div class="w-100 d-inline-block">
-                        <label for="attach_files" class="h4">첨부 파일</label>
-                        <input id="attach_files" name="attach_files" type="file" multiple />
-                        <div id="attach_files_list"></div>
+                        <!--<label for="attach_files" class="h4">첨부 파일</label>
+                        <input id="attach_files" name="attach_files" type="file" multiple />-->
+                        <div id="attach_file">
+                            <div class="wrap-table100">
+                                <div class="table100">
+                                    <table>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <span class="align-middle">첨부 파일</span>
+                                                <button id="add_files" class="btn " type="button"><i class="fa fa-plus-square align-middle" style="color:green"></i></button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="files-box">
+                                        <tr>
+                                            <td class="pl-0 column1">
+                                                <label for="attach-file" class="btn m-auto"><i class="fa fa-plus align-middle"></i></label> 
+                                                <input type="text" class="w-75 upload-name align-middle" value=" 파일 선택" disabled="disabled">
+
+                                                <input type="file" id="attach-file" name="attach_files"/>
+                                                <button name='delete_button' type='button' class="btn"><i class="fa fa-minus-square align-middle" style="color:red"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
             <br>
             <div class="float-sm-right">
-                <input type="submit" class="btn btn-primary btn-lg" value="등록">
+                <input type="button" class="btn btn-primary btn-lg" value="등록" onclick="writeArticle()">
             <div>
             </form>
+        </div>
         </div>
     </main>
 </div>
@@ -45,36 +76,37 @@
 <script>
     const { Editor } = toastui;
     const { codeSyntaxHighlight } = Editor.plugin;
+    const { colorSyntax } = Editor.plugin;
 
     const editor = new Editor({
         el: document.querySelector('#post_contents'),
         height: '600px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical',
-        plugins: [[codeSyntaxHighlight, { highlighter: Prism }]]
+        plugins: [
+            [codeSyntaxHighlight, { highlighter: Prism }],
+            [colorSyntax]
+        ]
     });
 
-    $("#sidebar_qna").attr('class','nav-link active'); 
-    $(document).ready( function() {
- 
-        $("input[type=file]").change(function () {
-            
-            var fileInput = document.getElementById("attach_files");
-            
-            var files = fileInput.files;
-            var file;
-            var result = "<ul>";
-            
-            for (var i = 0; i < files.length; i++) {
-                
-                file = files[i];
- 
-                result += "<li>" + (i+1) + ": " + file.name + "</li>\n";
-            }
-            result += "</ul>";
-            document.getElementById("attach_files_list").innerHTML=result;
-        });
- 
+    $("#sidebar_qna").attr('class','nav-link active');
+
+    $("#add_files").click(function() {
+        $("table > tbody:last").append(`<tr>
+                                            <td class="pl-0 column1">
+                                                <label for="attach-file" class="btn m-auto"><i class="fa fa-plus align-middle"></i></label> 
+                                                <input type="text" class="w-75 upload-name align-middle" value=" 파일 선택" disabled="disabled">
+
+                                                <input type="file" id="attach-file" name="attach_files"/>
+                                                <button name='delete_button' type='button' class="btn"><i class="fa fa-minus-square align-middle" style="color:red"></i></button>
+                                            </td>
+                                        </tr>`);
     });
+
+    $('table').on('click', 'button[name="delete_button"]', function(e){
+        $(this).closest('tr').remove()
+    });
+
 </script>
+<script src="/static/js/editor.js"></script>
 {% endblock %}

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
@@ -34,12 +34,12 @@ class PostDV(FormMixin, DetailView):
             context['user'] = self.request.session['userid']
         else:
             context['user'] = 'anonymous'
-        context['comments'] = self.object.comment_set.all()
+        context['comments'] = sorted(list(self.object.comment_set.all()), key=lambda x: x.pub_date, reverse=False)
         context['attachments'] = self.object.attach_set.all()
-        #context['content'] = self.object.content
-        #context['content'] = self.object.content.replace('\\n', '\\\n')
-        #context['content'] = context['content'].replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
-        #context['content'] = context['content'].replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
+        context['content'] = self.object.content
+        context['content'] = self.object.content.replace('\\n', '\\\n')
+        context['content'] = context['content'].replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
+        context['content'] = context['content'].replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
         return context
         
     def post(self, request, *args, **kwargs):
@@ -79,14 +79,37 @@ def edit(request, article_id):
         article.title = title
         article.content = content
         article.save()
+
+        files = request.FILES.getlist('attach_files')
+        existing_files = request.POST.getlist('existing_files')
+        print(existing_files)
+        for attach in article.attach_set.all():
+            if str(attach.id) not in existing_files:
+                attach.delete()
+        
+        fs = FileSystemStorage()
+        for file in files:
+            fname = file.name
+            filename = fs.save(fname,file)
+            uploaded_file_url = fs.url(filename);
+            departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
+            destination_path = os.path.join(settings.BASE_DIR, 'media','attached','board',str(article.id))
+            if not os.path.exists(destination_path):
+                os.makedirs(destination_path)
+            destination_path = os.path.join(destination_path, fname)
+            shutil.move(departure_path,destination_path)
+            ext = filename.split(".")[-1]
+            attach = Attach(parent=article, path = destination_path,name=fname, ext = ext)
+            attach.save()
         return redirect('/ds2020/post/' + str(article_id))
         
     if request.method == "GET":
-        #content = article.content
-        #content = content.replace('\\n', '\\\n')
-        #content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
-        #content = content.replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
-        return render(request, 'board/edit.html',{'article_content' : article.content, 'article_title' : article.title})
+        content = article.content
+        content = content.replace('\\n', '\\\n')
+        content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
+        content = content.replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
+        return render(request, 'board/edit.html',{'article_content' : content, 'article_title' : article.title, 'attachments' : article.attach_set.all()})
+
     '''             
     files = request.FILES.getlist('attach_files')
     fs = FileSystemStorage()
@@ -127,7 +150,6 @@ def write(request):
         article = Post(title = title, author = author, content=content, post_hit = 0)
         article.save()
 
-                     
         files = request.FILES.getlist('attach_files')
         fs = FileSystemStorage()
         for file in files:
