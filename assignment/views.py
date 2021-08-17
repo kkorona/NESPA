@@ -313,9 +313,13 @@ def assignment_manage(request):
                 elif filename == "header_data": problem.header_data = files['header_data']
                 else:
                     for gradeModel in GradeModel.objects.filter(problem=problem):
-                        curr_filename = gradeModel.grade_input.name.split('/')[-1]
-                        if filename == curr_filename:
+                        curr_input_filename = gradeModel.grade_input.name.split('/')[-1]
+                        curr_output_filename = gradeModel.grade_output.name.split('/')[-1]
+                        if filename == curr_input_filename:
                             gradeModel.grade_input = files[filename]
+                            gradeModel.save()
+                        if filename == curr_output_filename:
+                            gradeModel.grade_output = files[filename]
                             gradeModel.save()
             problem.save()
             return redirect('assignment_manage')
