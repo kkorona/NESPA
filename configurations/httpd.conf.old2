@@ -760,17 +760,3 @@ EnableSendfile on
 #
 # Load config files in the "/etc/httpd/conf.d" directory, if any.
 IncludeOptional conf.d/*.conf
-
-#IncludeOptional sites-enabled/*.conf
-
-
-WSGIScriptAlias / /opt/vespa/vespa/wsgi.py
-WSGIPythonPath /opt/vespa
-
-<Directory /opt/vespa/vespa>
-<Files wsgi.py>
-Require all granted
-</Files>
-</Directory>
-
-Alias /static/ /opt/vespa/static/

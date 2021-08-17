@@ -258,6 +258,415 @@ LogLevel warn
     Require all granted
 </Directory>
 
+<Directory "/home/xe/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/ALCALL/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/ALCALL/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2015_01/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2015_01/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2015_02/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2015_02/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/graph2015/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/graph2015/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2015/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2015/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/data_structure2015/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/data_structure2015/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/cse_2015/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/cse_2015/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+
+<Directory "/home/intro2016_02/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2016_02/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2016_01/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2016_01/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2016/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2016/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/ds2016/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/ds2016/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/ads2016/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/ads2016/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2017_01/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2017_01/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2017_02/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2017_02/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/graph2017/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/graph2017/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/ds2017/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/ds2017/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2017/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2017/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2018/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2018/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2018/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2018/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/ae2018/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/ae2018/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+<Directory "/home/test/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/test/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl .py .pyc
+    Require all granted
+</Directory>
+
+<Directory "/home/ds2018/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/ds2018/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+<Directory "/home/writing2018/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/writing2018/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+<Directory "/home/graph2019/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/graph2019/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2019/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2019/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2019/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2019/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+<Directory "/home/ds2019/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/ds2019/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2020/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/algo2020/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+<Directory "/home/intro2020/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/intro2020/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+<Directory "/home/ads2020/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/ads2020/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
+<Directory "/home/debug2020/public_html">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<Directory "/home/debug2020/public_html/espaCGI">
+    AllowOverride None
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+    Require all granted
+</Directory>
+
 <IfModule mime_module>
     #
     # TypesConfig points to the file containing the list of mappings from
@@ -351,3 +760,5 @@ EnableSendfile on
 #
 # Load config files in the "/etc/httpd/conf.d" directory, if any.
 IncludeOptional conf.d/*.conf
+
+#IncludeOptional sites-enabled/*.conf
