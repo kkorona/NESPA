@@ -13,5 +13,5 @@ urlpatterns = [
     path('assignment_manage/',views.assignment_manage, name='assignment_manage'),
     path('user_approval/',views.user_approval, name='user_approval'),
     path('user_manage/',views.user_manage, name='user_manage'),
-    path('settings/',views.settings, name='settings'),
+    path('settings/',views.web_settings, name='settings'),
 ]
