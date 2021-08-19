@@ -27,14 +27,14 @@
                 {% for prob in prob_list %}
                 <tr>
                     <th scope="row">{{ prob.prob_id }}</th>
-                    <td><a href="/media/assignment/documents/{{ prob.prob_id }}_{{prob.prob_name}}.hwp">{{prob.prob_name}}</a></td>
+                    <td><a href="{{ prob.document.url }}">{{prob.prob_name}}</a></td>
                     <td>{{ prob.size_limit}}</td>
                     <td>{{ prob.time_limit }}</td>
                     <td>{{ prob.try_limit }}</td>
                     <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
                     <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
                     <td>{{ prob.eval }}</td>
-                    <td><a href="/media/assignment/sampledata/{{ prob.prob_id }}/open{{prob.prob_id}}.zip">{{prob.prob_name}}</a></td>
+                    <td><a href="{{ prob.sample_data.url }}">{{prob.prob_name}}</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
