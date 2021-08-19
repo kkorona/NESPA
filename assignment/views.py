@@ -362,7 +362,7 @@ def user_manage(request):
     users = vespaUser.objects.filter(usertype="normal")
     return render(request, "user_manage.html", {'users':users});
 
-def settings(request):
+def web_settings(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
     return render(request, "settings.html");
