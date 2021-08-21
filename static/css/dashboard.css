@@ -33,8 +33,12 @@
 }
 
 body {
-  font-size: .875rem;
+  font-size: 1rem;
   font-family: 'Pretendard-Regular';
+}
+
+.toastui-editor-contents {
+  font-size: 1rem;
 }
 
 .feather {
@@ -53,13 +57,10 @@ body {
   bottom: 0;
   left: 0;
   z-index: 100; /* Behind the navbar */
-  padding: 48px 0 0; /* Height of navbar */
+  padding: 48px 0 0 calc(25% - 220px); /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-  width: 10%;
-  max-width: 250px;
-  min-width: 150px;
-  /* width: 200px; */
-  /* margin-left: 80px; */
+  max-width: 25%;
+  /* margin-left: calc(25% - 220px); */
 }
 
 @media (max-width: 767.98px) {
@@ -154,17 +155,16 @@ body {
   margin-bottom: 50px;
 }
 
-#viewer .toastui-editor-contents p, toastui-editor-main p{
-  font-size: 15px !important;
-}
-
 main[role="main"] {
-  flex: 0 0 90% !important;
-  max-width: 90% !important;
+  flex: 0 0 75% !important;
+  max-width: 75% !important;
+  padding-left: 50px !important;
 }
 
 #main_center{
   max-width: 1000px;
+  min-width: 800px;
+  margin : 0 !important;
 }
 
 #main_center > table td,
@@ -178,19 +178,26 @@ main[role="main"] {
   font-size: 2.3rem;
 }
 
+main table {
+  table-layout: fixed;
+}
+
 th.table_title,
 td.table_title {
-  width: 70%;
+  max-width: 72% !important;
+  width: 72% !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 th.table_info,
 td.table_info {
-  width: 9%;
+  width: 100px !important;
 }
 
 th.table_idx,
 td.table_idx {
-  width: 3%;
+  width: 50px;
 }
 
 .admin {
@@ -211,12 +218,12 @@ td.table_idx {
   font-weight: 900;
   padding: 10px 20px;
   border: 0;
-  color: #fff;
-  letter-spacing: 2px;
+  color: #fff !important;
+  letter-spacing: 1px;
   line-height: 60px;
   outline: transparent;
   position: relative;
-  background: linear-gradient(45deg, transparent 5%, #003ab6 5%);
+  background: linear-gradient(45deg, transparent 5%, #414141 5%);
   text-decoration: none;
 }
 

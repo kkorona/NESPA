@@ -98,7 +98,7 @@
 
       {% if request.session.usertype == "admin" %}
        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-        <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #003ab6 5%);">관리자 항목</span>
+        <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #b64131 5%);">관리자 항목</span>
       </h6>
 
       <ul class="nav flex-column mb-2">
@@ -137,7 +137,7 @@
       {% endif %}
       
       <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #168500 5%);">강의 정보</span>
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #45858C 5%);">강의 정보</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -161,7 +161,7 @@
         </ul>
         
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #962a00 5%);">과제</span>
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #87bdbd 5%);">과제</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -191,7 +191,7 @@
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #009191 5%);">게시판</span>
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #D9B166 5%);">게시판</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -215,7 +215,7 @@
         </ul>
     
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #8f0070 5%);">About</span>
+          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #BF9969 5%);">About</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
@@ -243,7 +243,7 @@
       <div class="row">
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
            <div class="w-100 form-inline">
-            <img  class="m-auto" src="/static/miscs/banner.png">
+            <img src="/static/miscs/banner.png">
            </div> 
             
           <div id="main_center" class="board-title d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 w-75 m-auto">
@@ -259,7 +259,7 @@
                 <th class="w-50 table_title">제목</th>
                 <th class="w-10 table_info text-center">작성자</th>
                 <th class="w-10 table_info text-center">게시날짜</th>
-                <th class="w-5 table_info text-center">조회수</th>
+                <th class="w-5 table_idx text-center">조회수</th>
             </tr>
             </thead>
                 <tbody>
@@ -272,6 +272,10 @@
                 [{{ post.comments_count }}]
                 </span>
                 {% endif %}
+                <script>
+                  if(Number(Date.parse(`{% now "c" %}`)) < Number(Date.parse(`{{ post.pub_date | date:'c' }}`)) + 25920000)
+                    document.write("<span style='color:rgb(250, 230, 0);font-weight:800;'>[N]</span>");
+                </script>
                 </a></td>
                 <td class="text-center table_info">{{ post.author }}</td>
                 <td class="text-center table_info">{{ post.pub_date|date:"N j일" }}</td>

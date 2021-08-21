@@ -25,9 +25,13 @@
 <div class="container-fluid">
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">과제 제출 현황 / Submission Result</h1>
+      <div class="title-container">
+        <br>
+        <a class="title-box">
+          <span>과제 제출 현황/ Submission list</span>
+        </a><br>
       </div>
+      <hr>
       {% if not request.session.logged_in  %}
       <span>로그인이 필요한 기능입니다.</span>
       {% else %}
