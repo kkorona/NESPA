@@ -101,126 +101,126 @@
           
         </ul>
 
-      {% if request.session.usertype == "admin" %}
-      <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-        <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #003ab6 5%);">관리자 항목</span>
-      </h6>
-
-      <ul class="nav flex-column mb-2">
-        <li class="nav-item">
-          <a class="nav-link" id="sidebar_assignment_registry" href="/assignment/assignment_registry">
-            <span data-feather="upload"></span>
-            과제물 등록
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="sidebar_assignment_manage" href="/assignment/assignment_manage">
-            <span data-feather="briefcase"></span>
-            과제물 관리
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="sidebar_user_approval" href="/assignment/user_approval">
-            <span data-feather="user-check"></span>
-            사용자 승인
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="sidebar_user_manage" href="/assignment/user_manage">
-            <span data-feather="user"></span>
-            사용자 관리
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="sidebar_settings" href="/assignment/settings">
-            <span data-feather="settings"></span>
-            시스템 설정
-          </a>
-        </li>
-      </ul>
-       
-      {% endif %}
-      
-      <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #168500 5%);">강의 정보</span>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_notice" href="/ds2020">
-              <span data-feather="aperture"></span>
-              공지사항
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_syllabus" href="/syllabus">
-              <span data-feather="compass"></span>
-              교수계획표
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_lecture" href="/lecture">
-              <span data-feather="archive"></span>
-              강의자료
-            </a>
-          </li>
-        </ul>
+        {% if request.session.usertype == "admin" %}
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+         <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #b64131 5%);">관리자 항목</span>
+       </h6>
+ 
+       <ul class="nav flex-column mb-2">
+         <li class="nav-item">
+           <a class="nav-link" id="sidebar_assignment_registry" href="/assignment/assignment_registry">
+             <span data-feather="upload"></span>
+             과제물 등록
+           </a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" id="sidebar_assignment_manage" href="/assignment/assignment_manage">
+             <span data-feather="briefcase"></span>
+             과제물 관리
+           </a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" id="sidebar_user_approval" href="/assignment/user_approval">
+             <span data-feather="user-check"></span>
+             사용자 승인
+           </a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" id="sidebar_user_manage" href="/assignment/user_manage">
+             <span data-feather="user"></span>
+             사용자 관리
+           </a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" id="sidebar_settings" href="/assignment/settings">
+             <span data-feather="settings"></span>
+             시스템 설정
+           </a>
+         </li>
+       </ul>
         
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #962a00 5%);">과제</span>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_list" href="/assignment/assignment_list">
-              <span data-feather="list"></span>
-              과제물 목록
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_submission" href="/assignment/submission">
-              <span data-feather="terminal"></span>
-              과제물 제출
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_result" href="/assignment/submission_list">
-              <span data-feather="pie-chart"></span>
-              과제 제출 현황
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_online_exam" href="/online_exam">
-              <span data-feather="edit"></span>
-              온라인 시험
-            </a>
-          </li>
-        </ul>
-
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #009191 5%);">게시판</span>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_forum" href="/forum">
-              <span data-feather="file-text"></span>
-              자유 게시판
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_qna" href="/qna">
-              <span data-feather="alert-circle"></span>
-              질문 게시판
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="sidebar_reports" href="/reports">
-              <span data-feather="edit-3"></span>
-              실습 보고서
-            </a>
-          </li>
-        </ul>
-    
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
-          <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #8f0070 5%);">About</span>
+       {% endif %}
+       
+       <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+           <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #45858C 5%);">강의 정보</span>
+         </h6>
+         <ul class="nav flex-column mb-2">
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_notice" href="/ds2020">
+               <span data-feather="aperture"></span>
+               공지사항
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_syllabus" href="/syllabus">
+               <span data-feather="compass"></span>
+               교수계획표
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_lecture" href="/lecture">
+               <span data-feather="archive"></span>
+               강의자료
+             </a>
+           </li>
+         </ul>
+         
+         <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+           <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #87bdbd 5%);">과제</span>
+         </h6>
+         <ul class="nav flex-column mb-2">
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_list" href="/assignment/assignment_list">
+               <span data-feather="list"></span>
+               과제물 목록
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_submission" href="/assignment/submission">
+               <span data-feather="terminal"></span>
+               과제물 제출
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_result" href="/assignment/submission_list">
+               <span data-feather="pie-chart"></span>
+               과제 제출 현황
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_online_exam" href="/online_exam">
+               <span data-feather="edit"></span>
+               온라인 시험
+             </a>
+           </li>
+         </ul>
+ 
+         <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+           <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #D9B166 5%);">게시판</span>
+         </h6>
+         <ul class="nav flex-column mb-2">
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_forum" href="/forum">
+               <span data-feather="file-text"></span>
+               자유 게시판
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_qna" href="/qna">
+               <span data-feather="alert-circle"></span>
+               질문 게시판
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" id="sidebar_reports" href="/reports">
+               <span data-feather="edit-3"></span>
+               실습 보고서
+             </a>
+           </li>
+         </ul>
+     
+         <h6 class="sidebar-heading d-flex justify-content-between align-items-center pl-2 mt-4 mb-1 text-muted">
+           <span class="sidebar-box" style="background: linear-gradient(45deg, transparent 5%, #BF9969 5%);">About</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
