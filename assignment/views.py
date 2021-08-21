@@ -124,6 +124,8 @@ def submission_check(request):
         execute_result = execute.executes(destination_path, eval_path, str(submission.id), ext, str(prob.time_limit))
         
         total_tc = len(execute_result)
+        if total_tc <=0:
+            total_tc = 1
         scored_tc = 0
         total_time = 0.0
         res_out = []
@@ -362,7 +364,7 @@ def user_manage(request):
     users = vespaUser.objects.filter(usertype="normal")
     return render(request, "user_manage.html", {'users':users});
 
-def settings(request):
+def web_setting(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
     return render(request, "settings.html");
