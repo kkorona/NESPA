@@ -23,11 +23,11 @@ def compiles(target_path, ext):
     return 0
     
 def compile_cpp(target_path):
-    query = "/opt/rh/devtoolset-8/root/usr/bin/g++ " + target_path + ".cpp -o " + target_path + " -O2 -Wall -lm -static -std=gnu++14"
+    query = "g++ " + target_path + ".cpp -o " + target_path + " -O2 -Wall -lm -static -std=gnu++14"
     return query
 
 def compile_c(target_path):
-    query = "/opt/rh/devtoolset-8/root/usr/bin/gcc " + target_path + ".c -o " + target_path + " -O2 -Wall -lm -static -std=c11"
+    query = "gcc " + target_path + ".c -o " + target_path + " -O2 -Wall -lm -static -std=c11"
     return query
 
 def compile_py(target_path):
