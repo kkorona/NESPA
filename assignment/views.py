@@ -124,6 +124,8 @@ def submission_check(request):
         execute_result = execute.executes(destination_path, eval_path, str(submission.id), ext, str(prob.time_limit))
         
         total_tc = len(execute_result)
+        if total_tc <=0:
+            total_tc = 1
         scored_tc = 0
         total_time = 0.0
         res_out = []
