@@ -33,8 +33,12 @@
 }
 
 body {
-  font-size: .875rem;
+  font-size: 1rem;
   font-family: 'Pretendard-Regular';
+}
+
+.toastui-editor-contents {
+  font-size: 1rem;
 }
 
 .feather {
@@ -151,10 +155,6 @@ body {
   margin-bottom: 50px;
 }
 
-#viewer .toastui-editor-contents p, toastui-editor-main p{
-  font-size: 15px !important;
-}
-
 main[role="main"] {
   flex: 0 0 75% !important;
   max-width: 75% !important;
@@ -163,7 +163,7 @@ main[role="main"] {
 
 #main_center{
   max-width: 1000px;
-  min-width: 700px;
+  min-width: 800px;
   margin : 0 !important;
 }
 
