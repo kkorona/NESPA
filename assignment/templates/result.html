@@ -4,9 +4,14 @@
 <div class="container-fluid">
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">채점 결과 / Result</h1>
-      </div>
+      <div id="main_center" class="w-75 m-auto">
+        <div class="title-container">
+          <br>
+          <a class="title-box">
+            <span>채점 결과 / Result</span>
+          </a><br>
+        </div>
+        <hr>
       <div>
       <p>problem ID : {{ prob_id }}</p>
       <p>execution time : {{ total_time }}</p>

@@ -5,10 +5,14 @@
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div id="main_center" class="w-75 m-auto">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">사용자 승인/ User Approval</h1>
-      </div>
-
+      <div id="main_center" class="w-75 m-auto">
+        <div class="title-container">
+          <br>
+          <a class="title-box">
+            <span>사용자 승인/ User Approval</span>
+          </a><br>
+        </div>
+        <hr>
       <div class="row">
         <form method="post" action="" name="approve_user" style="display: none;">
           {% csrf_token %}

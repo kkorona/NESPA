@@ -23,8 +23,9 @@
   
   .comment-widgets .comment-row {
       border-bottom: 2.5px double rgba(77, 77, 77, 0.062);
-      padding-top: 15px;
-      padding-bottom: 15px;
+      /* padding-top: 15px;
+      padding-bottom: 15px; */
+      padding: 15px 50px 15px 30px;
   }
   
   .comment-text:hover {

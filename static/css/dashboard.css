@@ -218,12 +218,12 @@ td.table_idx {
   font-weight: 900;
   padding: 10px 20px;
   border: 0;
-  color: #fff;
-  letter-spacing: 2px;
+  color: #fff !important;
+  letter-spacing: 1px;
   line-height: 60px;
   outline: transparent;
   position: relative;
-  background: linear-gradient(45deg, transparent 5%, #003ab6 5%);
+  background: linear-gradient(45deg, transparent 5%, #414141 5%);
   text-decoration: none;
 }
 
