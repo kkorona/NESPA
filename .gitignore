@@ -11,3 +11,5 @@ data/assignment
 media/attached
 /data
 mytoken
+*/migrations/*.py
+
