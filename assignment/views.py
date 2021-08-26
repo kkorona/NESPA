@@ -324,11 +324,16 @@ def assignment_manage(request):
                         curr_input_filename = gradeModel.grade_input.name.split('/')[-1]
                         curr_output_filename = gradeModel.grade_output.name.split('/')[-1]
                         if filename == curr_input_filename:
-                            os.remove(gradeModel.grade_input.path)
+                            if os.path.isfile(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_input.name)):
+                                os.remove(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_input.name))
+                            #os.remove(gradeModel.grade_input.path)
                             gradeModel.grade_input = files[filename]
                             gradeModel.save()
                         if filename == curr_output_filename:
-                            os.remove(gradeModel.grade_output.path)
+                            #print(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_output.name))
+                            if os.path.isfile(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_output.name)):
+                                os.remove(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_output.name))
+                            #os.remove(gradeModel.grade_output.path)
                             gradeModel.grade_output = files[filename]
                             gradeModel.save()
             problem.save()
