@@ -23,7 +23,11 @@ def compiles(target_path, ext):
     return 0
     
 def compile_cpp(target_path):
-    query = "g++ " + target_path + ".cpp -o " + target_path + " -O2 -Wall -lm -static -std=gnu++14"
+    # Use this when your OS is Ubuntu.
+    # cpp_path_head = "g++"
+    # use this when your OS is CentOS 7
+    cpp_path_head = "/opt/rh/devtoolset-8/root/usr/bin/g++"
+    query = cpp_path_head + " " + target_path + ".cpp -o " + target_path + " -O2 -Wall -lm -static -std=gnu++14"
     return query
 
 def compile_c(target_path):

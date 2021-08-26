@@ -271,10 +271,16 @@ def assignment_registry(request):
             grade_data = files['grade_data']
             zf = zipfile.ZipFile(grade_data)
             file_list = zf.namelist()
-            for i in range(0, len(file_list), 2):
+            #print(file_list)
+            for i in range(0, len(file_list) // 2):
                 gradeModel = GradeModel(problem=new_problem)
-                gradeModel.grade_input = DjangoFile(zf.open(file_list[i]), name=file_list[i])
-                gradeModel.grade_output = DjangoFile(zf.open(file_list[i+1]), name=file_list[i+1])
+                if f"0{i+1}.inp" in file_list:
+                    gradeModel.grade_input = DjangoFile(zf.open(file_list[file_list.index(f"0{i+1}.inp")]), name=f"0{i+1}.inp")
+                    gradeModel.grade_output = DjangoFile(zf.open(file_list[file_list.index(f"0{i+1}.out")]), name=f"0{i+1}.out")
+                else:
+                    gradeModel.grade_input = DjangoFile(zf.open(file_list[file_list.index(f"{i+1}.inp")]), name=f"{i+1}.inp")
+                    gradeModel.grade_output = DjangoFile(zf.open(file_list[file_list.index(f"{i+1}.out")]), name=f"{i+1}.out")
+
                 gradeModel.save()
         return render(request, "assignment_registry.html");
 
@@ -318,9 +324,16 @@ def assignment_manage(request):
                         curr_input_filename = gradeModel.grade_input.name.split('/')[-1]
                         curr_output_filename = gradeModel.grade_output.name.split('/')[-1]
                         if filename == curr_input_filename:
+                            if os.path.isfile(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_input.name)):
+                                os.remove(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_input.name))
+                            #os.remove(gradeModel.grade_input.path)
                             gradeModel.grade_input = files[filename]
                             gradeModel.save()
                         if filename == curr_output_filename:
+                            #print(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_output.name))
+                            if os.path.isfile(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_output.name)):
+                                os.remove(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_output.name))
+                            #os.remove(gradeModel.grade_output.path)
                             gradeModel.grade_output = files[filename]
                             gradeModel.save()
             problem.save()
