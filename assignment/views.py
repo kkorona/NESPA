@@ -271,10 +271,16 @@ def assignment_registry(request):
             grade_data = files['grade_data']
             zf = zipfile.ZipFile(grade_data)
             file_list = zf.namelist()
+            print(file_list)
             for i in range(0, len(file_list) // 2):
                 gradeModel = GradeModel(problem=new_problem)
-                gradeModel.grade_input = DjangoFile(zf.open(file_list[file_list.index(f"{i+1}.inp")]), name=f"{i+1}.inp")
-                gradeModel.grade_output = DjangoFile(zf.open(file_list[file_list.index(f"{i+1}.out")]), name=f"{i+1}.out")
+                if i + 1 < 10:
+                    gradeModel.grade_input = DjangoFile(zf.open(file_list[file_list.index(f"0{i+1}.inp")]), name=f"{i+1}.inp")
+                    gradeModel.grade_output = DjangoFile(zf.open(file_list[file_list.index(f"0{i+1}.out")]), name=f"{i+1}.out")
+                else:
+                    gradeModel.grade_input = DjangoFile(zf.open(file_list[file_list.index(f"{i+1}.inp")]), name=f"{i+1}.inp")
+                    gradeModel.grade_output = DjangoFile(zf.open(file_list[file_list.index(f"{i+1}.out")]), name=f"{i+1}.out")
+
                 gradeModel.save()
         return render(request, "assignment_registry.html");
 
