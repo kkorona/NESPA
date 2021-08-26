@@ -271,12 +271,12 @@ def assignment_registry(request):
             grade_data = files['grade_data']
             zf = zipfile.ZipFile(grade_data)
             file_list = zf.namelist()
-            print(file_list)
+            #print(file_list)
             for i in range(0, len(file_list) // 2):
                 gradeModel = GradeModel(problem=new_problem)
-                if i + 1 < 10:
-                    gradeModel.grade_input = DjangoFile(zf.open(file_list[file_list.index(f"0{i+1}.inp")]), name=f"{i+1}.inp")
-                    gradeModel.grade_output = DjangoFile(zf.open(file_list[file_list.index(f"0{i+1}.out")]), name=f"{i+1}.out")
+                if f"0{i+1}.inp" in file_list:
+                    gradeModel.grade_input = DjangoFile(zf.open(file_list[file_list.index(f"0{i+1}.inp")]), name=f"0{i+1}.inp")
+                    gradeModel.grade_output = DjangoFile(zf.open(file_list[file_list.index(f"0{i+1}.out")]), name=f"0{i+1}.out")
                 else:
                     gradeModel.grade_input = DjangoFile(zf.open(file_list[file_list.index(f"{i+1}.inp")]), name=f"{i+1}.inp")
                     gradeModel.grade_output = DjangoFile(zf.open(file_list[file_list.index(f"{i+1}.out")]), name=f"{i+1}.out")
@@ -324,9 +324,11 @@ def assignment_manage(request):
                         curr_input_filename = gradeModel.grade_input.name.split('/')[-1]
                         curr_output_filename = gradeModel.grade_output.name.split('/')[-1]
                         if filename == curr_input_filename:
+                            os.remove(gradeModel.grade_input.path)
                             gradeModel.grade_input = files[filename]
                             gradeModel.save()
                         if filename == curr_output_filename:
+                            os.remove(gradeModel.grade_output.path)
                             gradeModel.grade_output = files[filename]
                             gradeModel.save()
             problem.save()
