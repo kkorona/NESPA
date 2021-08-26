@@ -24,8 +24,9 @@ admin.site.enable_nav_sidebar = False
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', dev2020.views.index, name='index'),
-    
+    path('',include('board.urls')),
+    path('notice/',include('board.urls')),
+    path('ds2021/', include('board.urls')),
     path('ds2020/', include('board.urls')),
     path('syllabus/', dev2020.views.index, name='index'),
     path('lecture/', dev2020.views.index, name='index'),
