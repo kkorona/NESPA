@@ -271,7 +271,6 @@ def assignment_registry(request):
             grade_data = files['grade_data']
             zf = zipfile.ZipFile(grade_data)
             file_list = zf.namelist()
-            #print(file_list)
             for i in range(0, len(file_list) // 2):
                 gradeModel = GradeModel(problem=new_problem)
                 if f"0{i+1}.inp" in file_list:
@@ -315,10 +314,22 @@ def assignment_manage(request):
             problem.eval = eval_std
             
             for filename in files:
-                if filename == "document": problem.document = files['document']
-                elif filename == "sample_data": problem.sample_data = files['sample_data']
-                elif filename == "sub_data": problem.sub_data = files['sub_data']
-                elif filename == "header_data": problem.header_data = files['header_data']
+                if filename == "document":
+                    if os.path.isfile(os.path.join(settings.BASE_DIR,'media',problem.document.name)):
+                        os.remove(os.path.join(settings.BASE_DIR,'media',problem.document.name))
+                    problem.document = files['document']
+                elif filename == "sample_data":
+                    if os.path.isfile(os.path.join(settings.BASE_DIR,'media', problem.sample_data.name)):
+                        os.remove(os.path.join(settings.BASE_DIR,'media',problem.sample_data.name))
+                    problem.sample_data = files['sample_data']
+                elif filename == "sub_data":
+                    if os.path.isfile(os.path.join(settings.BASE_DIR,'data', 'assignment', problem.sub_data.name)):
+                        os.remove(os.path.join(settings.BASE_DIR,'data', 'assignment', problem.sub_data.name))
+                    problem.sub_data = files['sub_data']
+                elif filename == "header_data":
+                    if os.path.isfile(os.path.join(settings.BASE_DIR,'data', 'assignment', problem.header_data.name)):
+                        os.remove(os.path.join(settings.BASE_DIR,'data', 'assignment', problem.header_data.name))
+                    problem.header_data = files['header_data']
                 else:
                     for gradeModel in GradeModel.objects.filter(problem=problem):
                         curr_input_filename = gradeModel.grade_input.name.split('/')[-1]
@@ -326,14 +337,11 @@ def assignment_manage(request):
                         if filename == curr_input_filename:
                             if os.path.isfile(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_input.name)):
                                 os.remove(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_input.name))
-                            #os.remove(gradeModel.grade_input.path)
                             gradeModel.grade_input = files[filename]
                             gradeModel.save()
                         if filename == curr_output_filename:
-                            #print(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_output.name))
                             if os.path.isfile(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_output.name)):
                                 os.remove(os.path.join(settings.BASE_DIR,'data','assignment',gradeModel.grade_output.name))
-                            #os.remove(gradeModel.grade_output.path)
                             gradeModel.grade_output = files[filename]
                             gradeModel.save()
             problem.save()
