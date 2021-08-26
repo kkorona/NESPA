@@ -27,6 +27,12 @@ def executes(target_path, eval_path, submission_id, ext, timeout):
     elif ext == "java":
         query_head = execute_c(target_path, submission_id)
 
+    with open("/opt/vespa/assignment/debug.txt","w") as f:
+            outstr = ""
+            outstr += eval_path + "\n\n"
+            for filename in filenames:
+                outstr += filename + "\n"
+            f.write(outstr)
     for filename in filenames:
         eval_input_file = os.path.join(eval_path, filename + ".inp")
         eval_output_file = os.path.join(eval_path, filename + ".out")
