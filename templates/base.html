@@ -50,17 +50,17 @@
     </head>
     <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/ds2020"><span data-feather="aperture"></span>NESPA 0.95(beta)</a>
+      <a class="navbar-brand col-md-3 mr-0 px-3" href="/ds2020"><span data-feather="aperture"></span>NESPA 0.95(beta)</a>
       <ul class="navbar-nav ml-auto px-3 flex">
-        <li>
-          <button class="btn-secondary mr-3" onclick="location.href='/ds2020'">공지사항</button>
-          <button class="btn-secondary mr-3" onclick="location.href='/forum'">자유게시판</button>
-          <button class="btn-secondary mr-3" onclick="location.href='/qna'">질문게시판</button>
-          <button class="btn-secondary mr-3" onclick="location.href='/devs'">오류보고</button>
+        <li class="topbar">
+          <button class="btn mr-3" onclick="location.href='/ds2020'">공지사항</button>
+          <button class="btn mr-3" onclick="location.href='/forum'">자유게시판</button>
+          <button class="btn mr-3" onclick="location.href='/qna'">질문게시판</button>
+          <button class="btn mr-3" onclick="location.href='/devs'">오류보고</button>
           {% if request.session.userid %}
-            <button class="btn-secondary" onclick="location.href='/accounts/logout'">로그아웃</button>
+            <button class="btn" onclick="location.href='/accounts/logout'">로그아웃</button>
             {% else %}
-            <button class="btn-secondary" onclick="location.href='/accounts/login'">로그인</button>
+            <button class="btn" onclick="location.href='/accounts/login'">로그인</button>
             {% endif %}
         </li>
       </ul>
