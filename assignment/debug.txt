@@ -1,13 +1,5 @@
-/opt/vespa/data/assignment/99/eval
+/opt/vespa/data/assignment/2/eval
 
-/opt/vespa/data/assignment/99/eval/8
-/opt/vespa/data/assignment/99/eval/1
-/opt/vespa/data/assignment/99/eval/7
-/opt/vespa/data/assignment/99/eval/12
-/opt/vespa/data/assignment/99/eval/4
-/opt/vespa/data/assignment/99/eval/5
-/opt/vespa/data/assignment/99/eval/6
-/opt/vespa/data/assignment/99/eval/10
-/opt/vespa/data/assignment/99/eval/9
-/opt/vespa/data/assignment/99/eval/3
-/opt/vespa/data/assignment/99/eval/2
+/opt/vespa/data/assignment/2/eval/03
+/opt/vespa/data/assignment/2/eval/01
+/opt/vespa/data/assignment/2/eval/02
