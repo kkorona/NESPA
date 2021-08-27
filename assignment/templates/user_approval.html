@@ -13,7 +13,7 @@
           </a><br>
         </div>
         <hr>
-      <div class="row">
+      <div class="col">
         <form method="post" action="" name="approve_user" style="display: none;">
           {% csrf_token %}
           <input type="hidden" name="approve_user" value="">
@@ -27,7 +27,7 @@
               <div class="card-title d-flex justify-content-between">
                 <span class="pl-2" style="font-size: 24px;font-weight:700;"># {{forloop.counter}}</span>
                 <span>
-                  <button class="btn btn-warning mr-3">보류</button>
+                  <!-- <button class="btn btn-warning mr-3">보류</button> -->
                   <button class="btn btn-success" name="approve_button" id="{{ newuser.id }}">승인</button>
                 </span>
               </div>

@@ -26,15 +26,16 @@
 } */
 
 @font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 body {
   font-size: 1rem;
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
 }
 
 .toastui-editor-contents {
@@ -58,7 +59,7 @@ body {
   left: 0;
   z-index: 100; /* Behind the navbar */
   padding: 48px 0 0 calc(25% - 220px); /* Height of navbar */
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
   max-width: 25%;
   /* margin-left: calc(25% - 220px); */
 }
@@ -73,7 +74,7 @@ body {
   position: relative;
   top: 0;
   height: calc(100vh - 48px);
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
@@ -89,7 +90,7 @@ body {
   font-weight: 600;
   color: #333;
   padding: 3px 0px 3px 12px;
-  transition: all 0.1s  0s;
+  transition: all 0.1s 0s;
 }
 
 .sidebar .nav-link .feather {
@@ -99,7 +100,7 @@ body {
 
 .sidebar .nav-link.active {
   color: #007bff !important;
-  font-weight:900;
+  font-weight: 900;
 }
 
 .sidebar .nav-link:hover .feather,
@@ -109,15 +110,13 @@ body {
 
 .sidebar .nav-link:hover {
   color: inherit;
-  transition: all 0.1s  0s;
+  transition: all 0.1s 0s;
   font-weight: 900;
   padding-left: 14px;
 }
 
-
-
 .sidebar-heading {
-  font-size: .75rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
 }
 
@@ -126,33 +125,33 @@ body {
  */
 
 .navbar-brand {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
   font-size: 1rem;
-  background-color: rgba(0, 0, 0, .25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25);
 }
 
 .navbar .navbar-toggler {
-  top: .25rem;
+  top: 0.25rem;
   right: 1rem;
 }
 
 .navbar .form-control {
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   border-width: 0;
   border-radius: 0;
 }
 
 .form-control-dark {
   color: #fff;
-  background-color: rgba(255, 255, 255, .1);
-  border-color: rgba(255, 255, 255, .1);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .form-control-dark:focus {
   border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
 
 .post_info h5 {
@@ -171,10 +170,10 @@ main[role="main"] {
   padding-left: 50px !important;
 }
 
-#main_center{
+#main_center {
   max-width: 1000px;
   min-width: 800px;
-  margin : 0 !important;
+  margin: 0 !important;
 }
 
 #main_center > table td,
@@ -183,7 +182,7 @@ main[role="main"] {
 }
 
 #main_center > div > h1 {
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
   font-weight: 900;
   font-size: 2.3rem;
 }
@@ -214,7 +213,8 @@ td.table_idx {
   color: #ce2121;
 }
 
-.comment-author, .retweet-author {
+.comment-author,
+.retweet-author {
   font-size: 1.2em !important;
 }
 
@@ -222,8 +222,10 @@ td.table_idx {
   width: fit-content;
 }
 
-.title-box, .title-box::after, .title-box:hover {
-  font-family: 'Pretendard-Regular';
+.title-box,
+.title-box::after,
+.title-box:hover {
+  font-family: "Pretendard-Regular";
   font-size: 28px;
   font-weight: 900;
   padding: 10px 20px;
@@ -237,10 +239,11 @@ td.table_idx {
   text-decoration: none;
 }
 
-
-.sidebar-box, .sidebar-box::after, .sidebar-box:hover {
+.sidebar-box,
+.sidebar-box::after,
+.sidebar-box:hover {
   width: 500px;
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
   font-weight: 900;
   font-size: 15px;
   background: linear-gradient(45deg, transparent 5%, #2e2e2e 5%);
@@ -262,14 +265,14 @@ li.topbar > button {
   font-weight: 700;
 }
 
-li.topbar > button:hover {  
+li.topbar > button:hover {
   transition: all 0.1s ease 0s;
   background-color: inherit;
   padding-top: 9px;
   color: rgb(212, 212, 212);
   font-size: 1.15rem;
   font-weight: 900;
-} 
+}
 
 tbody tr > td:nth-child(2):hover {
   font-weight: 900;
@@ -282,7 +285,11 @@ nav > span.gohwak .feather {
   height: 20px;
 }
 
-nav > span.gohwak  {
+nav > span.gohwak > a {
+  color: white;
+}
+
+nav > span.gohwak {
   color: white;
   padding-left: 10px;
 }
