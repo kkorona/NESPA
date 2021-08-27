@@ -13,3 +13,4 @@ media/attached
 mytoken
 */migrations/*.py
 !venv/*/migrations/*.py
+media/*
