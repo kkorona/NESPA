@@ -1,6 +1,6 @@
 def notification(request):
 	context = {
-		'notification_list' : ["테스트입니다1", "테스트입니다2"],
+		'notification_list' : "테스트 공지입니다"
 	}
 
 	return context
