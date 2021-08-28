@@ -54,10 +54,10 @@
       </span>
       <ul class="navbar-nav ml-auto px-3 flex">
         <li class="topbar">
-          <button class="btn mr-3" onclick="location.href='/notice'">공지사항</button>
-          <button class="btn mr-3" onclick="location.href='/forum'">자유게시판</button>
-          <button class="btn mr-3" onclick="location.href='/qna'">질문게시판</button>
-          <button class="btn mr-3" onclick="location.href='/devs'">오류보고</button>
+          <button class="btn" onclick="location.href='/notice'">공지사항</button>
+          <button class="btn" onclick="location.href='/forum'">자유게시판</button>
+          <button class="btn" onclick="location.href='/qna'">질문게시판</button>
+          <button class="btn" onclick="location.href='/devs'">오류보고</button>
           {% if request.session.userid %}
             <button class="btn" onclick="location.href='/accounts/logout'">로그아웃</button>
             {% else %}
@@ -97,7 +97,6 @@
               <span data-feather="user-plus"></span>
               회원가입
             </a>
-q
           </li>
             {% endif %}
           
