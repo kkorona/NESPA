@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import render
 import dev2020.views
 
 admin.autodiscover()
@@ -40,3 +41,5 @@ urlpatterns = [
     path('nespa_qna/', dev2020.views.index, name='index'),
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+handler404 = "dev2020.views.page_not_found"

@@ -7,3 +7,6 @@ def index(request):
     
 def nespa_dev(request):
     return render(request, 'dev2020/nespa_dev.html')
+
+def page_not_found(request, exception):
+    return render(request, 'dev2020/404.html', {})
