@@ -2,7 +2,7 @@
 {% extends 'board_list.html' %}
 {% block board_title %}
     <div class="title-container">
-        <a href="/ds2020" class="title-box">
+        <a href="/notice" class="title-box">
           <span>공지사항/ Notice</span>
         </a>
     </div>
@@ -12,7 +12,7 @@
 {% block write_button %}
 {% if request.session.logged_in == 'YES' and request.session.usertype == 'admin' %}
 <div align="right">
-    <a class="btn btn-primary pull-right" href="/ds2020/write">글쓰기</a>
+    <a class="btn btn-primary pull-right" href="/notice/write">글쓰기</a>
 </div>
 {% endif %}
 {% endblock %}

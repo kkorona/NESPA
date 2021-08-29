@@ -86,7 +86,7 @@ def login(request):
                     request.session['username'] = myuser.username
                     request.session['usertype'] = myuser.usertype
                     request.session['logged_in'] = 'YES'
-                    return redirect('/ds2020')
+                    return redirect('/notice')
                 else:
                     return HttpResponse('ID 또는 비밀번호가 잘못되었습니다.<br>ID or password is invalid.')
             except vespaUser.DoesNotExist:
@@ -98,4 +98,4 @@ def logout(request):
     request.session.pop('username')
     request.session.pop('usertype')
     request.session.pop('logged_in')
-    return redirect('/ds2020')
+    return redirect('/notice')
