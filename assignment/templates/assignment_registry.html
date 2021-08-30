@@ -40,7 +40,7 @@
                         </div>
                      </div>
                      <div class=" d-flex flex-row">
-                        <div class="form-row" style="width:32%">
+                        <div class="form-row" style="width:30%">
                            <div class="name" style="width:90px">제한 회수</div>
                            <div class="value">
                               {% if problem %}
@@ -51,7 +51,7 @@
                               <span>회</span>
                            </div>
                         </div>
-                        <div class="form-row" style="width:32%">
+                        <div class="form-row" style="width:30%">
                            <div class="name" style="width:90px">제한 시간</div>
                            <div class="value">
                               {% if problem %}
@@ -62,7 +62,7 @@
                               <span>초</span>
                            </div>
                         </div>
-                        <div class="form-row" style="width:32%">
+                        <div class="form-row" style="width:40%">
                            <div class="name" style="width:90px">제한 크기</div>
                            <div class="value">
                               {% if problem %}
@@ -209,9 +209,11 @@
 
                               </div>
                               {% else %}
-                              <input class="input-file" type="file" name="grade_data" id="file5" required>
-                              <label class="label--file" for="file5">파일 선택</label>
-                              <span class="input-file__info">선택된 파일이 없습니다</span>
+                              <div class="js-input-file">
+                                 <input class="input-file" type="file" name="grade_data" id="file5" required>
+                                 <label class="label--file" for="file5">파일 선택</label>
+                                 <span class="input-file__info">선택된 파일이 없습니다</span>
+                              </div>
                               {% endif %}
                            </div>
                         </div>
