@@ -54,29 +54,27 @@
 
           </div> -->
           <br>
-
-          <div  class="m-auto w-50">
-            <div id="assignment-form" class="pt-3 pl-3">
-              <div class="name" style="font-size: large;font-weight: 700;"> <span data-feather="image"></span> 배너선택</div>
-              <br>
-              <div class="value">
-                <div class="input-group js-input-file">
-                  <input class="input-file" type="file" name="grade_data" id="file5" required>
-                  <label class="label--file" for="file5">파일 선택</label>
-                  <span class="input-file__info">선택된 파일이 없습니다</span>
+          <form method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div  class="m-auto w-50">
+              <div id="assignment-form" class="pt-3 pl-3">
+                <div class="name" style="font-size: large;font-weight: 700;"> <span data-feather="image"></span> 배너선택</div>
+                <br>
+                <div class="value">
+                  <div class="input-group js-input-file">
+                    <input class="input-file" type="file" name="banner" id="file5" required>
+                    <label class="label--file" for="file5">파일 선택</label>
+                    <span class="input-file__info">선택된 파일이 없습니다</span>
+                  </div>
                 </div>
               </div>
+              <div style="height: 20px;"></div>
+              <div class="d-flex">
+                <button class="btn btn-secondary w-25 m-auto">변경</button>
+              </div>
+              <br>
             </div>
-            <div style="height: 20px;"></div>
-            <div class="d-flex">
-              <button class="btn btn-secondary w-25 m-auto">변경</button>
-            </div>
-            
-            <br>
-          </div>
-          
-
-          
+          </form>
         </div>
       </div>
       </div>

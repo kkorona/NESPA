@@ -389,4 +389,9 @@ def user_manage(request):
 def web_setting(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
+    if request.method == "POST":
+        if 'banner' in request.FILES:
+            banner_file = open(os.path.join(settings.BASE_DIR,'static', 'miscs', 'banner.png'), 'wb')
+            banner_file.write(request.FILES.get('banner').read())
+            banner_file.close()
     return render(request, "settings.html");
