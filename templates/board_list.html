@@ -34,8 +34,12 @@
             color: #cc3300;
             font-weight: bold;
         }
-	img {
-		width: 800px;
+	div.banner {
+            margin-top: 20px;
+	}
+	div.banner img{
+	    width: 800px;
+            
 	}
       {% block styles %}
       {% endblock %}
@@ -48,8 +52,8 @@
       <a class="navbar-brand col-md-3 mr-0 px-3" href="/notice"><span data-feather="aperture"></span>NESPA 0.95 (beta)</a>
       <span class="gohwak">
         <span data-feather="volume"></span>
-        <a href="#"><span>
-          {{ notification_list }}
+        <a href="{{ latest_post.get_absolute_url }}"><span>
+          {{ latest_post }}
        </span></a>
       </span>
       <ul class="navbar-nav ml-auto px-3 flex">
@@ -247,8 +251,8 @@
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-           <div class="w-100 form-inline">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pb-5">
+           <div class="w-100 form-inline banner">
             <img src="/static/miscs/banner.png">
            </div> 
             
@@ -280,7 +284,7 @@
                 {% endif %}
                 <script>
                   if(Number(Date.parse(`{% now "c" %}`)) < Number(Date.parse(`{{ post.pub_date | date:'c' }}`)) + 259200000)
-                    document.getElementById(`post-{{ post.id }}`).innerHTML += "<span style='color:rgb(250, 230, 0);font-weight:800;'>[N]</span>";
+                    document.getElementById(`post-{{ post.id }}`).innerHTML += "<span style='background-color:rgb(255,150,0);color:rgb(255, 255, 255);font-weight:800;font-size:8pt;'>&nbsp;N&nbsp;</span>";
                     // pubdate로부터 3일이내의 게시글은 [N]를 달아줌
                 </script>
                 </a></td>

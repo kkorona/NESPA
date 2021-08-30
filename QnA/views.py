@@ -132,7 +132,7 @@ def edit(request, article_id):
         content = content.replace('\\n', '\\\n')
         content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
         content = content.replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
-        return render(request, 'qna/edit.html',{'article_content' : content, 'article_title' : article.title, 'attachments' : article.attach_set.all()})
+        return render(request, 'QnA/edit.html',{'article_content' : content, 'article_title' : article.title, 'attachments' : article.attach_set.all()})
         
 def write(request):
     if request.method == "GET":
