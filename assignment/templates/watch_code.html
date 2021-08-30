@@ -60,8 +60,8 @@
     el: document.querySelector('#viewer'),
     initialEditType: 'wysiwyg',
     viewer:true,
-    initialValue:`\`\`\`cpp
-{{ code_content }}
+    initialValue:`\`\`\`{{ lang }}
+{{ code_content|safe }}
 \`\`\` `,
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   });
