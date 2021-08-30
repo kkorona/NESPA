@@ -66,7 +66,9 @@ def submission(request):
                 if len(request.FILES['source_code'].read()) > prob.size_limit:
                     return HttpResponse('코드 크기가 초과되었습니다.')
             
+            request.session['problem_id'] = prob.prob_id
             request.session['language'] = LANGDICT[language]
+            request.session['code_size'] = len(request.FILES['source_code'].read())
 
             now = time.localtime()
             request.session['updated_time'] = "%04d/%02d/%02d %02d:%02d:%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
@@ -80,8 +82,7 @@ def submission(request):
             submission.save()
 
             request.session['submission_id'] = submission.id
-            
-            return redirect('submission_check')
+            return render(request, "submission_check.html")
             
         else:
             return HttpResponse('소스코드가 첨부되지 않았습니다.')

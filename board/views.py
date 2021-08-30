@@ -101,7 +101,7 @@ def edit(request, article_id):
             ext = filename.split(".")[-1]
             attach = Attach(parent=article, path = destination_path,name=fname, ext = ext)
             attach.save()
-        return redirect('/ds2020/post/' + str(article_id))
+        return redirect('/notice/post/' + str(article_id))
         
     if request.method == "GET":
         content = article.content
