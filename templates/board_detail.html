@@ -41,8 +41,8 @@
       <a class="navbar-brand col-md-3 mr-0 px-3" href="/notice">NESPA 0.95 (beta)</a>
       <span class="gohwak">
         <span data-feather="volume"></span>
-        <a href="#"><span>
-          {{ notification_list }}
+        <a href="{{ latest_post.get_absolute_url }}"><span>
+          {{ latest_post }}
        </span></a>
       </span>
       <ul class="navbar-nav ml-auto px-3 flex">

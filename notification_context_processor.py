@@ -1,6 +1,9 @@
+from board.models import Post
+
 def notification(request):
+	posts = Post.objects.all().order_by('-mod_date')
 	context = {
-		'notification_list' : "테스트 공지입니다"
+		'latest_post' : posts[0]
 	}
 
 	return context
