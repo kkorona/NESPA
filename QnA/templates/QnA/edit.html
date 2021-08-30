@@ -6,7 +6,11 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
         <div id="main_center" class="w-75 m-auto">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">질문 게시판 / Q&amp;A</h1>
+            <div class="title-container">
+                <a href="/qna" class="title-box">
+                  <span>질문 게시판 / Q&amp;A</span>
+                </a>
+            </div>
         </div>
         <div>
             <div class="w-75">
@@ -30,32 +34,32 @@
                             <div class="wrap-table100">
                                 <div class="table100">
                                     <table>
-                                         <thead>
-                                            <tr>
-                                                <th>
-                                                    첨부 파일
-                                                    <button id="add_files" type="button">추가</button>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for attachment in attachments %}
-                                            <tr>
-                                                <td class="column1">
-                                                    <a href="/media/attached/board/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
-                                                    <input name="existing_files" type="hidden" value="{{attachment.id}}"/>
-                                                    <button name='delete_button' type='button'>삭제</button>
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                            <tr>
-                                                <td class="column1">
-                                                    <input name="attach_files" type="file"/>
-                                                    <button name='delete_button' type='button'>삭제</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                        <thead>
+                                           <tr>
+                                               <th>
+                                                   첨부 파일
+                                                   <button data-feather="plus-circle" id="add_files" type="button"></button>
+                                               </th>
+                                           </tr>
+                                       </thead>
+                                       <tbody>
+                                           {% for attachment in attachments %}
+                                           <tr>
+                                               <td class="column1">
+                                                   <a href="/media/attached/board/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
+                                                   <input name="existing_files" type="hidden" value="{{attachment.id}}"/>
+                                                   <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
+                                               </td>
+                                           </tr>
+                                           {% endfor %}
+                                           <tr>
+                                               <td class="column1">
+                                                   <input name="attach_files" type="file"/>
+                                                   <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
+                                               </td>
+                                           </tr>
+                                       </tbody>
+                                   </table>
                                 </div>
                             </div>
                         </div>
