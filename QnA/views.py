@@ -27,6 +27,13 @@ class PostDV(FormMixin, DetailView):
         
     def get_context_data(self, **kwargs):
         context = super(PostDV, self).get_context_data(**kwargs)
+
+        post_id = self.kwargs['pk']
+        if f'username/qna/{post_id}' not in self.request.session:
+            current_post = Post.objects.get(pk=post_id)
+            current_post.update_counter
+            self.request.session[f'username/qna/{post_id}'] = True
+
         context['form'] = CommentForm(initial={
             'text' : '',
         })
