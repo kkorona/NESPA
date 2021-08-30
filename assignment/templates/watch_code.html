@@ -34,8 +34,8 @@
       <span>로그인이 필요한 기능입니다.</span>
       {% else %}
       {% if request.session.usertype == "admin" %}
-      <div class="w-75">
-        <div id="viewer" class=" border-dark">
+      <div class="w-100">
+	      <div id="viewer" class=" border-dark"></div>
       </div>      
       {% else %}
       <span>허용되지 않은 기능입니다.<span>
@@ -50,11 +50,19 @@
 {% block scripts %}
 <script>
     $("#sidebar_result").attr('class','nav-link active'); 
+    console.log(`{{ code_content }}`);
+
+
+    const { Editor } = toastui;
+    const { codeSyntaxHighlight } = Editor.plugin;
+    const { colorSyntax } = Editor.plugin;
+
+    var editor;
 
     const viewer = new Editor.factory({
     el: document.querySelector('#viewer'),
     viewer:true ,
-    initialValue:  "{{ code_content }}",
+    initialValue:`{{ code_content }}`,
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   });
 
