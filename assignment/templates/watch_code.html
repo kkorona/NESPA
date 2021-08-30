@@ -55,14 +55,14 @@
 
     const { Editor } = toastui;
     const { codeSyntaxHighlight } = Editor.plugin;
-    const { colorSyntax } = Editor.plugin;
-
-    var editor;
 
     const viewer = new Editor.factory({
     el: document.querySelector('#viewer'),
-    viewer:true ,
-    initialValue:`{{ code_content }}`,
+    initialEditType: 'wysiwyg',
+    viewer:true,
+    initialValue:`\`\`\`cpp
+{{ code_content }}
+\`\`\` `,
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   });
 
