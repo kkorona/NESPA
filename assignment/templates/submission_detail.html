@@ -28,14 +28,14 @@
       <div class="title-container">
         <br>
         <a class="title-box">
-          <span>과제 제출 현황/ Submission list</span>
+          <span>과제 제출 현황/ Submission list detail</span>
         </a><br>
       </div>
       <hr>
       {% if not request.session.logged_in  %}
       <span>로그인이 필요한 기능입니다.</span>
       {% else %}
-      <div class="w-75">
+      <div class="w-100">
         <table class="table">
             <thead class="thead-dark">
                 <tr>

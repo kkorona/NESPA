@@ -35,7 +35,7 @@
       {% else %}
       {% if request.session.usertype == "admin" %}
       <div class="w-75">
-        <pre><code class="courier-new">{{ code_content }}</code></pre>
+        <div id="viewer" class=" border-dark">
       </div>      
       {% else %}
       <span>허용되지 않은 기능입니다.<span>
@@ -50,6 +50,15 @@
 {% block scripts %}
 <script>
     $("#sidebar_result").attr('class','nav-link active'); 
+
+    const viewer = new Editor.factory({
+    el: document.querySelector('#viewer'),
+    viewer:true ,
+    initialValue:  "{{ code_content }}",
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+  });
+
+    
 </script>
 {% endblock %}
 
