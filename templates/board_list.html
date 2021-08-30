@@ -272,21 +272,21 @@
                 {% for post in posts %}
                 <tr>
                 <td class="table_idx text-center">{{ post.id }}</td>
-                <td class="table_title"><a href="{{ post.get_absolute_url }}">{{ post.title }}
+                <td class="table_title"><a id="post-{{ post.id }}" href="{{ post.get_absolute_url }}">{{ post.title }}
                 {% if post.comments_count > 0 %}
-                <span class="text-comment-info">
+                <span id="post" class="text-comment-info">
                 [{{ post.comments_count }}]
                 </span>
                 {% endif %}
                 <script>
-                  if(Number(Date.parse(`{% now "c" %}`)) < Number(Date.parse(`{{ post.pub_date | date:'c' }}`)) + 25920000)
-                    document.write("<span style='color:rgb(250, 230, 0);font-weight:800;'>[N]</span>");
+                  if(Number(Date.parse(`{% now "c" %}`)) < Number(Date.parse(`{{ post.pub_date | date:'c' }}`)) + 259200000)
+                    document.getElementById(`post-{{ post.id }}`).innerHTML += "<span style='color:rgb(250, 230, 0);font-weight:800;'>[N]</span>";
                     // pubdate로부터 3일이내의 게시글은 [N]를 달아줌
                 </script>
                 </a></td>
                 <td class="text-center table_info">{{ post.author }}</td>
                 <td class="text-center table_info">{{ post.pub_date|date:"N j일" }}</td>
-                <td class="text-center table_info">
+                <td class="text-center table_idx">
                 {% if post.post_hit %}
                 {{ post.post_hit }}
                 {% else %}
