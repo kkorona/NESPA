@@ -6,7 +6,11 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
         <div id="main_center" class="w-75 m-auto">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">질문 게시판 / Q&amp;A</h1>
+            <div class="title-container">
+                <a href="/qna" class="title-box">
+                  <span>질문 게시판 / Q&amp;A</span>
+                </a>
+            </div>
         </div>
         <div>
             <div class="w-100">
@@ -32,25 +36,22 @@
                             <div class="wrap-table100">
                                 <div class="table100">
                                     <table>
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <span class="align-middle">첨부 파일</span>
-                                                <button id="add_files" class="btn " type="button"><i class="fa fa-plus-square align-middle" style="color:green"></i></button>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="files-box">
-                                        <tr>
-                                            <td class="pl-0 column1">
-                                                <label for="attach-file" class="btn m-auto"><i class="fa fa-plus align-middle"></i></label> 
-                                                <input type="text" class="w-75 upload-name align-middle" value=" 파일 선택" disabled="disabled">
-
-                                                <input type="file" id="attach-file" name="attach_files"/>
-                                                <button name='delete_button' type='button' class="btn"><i class="fa fa-minus-square align-middle" style="color:red"></i></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    첨부 파일
+                                                    <button data-feather="plus-circle" id="add_files" type="button"></button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="column1">
+                                                    <input name="attach_files" type="file"/>
+                                                    <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -92,15 +93,12 @@
     $("#sidebar_qna").attr('class','nav-link active');
 
     $("#add_files").click(function() {
-        $("table > tbody:last").append(`<tr>
-                                            <td class="pl-0 column1">
-                                                <label for="attach-file" class="btn m-auto"><i class="fa fa-plus align-middle"></i></label> 
-                                                <input type="text" class="w-75 upload-name align-middle" value=" 파일 선택" disabled="disabled">
-
-                                                <input type="file" id="attach-file" name="attach_files"/>
-                                                <button name='delete_button' type='button' class="btn"><i class="fa fa-minus-square align-middle" style="color:red"></i></button>
-                                            </td>
-                                        </tr>`);
+        $("table > tbody:last").append(`
+        <tr><td class="column1">
+            <input name="attach_files" type="file"/>
+            <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
+        </td>
+        `);
     });
 
     $('table').on('click', 'button[name="delete_button"]', function(e){

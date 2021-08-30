@@ -5,9 +5,13 @@
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
         <div id="main_center" class="w-75 m-auto">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">자유게시판 / Forum</h1>
-        </div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom  border-dark">
+              <div class="title-container">
+                <a href="/forum" class="title-box">
+                  <span>자유 게시판 / Forum</span>
+                </a>
+            </div>
+            </div>
         <div class="w-100">
             <form method='POST' enctype="multipart/form-data" name="write_form" action="">
             {% csrf_token %}
@@ -35,7 +39,7 @@
                                             <tr>
                                                 <th>
                                                     첨부 파일
-                                                    <button id="add_files" type="button">추가</button>
+                                                    <button data-feather="plus-circle" id="add_files" type="button"></button>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -43,7 +47,7 @@
                                             <tr>
                                                 <td class="column1">
                                                     <input name="attach_files" type="file"/>
-                                                    <button name='delete_button' type='button'>삭제</button>
+                                                    <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -87,8 +91,12 @@
     });
 
     $("#add_files").click(function() {
-        $("table > tbody:last").append("<tr><td class='column1'><input name='attach_files' type='file'/>\
-            <button name='delete_button' type='button'>삭제</button></td>");
+        $("table > tbody:last").append(`
+        <tr><td class="column1">
+            <input name="attach_files" type="file"/>
+            <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
+        </td>
+        `);
     });
 
     $('table').on('click', 'button[name="delete_button"]', function(e){
