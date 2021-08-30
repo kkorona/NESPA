@@ -32,7 +32,7 @@
       <div id="main_center" class="w-75 m-auto">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom  border-dark">
         <div class="title-container">
-          <a href="/QnA" class="title-box">
+          <a href="/qna" class="title-box">
             <span>질문 게시판 / Q&amp;A</span>
           </a>
       </div>
@@ -48,7 +48,7 @@
         <ul>
         {% for attachment in attachments %}
       {% if attachment.ext == "jpg" or attachment.ext == "png" or attachment.ext == "gif" or attachment.ext == "bmp" or attachment.ext == "jpeg" %}
-            <img src="/media/attached/forum/{{object.id}}/{{attachment.name}}">
+            <img src="/media/attached/qna/{{object.id}}/{{attachment.name}}">
       {% endif %}
         {% endfor %}
         </ul>
@@ -91,9 +91,9 @@
       
       <div class="text-right p-3 d-flex justify-content-end">
         {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-        <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'forum:edit' object.id %}';"> 수정 </button>
+        <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'qna:edit' object.id %}';"> 수정 </button>
         {% endif %}
-        <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'forum:post_list' %}';"> 목록으로 </button>      
+        <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'qna:post_list' %}';"> 목록으로 </button>      
       </div>  
 
       <div class="cards">
