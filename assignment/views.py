@@ -172,7 +172,6 @@ def watch_code(request):
     if submission_ID == "None": submission_ID = -1
     submission = get_object_or_404(SubmissionModel, id=submission_ID)
     code_path = submission.sub_file.path
-    code_content = ""
     if os.path.isfile(code_path) :
         try:
             with open(code_path, 'r', encoding="utf-8") as f:
@@ -180,8 +179,7 @@ def watch_code(request):
         except UnicodeDecodeError:
             with open(code_path, 'r', encoding="ISO-8859-1") as f:
                 code_content = f.read()
-    
-    return render(request, "watch_code.html", {'code_content' : code_content, 'path':code_path})
+    return render(request, "watch_code.html", {'code_content' : code_content, 'lang': submission.lang, 'path':code_path})
     
 def sub_to_show(sub, count):
     show = {}
@@ -389,4 +387,9 @@ def user_manage(request):
 def web_setting(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
+    if request.method == "POST":
+        if 'banner' in request.FILES:
+            banner_file = open(os.path.join(settings.BASE_DIR,'static', 'miscs', 'banner.png'), 'wb')
+            banner_file.write(request.FILES.get('banner').read())
+            banner_file.close()
     return render(request, "settings.html");
