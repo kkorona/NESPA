@@ -83,9 +83,9 @@ def submission(request):
 
             request.session['submission_id'] = submission.id
             return render(request, "submission_check.html")
-            
         else:
-            return HttpResponse('소스코드가 첨부되지 않았습니다.')
+            return HttpResponse('소스 코드가 첨부되지 않았습니다.')
+            
         # https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html
 
 def submission_check(request):
