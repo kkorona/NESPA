@@ -260,9 +260,10 @@ td.table_idx {
 li.topbar > button {
   background-color: inherit;
   color: white;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   transition: all 0.3s ease 0s;
   font-weight: 700;
+  padding: 6px 10px;
 }
 
 li.topbar > button:hover {
@@ -270,7 +271,7 @@ li.topbar > button:hover {
   background-color: inherit;
   padding-top: 9px;
   color: rgb(212, 212, 212);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 900;
 }
 
@@ -290,6 +291,11 @@ nav > span.gohwak > a {
 }
 
 nav > span.gohwak {
+  padding-top: 5px;
   color: white;
   padding-left: 10px;
+  width: 500px !important;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
