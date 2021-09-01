@@ -329,4 +329,13 @@ nav > span.gohwak {
   .table_author {
     width: 60px;
   }
+  li.topbar > button,
+  li.topbar > button:hover {
+    background-color: inherit;
+    color: white;
+    font-size: 0.8rem;
+    transition: all 0.3s ease 0s;
+    font-weight: 700;
+    padding: 6px 10px;
+  }
 }
