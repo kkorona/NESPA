@@ -308,6 +308,9 @@ nav > span.gohwak {
 }
 
 @media (max-width: 768px) {
+  * {
+    font-size: 0.95rem;
+  }
   main[role="main"] {
     margin-left: 0 !important;
     padding-left: 10px !important;
@@ -337,14 +340,18 @@ nav > span.gohwak {
 
   li.topbar > button,
   li.topbar > button:hover {
-    font-size: 0.8rem;
+    margin: 5px 0;
+    font-size: 0.9rem;
     padding:3px !important;
   }
   li.topbar > button:nth-child(4) {
     display: none;
   }
-  .title-box, .title-box::after, .title-box:hover {
-    font-size: 20px;
+  .title-box, .title-box::after, .title-box:hover{
+    font-size: 1.0em;
+    padding: 8px 20px !important;
+    vertical-align: center;
+    font-weight: 900;
   }
   
 }
