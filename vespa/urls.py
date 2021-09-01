@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
+from django.conf.urls import url
 from django.shortcuts import render
 import dev2020.views
 
@@ -39,7 +41,15 @@ urlpatterns = [
     path('about/', dev2020.views.index, name='index'),
     path('devs/', dev2020.views.nespa_dev, name='nespa_dev'),
     path('nespa_qna/', dev2020.views.index, name='index'),
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+'''
+urlpatterns ( url(r'^media/(?P<path>.\*)$', serve, {
+    'document_root': settings.MEDIA_ROOT,
+}))
+'''
 
 handler404 = "dev2020.views.page_not_found"
