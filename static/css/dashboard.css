@@ -354,7 +354,7 @@ nav > span.gohwak {
     font-weight: 900;
   }
   #f-table .wrap-table100 {
-    width: 100%;
+    width: 100% !important;
   }
   
 }
