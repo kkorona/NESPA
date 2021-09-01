@@ -329,13 +329,22 @@ nav > span.gohwak {
   .table_author {
     width: 60px;
   }
+  li.topbar, .navbar-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
   li.topbar > button,
   li.topbar > button:hover {
-    background-color: inherit;
-    color: white;
     font-size: 0.8rem;
-    transition: all 0.3s ease 0s;
-    font-weight: 700;
-    padding: 6px 10px;
+    padding:3px !important;
   }
+  li.topbar > button:nth-child(4) {
+    display: none;
+  }
+  .title-box, .title-box::after, .title-box:hover {
+    font-size: 20px;
+  }
+  
 }
