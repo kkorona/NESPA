@@ -235,7 +235,7 @@ td.table_idx {
   line-height: 60px;
   outline: transparent;
   position: relative;
-  background: linear-gradient(45deg, transparent 5%, #414141 5%);
+  background: linear-gradient(45deg, transparent 5%, firebrick 5%);
   text-decoration: none;
 }
 

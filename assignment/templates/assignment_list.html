@@ -13,7 +13,7 @@
       </div>
       <hr>
       <div>
-        <table class="table table-hover">
+        <table class="table table-hover" >
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
@@ -35,8 +35,8 @@
                     <td>{{ prob.size_limit}}</td>
                     <td>{{ prob.time_limit }}</td>
                     <td>{{ prob.try_limit }}</td>
-                    <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
-                    <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
+                    <td style="color:blue;">{{ prob.starts_at | date:"m/j H:i" }}</td>
+                    <td style="color:red; font-weight:bold">{{ prob.ends_at | date:"m/j H:i" }}</td>
                     <td>{{ prob.eval }}</td>
                     <td><a href="{{ prob.sample_data.url }}">{{prob.prob_name}}</a></td>
                 </tr>
