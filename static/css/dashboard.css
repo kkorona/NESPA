@@ -353,5 +353,8 @@ nav > span.gohwak {
     vertical-align: center;
     font-weight: 900;
   }
+  #f-table .wrap-table100 {
+    width: 100%;
+  }
   
 }
