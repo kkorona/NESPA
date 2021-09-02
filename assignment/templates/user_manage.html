@@ -18,58 +18,38 @@
           <input type="hidden" name="delete_user" value="">
         </form>
 
-        {% for user in users %}
-
         <div class="col mt-5">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title d-flex justify-content-between">
-                <span class="pl-2" style="font-size: 24px;font-weight:700;"># {{forloop.counter}}</span>
-                <button class="btn btn-outline-danger" name="delete_button" id="{{ user.id }}">삭제</button>
-              </div>
-              <div class="card-text">
-                <table  class="table table-borderless btn-sm">
-                  <tbody>
-                    <tr>
-                      <th>학번</th>
-                      <td>{{ user.studentNumber }}</td>
-                    </tr>
-                    <tr>
-                      <th>이름</th>
-                      <td>{{ user.username }}</td>
-                    </tr>
-                    <tr>
-                      <th>아이디</th>
-                      <td>{{ user.user_id }}</td>
-                    </tr>
-                    <tr>
-                      <th>학년</th>
-                      <td>{{ user.grade }}</td>
-                    </tr>
-                    <tr>
-                      <th>전공</th>
-                      <td>{{ user.major }}</td>
-                    </tr>
-                    <tr>
-                      <th>이메일</th>
-                      <td>{{ user.email }}</td>
-                    </tr>
-                    <tr>
-                      <th>전화번호</th>
-                      <td>{{ user.phone }}</td>
-                    </tr>
-                    <tr>
-                      <th>등록일자</th>
-                      <td>{{ user.created_at }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+            <table  class="table btn-sm nowrap">
+                <thead>
+                <tr class="bg-info" style="color: white">
+                  <th>#</th>
+                  <th>학번</th>
+                  <th>이름</th>
+                  <th>아이디</th>
+                  <th>학년</th>
+                  <th>전공</th>
+                  <th>전화번호</th>
+                  <th>등록일자</th>
+                  <th></th>
+                </tr>
+                </thead>
+              <tbody>
+                {% for user in users %}
+                <tr>
+                  <td># {{forloop.counter}}</td>
+                  <td>{{ user.studentNumber }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.user_id }}</td>                      
+                  <td>{{ user.grade }}</td>                      
+                  <td>{{ user.major }}</td>
+                  <td>{{ user.phone }}</td>                      
+                  <td>{{ user.created_at }}</td>
+                  <td><button class="btn btn-outline-danger" name="delete_button" id="{{ user.id }}">삭제</button></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
         </div>
-
-        {% endfor %}
         
       </div>
       </div>
