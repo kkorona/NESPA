@@ -4,7 +4,7 @@
 <div class="container-fluid">
   <div class="row">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <div id="main_center" class="w-75 m-auto">
+      <div id="main_center" class="w-100 m-auto">
         <div class="title-container">
           <br>
           <a class="title-box">
@@ -12,7 +12,7 @@
           </a><br>
         </div>
         <hr>
-      <div class="row row-cols-2">
+      <div class="col">
         <form method="post" action="" name="delete_user" style="display: none;">
           {% csrf_token %}
           <input type="hidden" name="delete_user" value="">
@@ -21,7 +21,7 @@
         <div class="col mt-5">
             <table  class="table btn-sm nowrap">
                 <thead>
-                <tr class="bg-info" style="color: white">
+                <tr class="table-primary">
                   <th>#</th>
                   <th>학번</th>
                   <th>이름</th>
