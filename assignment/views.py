@@ -204,7 +204,30 @@ def submission_detail(request):
         if request.session['usertype'] == 'normal':
             prob = ProblemModel.objects.get(prob_id = prob_ID)
             submission_table = SubmissionModel.objects.filter(client_ID = request.session['userid'], prob_ID = prob_ID)
-            return render(request, "submission_detail.html", {'submission_table' : submission_table, "prob":prob})
+
+            users = vespaUser.objects.filter(usertype="normal")
+            scores = {}
+            for user in users:
+                recent_submission = SubmissionModel.objects.filter(prob_ID = prob_ID, client_ID = user.user_id).order_by('-created_at')
+                sub_count = recent_submission.count()
+                if recent_submission:
+                    recent_submission = recent_submission[0]
+                else:
+                    recent_submission = SubmissionModel(client_ID = user.user_id, client_number = user.studentNumber, prob_ID = prob_ID, created_at = "-", score = 0, exec_time = 0.0, code_size = 0, lang = '-')
+                recent_submission.client_ID = user.username
+
+                if not recent_submission.score in scores:
+                    scores[recent_submission.score] = 0
+                scores[recent_submission.score] += 1
+            scores = OrderedDict(sorted(scores.items()))
+            key_list = []
+            score_list = []
+            for key,score in scores.items():
+                key_list.append(key)
+                score_list.append(score)
+
+            return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list, "prob":prob})
+
         elif request.session['usertype'] == 'admin':
             if prob_ID == 'full':
                 submission_table = SubmissionModel.objects.all()

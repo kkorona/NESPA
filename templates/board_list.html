@@ -267,9 +267,9 @@
             <tr>
                 <th class="w-5 table_idx text-center">#</th>
                 <th class="w-50 table_title">제목</th>
-                <th class="w-10 table_info text-center">작성자</th>
-                <th class="w-10 table_info text-center">게시날짜</th>
-                <th class="w-5 table_idx text-center">조회수</th>
+                <th class="w-10 table_info table-author text-center">작성자</th>
+                <th class="w-10 table_info table_date text-center">게시날짜</th>
+                <th class="w-5 table_idx table_hit text-center">조회수</th>
             </tr>
             </thead>
                 <tbody>
@@ -288,9 +288,9 @@
                     // pubdate로부터 3일이내의 게시글은 [N]를 달아줌
                 </script>
                 </a></td>
-                <td class="text-center table_info">{{ post.author }}</td>
-                <td class="text-center table_info">{{ post.pub_date|date:"N j일" }}</td>
-                <td class="text-center table_idx">
+                <td class="text-center table_author table_info">{{ post.author }}</td>
+                <td class="text-center table_date table_info">{{ post.pub_date|date:"N j일" }}</td>
+                <td class="text-center table_hit table_idx">
                 {% if post.post_hit %}
                 {{ post.post_hit }}
                 {% else %}

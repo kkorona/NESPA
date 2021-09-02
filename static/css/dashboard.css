@@ -164,17 +164,20 @@ body {
   margin-bottom: 50px;
 }
 
-main[role="main"] {
-  flex: 0 0 75% !important;
-  max-width: 75% !important;
-  padding-left: 50px !important;
+@media (min-width: 768px) {
+  main[role="main"] {
+    flex: 0 0 75% !important;
+    max-width: 75% !important;
+    padding-left: 50px !important;
+  }
+  #main_center {
+    max-width: 1000px;
+    min-width: 800px;
+    margin: 0 !important;
+  }
 }
 
-#main_center {
-  max-width: 1000px;
-  min-width: 800px;
-  margin: 0 !important;
-}
+
 
 #main_center > table td,
 #main_center > table th {
@@ -257,6 +260,10 @@ td.table_idx {
   white-space: nowrap;
 }
 
+li.topbar {
+  white-space: nowrap;
+}
+
 li.topbar > button {
   background-color: inherit;
   color: white;
@@ -298,4 +305,56 @@ nav > span.gohwak {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  * {
+    font-size: 0.95rem;
+  }
+  main[role="main"] {
+    margin-left: 0 !important;
+    padding-left: 10px !important;
+  }
+  div.banner {
+    display: none;
+  }
+  #main_center {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .table_date, .table_hit {
+    display: none;
+  }
+  th.table_idx,
+  td.table_idx {
+    width: 30px;
+  }
+  .table_author {
+    width: 60px;
+  }
+  li.topbar, .navbar-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  li.topbar > button,
+  li.topbar > button:hover {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    padding:3px !important;
+  }
+  li.topbar > button:nth-child(4) {
+    display: none;
+  }
+  .title-box, .title-box::after, .title-box:hover{
+    font-size: 1.0em;
+    padding: 8px 20px !important;
+    vertical-align: center;
+    font-weight: 900;
+  }
+  #f-table .wrap-table100 {
+    width: 100% !important;
+  }
+  
 }
