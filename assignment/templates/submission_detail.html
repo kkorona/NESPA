@@ -20,6 +20,9 @@
     td.zero-score {
         color : gray;
     }
+    .center th{
+        text-align : center !important;
+    }
 {% endblock %}
 {% block contents %}
 <div class="container-fluid">
@@ -37,7 +40,7 @@
       {% else %}
       <div class="w-100">
         <table class="table">
-            <thead class="thead-dark">
+            <thead class="thead-dark center">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Problem</th>
@@ -64,6 +67,7 @@
                 </tr>
             </tbody>
         </table>
+
         {% if request.session.usertype == "admin" %}
         <table class="table table-bordered">
             <thead class="thead-dark">
@@ -83,22 +87,21 @@
                 </tr>
             </tbody>
         </table>
-        
         {% endif %}
+
                 
         <table class="table table-hover">
-            <thead class="thead-dark">
+            <thead class="thead-dark center">
                 <tr>
                     {% if request.session.usertype == "normal" %}
-                    <th scope="col">#</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Std.No.</th>
-                    <th scope="col">Problem</th>
-                    <th scope="col">Language</th>
-                    <th scope="col">Submitted at</th>
-                    <th scope="col">Score</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Size</th>
+                    <th scope="col" width="50px">#</th>
+                    <th scope="col" width="60px">제출ID</th>
+                    <th scope="col">과제명</th>
+                    <th scope="col">사용언어</th>
+                    <th scope="col">제출일자</th>
+                    <th scope="col">실행시간</th>
+                    <th scope="col">파일크기</th>
+                    <th scope="col">채점점수</th>
                     {% else %}
                     <th scope="col">Std.No.</th>
                     <th scope="col">ID</th>
@@ -117,21 +120,20 @@
                 {% for submission in submission_table %}
                 <tr>
                     {% if request.session.usertype == "normal" %}
+                    <td> {{ forloop.revcounter }} </td>
                     <td> {{ submission.id }} </td>
-                    <td> {{ submission.client_ID }} </td>
-                    <td> {{ submission.client_number }} </td>
                     <td> {{ submission.prob_name }} </td>
                     <td> {{ submission.lang }} </td>
-                    <td> {{ submission.created_at | date:"n/j, H:i" }} </td>
-                    <td> {{ submission.score }} </td>
+                    <td> {{ submission.created_at | date:"n/j | H:i" }} </td>
                     <td> {{ submission.exec_time|stringformat:".3f" }} </td>
                     <td> {{ submission.code_size }}</td>
+                    <td> {{ submission.score }} </td>
                     </td>
                     {% else %}
                     <td class="students"> {{ submission.client_number }} </td>
                     <td class="students bold"> {{ submission.client_ID }} </td>
                     <td class="students"> {{ submission.prob_name }} </td>
-                    <td class="students"> {{ submission.created_at | date:"n/j, H:i" }} </td>
+                    <td class="students"> {{ submission.created_at | date:"n/j | H:i" }} </td>
                     <td class="students"> {{ submission.lang }} </td>
                     {% if submission.score == 0 %}
                     <td class="students zero-score"> {{ submission.score }} </td>
