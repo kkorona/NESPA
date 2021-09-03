@@ -48,7 +48,7 @@ class Comment(models.Model):
     deleted = models.BooleanField(default=False)
     author = models.CharField(max_length=50)
     text = models.TextField()
-    pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
+    pub_date = models.DateTimeField('PUBLISH DATE', auto_now_add = True)
     mod_date = models.DateTimeField('MODIFY DATE', auto_now = True)
     
     class Meta:

@@ -7,6 +7,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
+from django.utils import timezone
 
 from QnA.models import Post, Comment, Attach
 from QnA.forms import CommentForm
