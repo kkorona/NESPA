@@ -32,8 +32,8 @@
       <div id="main_center" class="w-75 m-auto">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom  border-dark">
         <div class="title-container">
-          <a href="/reports/" class="title-box">
-            <span>평가 게시판 / Reports</span>
+          <a href="/course/" class="title-box">
+            <span>강의 자료실 / Course Materials</span>
           </a>
       </div>
       </div>
@@ -68,7 +68,7 @@
         {% for attachment in attachments %}
             <tr>
               <td class="column1">
-                <a href="/media/attached/reports/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
+                <a href="/media/attached/course/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
               </td>
             </tr>
         {% endfor %}
@@ -81,9 +81,9 @@
       
       <div class="text-right p-3 d-flex justify-content-end">
         {% if request.session.usertype == "admin" or request.session.userid == object.author %}
-        <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'reports:edit' object.id %}';"> 수정 </button>
+        <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'course:edit' object.id %}';"> 수정 </button>
         {% endif %}
-        <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'reports:post_list' %}';"> 목록으로 </button>      
+        <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'course:post_list' %}';"> 목록으로 </button>      
       </div>  
 
       <div class="cards">
@@ -250,7 +250,7 @@
       });
   });
 
-  $("#sidebar_reports").attr('class','nav-link active');
+  $("#sidebar_course").attr('class','nav-link active');
 
 
   $('a').on('click', 'i[class="fa fa-trash"]', function(e){

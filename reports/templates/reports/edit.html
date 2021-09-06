@@ -7,35 +7,34 @@
         <div id="main_center" class="w-75 m-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom  border-dark">
               <div class="title-container">
-                <a href="/reports" class="title-box">
+                <a href="/reports/" class="title-box">
                   <span>평가 게시판 / Reports</span>
                 </a>
             </div>
             </div>
-        <div class="w-100">
+        <div>
             <form method='POST' enctype="multipart/form-data" name="write_form" action="">
             {% csrf_token %}
-            <div class="form-row w-100">            
+             <div class="form-row w-100">            
                 <div class="form-group w-100">
                     <div class="mb-3">
                         <label for="post_title" class="h4">제목</label>
-                        <input id="post_title" name="post_title" class="form-control" type="text">
+                        <input id="post_title" name="post_title" class="form-control" type="text" value="{{article_title}}">
                     </div>
 
-                    <!-- new 에디터 부 -->
-                    <div id="post_contents"></div>
+                    <div id="post_contents">
+
+                    </div>
                     <input id="post_content" name="post_contents" class="form-control" type="hidden">
 
-                    <br>
-                    <div id="f-table">
                     <div class="w-100 d-inline-block">
                         <!--<label for="attach_files" class="h4">첨부 파일</label>
                         <input id="attach_files" name="attach_files" type="file" multiple />-->
-                        <div id="attach_file">
+                        <div id="f-table">
                             <div class="wrap-table100">
                                 <div class="table100">
                                     <table>
-                                        <thead>
+                                         <thead>
                                             <tr>
                                                 <th>
                                                     첨부 파일
@@ -44,6 +43,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for attachment in attachments %}
+                                            <tr>
+                                                <td class="column1">
+                                                    <a href="/media/attached/board/{{object.id}}/{{attachment.name}}">{{attachment.name}}</a>
+                                                    <input name="existing_files" type="hidden" value="{{attachment.id}}"/>
+                                                    <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
                                             <tr>
                                                 <td class="column1">
                                                     <input name="attach_files" type="file"/>
@@ -56,16 +64,16 @@
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
             </div>
             <br>
+            
             <div class="float-sm-right">
                 <input type="button" class="btn btn-primary btn-lg" value="등록" onclick="writeArticle()">
-            <div>
+            </div>
             </form>
         </div>
-        </div>
+    </div>
     </main>
 </div>
 </div>
@@ -74,7 +82,6 @@
 
 {% block scripts %}
 <script>
-    $("#sidebar_reports").attr('class','nav-link active');
     const { Editor } = toastui;
     const { codeSyntaxHighlight } = Editor.plugin;
     const { colorSyntax } = Editor.plugin;
@@ -84,25 +91,24 @@
         height: '600px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical',
+        initialValue: "{{ article_content|safe }}",
         plugins: [
             [codeSyntaxHighlight, { highlighter: Prism }],
             [colorSyntax]
         ]
     });
 
+    $("#sidebar_reports").attr('class','nav-link active');
+
     $("#add_files").click(function() {
-        $("table > tbody:last").append(`
-        <tr><td class="column1">
-            <input name="attach_files" type="file"/>
-            <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
-        </td>
-        `);
+        $("table > tbody:last").append("<tr><td class='column1'><input name='attach_files' type='file'/>\
+            <button name='delete_button' type='button'>삭제</button></td>");
     });
 
     $('table').on('click', 'button[name="delete_button"]', function(e){
+        //alert($(this).closest('input').value)
         $(this).closest('tr').remove()
     });
-
 </script>
 <script src="/static/js/editor.js"></script>
 {% endblock %}

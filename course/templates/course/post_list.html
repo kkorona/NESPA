@@ -2,8 +2,8 @@
 {% extends 'board_list.html' %}
 {% block board_title %}
 <div class="title-container">
-    <a href="/reports" class="title-box">
-      <span>평가 게시판 / Reports</span>
+    <a href="/course" class="title-box">
+      <span>강의 자료실 / Course Materials</span>
     </a>
 </div>
 {% endblock %}
@@ -11,13 +11,13 @@
 {% block write_button %}
 {% if request.session.logged_in == 'YES' and request.session.usertype != 'unapproved' %}
 <div align="right">
-    <a class="btn btn-primary pull-right" href="/reports/write">글쓰기</a>
+    <a class="btn btn-primary pull-right" href="/course/write">글쓰기</a>
 </div>
 {% endif %}
 {% endblock %}
 
 {% block scripts %}
 <script>
-    $("#sidebar_reports").attr('class','nav-link active'); 
+    $("#sidebar_course").attr('class','nav-link active'); 
 </script>
 {% endblock %}
