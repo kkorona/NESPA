@@ -185,7 +185,7 @@
                     </span>
                       <span>
                         <div class="date">{{ retweet.pub_date | date:"N j일" }}</div> 
-                        <div class="date text-right">{{ comment.pub_date | date:"H:i" }}</div> 
+                        <div class="date text-right">{{ retweet.pub_date | date:"H:i" }}</div> 
                       </span>
                     </div>
                       {% if retweet.deleted %}

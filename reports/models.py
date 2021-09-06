@@ -10,8 +10,8 @@ class Post(models.Model):
     content = models.TextField('CONTENT', default='')
     pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
     mod_date = models.DateTimeField('MODIFY DATE', auto_now = True)
-    post_hit = models.IntegerField()
-    
+    post_hit = models.PositiveIntegerField()
+
     class Meta:
         verbose_name = 'post'
         verbose_name_plural = 'posts'
@@ -32,15 +32,21 @@ class Post(models.Model):
 
     def get_next(self):
         return self.get_next_by_mod_date()
-        
+    
     @property
     def update_counter(self):
         self.post_hit += 1
         self.save()
         return ''
 
+    def comments_count(self):
+        return len(self.comment_set.filter(deleted=False))
+
+
 class Comment(models.Model):
     parent = models.ForeignKey(Post, on_delete=models.CASCADE)
+    retweet = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    deleted = models.BooleanField(default=False)
     author = models.CharField(max_length=50)
     text = models.TextField()
     pub_date = models.DateTimeField('PUBLISH DATE', default = timezone.now)
@@ -54,3 +60,14 @@ class Comment(models.Model):
         
     def get_parent(self):
         return self.parent
+
+class Attach(models.Model):
+    parent = models.ForeignKey(Post, on_delete=models.CASCADE)
+    name = models.CharField(max_length = 50)
+    path = models.CharField(max_length=100)
+    ext = models.CharField(max_length=10)
+    
+    class Meta:
+        verbose_name = 'attachment'
+        verbose_name_plural = 'attachments'
+        db_table = 'reports_attachments'

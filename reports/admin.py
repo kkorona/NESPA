@@ -1,5 +1,5 @@
 from django.contrib import admin
-from reports.models import Post, Comment
+from reports.models import Post, Comment, Attach
 
 # Register your models here.
 
@@ -16,3 +16,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ('id', 'author', 'text', 'pub_date', 'mod_date')
     list_filter = ('pub_date',)
     search_fields = ('title', 'author')
+
+@admin.register(Attach)
+class AttachAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'path', 'ext')

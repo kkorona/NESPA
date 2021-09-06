@@ -20,7 +20,7 @@
     td.zero-score {
         color : gray;
     }
-    .center th{
+    .center th, .center td{
         text-align : center !important;
     }
 {% endblock %}
@@ -68,30 +68,11 @@
             </tbody>
         </table>
 
-        {% if request.session.usertype == "admin" %}
-        <table class="table table-bordered">
+        {% if request.session.usertype == "admin" or request.session.usertype == "normal" %}
+        <table class="table table-bordered center">
             <thead class="thead-dark">
                 <tr>
-                <th scope="col">score</th>
-                {% for key in key_list %}
-                <th scope="col">{{key}}</th>
-                {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <th scope="col">名</th>
-                {% for score in score_list %}
-                <td>{{score}}</td>
-                {% endfor %}
-                </tr>
-            </tbody>
-        </table>
-        {% elif request.session.usertype == "normal" %}
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                <th scope="col">score</th>
+                <th scope="col">Score</th>
                 {% for key in key_list %}
                 <th scope="col">{{key}}</th>
                 {% endfor %}

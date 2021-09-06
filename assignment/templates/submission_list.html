@@ -16,27 +16,29 @@
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Problem</th>
-                    <th scope="col">Max Size</th>
-                    <th scope="col">Timeout</th>
-                    <th scope="col">Max Try</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                    <th scope="col">Evaluation</th>
+                    <th scope="col" width="50px">#</th>
+                    <th scope="col">과제명</th>
+                    <th scope="col">제한크기</th>
+                    <th scope="col">제한시간</th>
+                    <th scope="col">제한횟수</th>
+                    <th scope="col">제출시작</th>
+                    <th scope="col">제출마감</th>
+                    <th scope="col">채점점수</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for prob in prob_list %}
                 <tr>
-                    <th score="row">{{ prob.prob_id }}
-                    <td><a href="/assignment/submission_detail?prob_id={{prob.prob_id}}">{{prob.prob_name}}</a></td>
+                    <th score="row">{{ prob.prob_id }}</th>
+                    <td>{{ prob.prob_name }}</td>
                     <td>{{ prob.size_limit}}</td>
                     <td>{{ prob.time_limit }}</td>
                     <td>{{ prob.try_limit }}</td>
                     <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
                     <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
                     <td>{{ prob.eval }}</td>
+                    <td><a class="btn btn-primary btn-sm" href="/assignment/submission_detail?prob_id={{prob.prob_id}}">제출내역</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

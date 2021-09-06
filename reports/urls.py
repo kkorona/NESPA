@@ -6,8 +6,10 @@ app_name = 'reports'
 urlpatterns =[
     path('',views.PostLV.as_view(), name='index'),
     path('post/',views.PostLV.as_view(), name='post_list'),
-    path('post/<int:pk>/',views.PostDV.as_view(), name='post_detail'),
+    path('edit/<int:article_id>',views.edit, name='edit'),
     path('write/',views.write, name='write'),
+    path('post/<int:pk>/',views.PostDV.as_view(), name='post_detail'),
+    path('post/<int:article_id>/deleteComment/<int:comment_id>',views.deleteComment, name='delete_comment'),
 ]
 
 '''
