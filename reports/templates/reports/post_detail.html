@@ -37,6 +37,7 @@
           </a>
       </div>
       </div>
+      {% if request.session.logged_in and request.session.usertype != "unapproved" %}
       <div class="pb-4 pt-2 mb-3 m-autoborder-dark post_info">
         <h3 class="font-weight-bold">{{ object.title }}</h3>
         <h5>
@@ -201,6 +202,9 @@
           </div>
         </div>
       </div>
+      {% elif not request.session.logged_in  %}
+      <span>로그인이 필요한 기능입니다.</span>
+      {% endif %}
     </div>
     </main>
   </div>
