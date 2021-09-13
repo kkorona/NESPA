@@ -168,10 +168,6 @@ def write(request):
             filename = fs.save(fname,file)
             uploaded_file_url = fs.url(filename)
             departure_path = urllib.parse.unquote(os.path.join(settings.BASE_DIR, uploaded_file_url[1:]))
-            with open("/opt/test.txt","w") as f:
-                f.write(str(file.name)+"\n")
-                f.write(str(fname)+"\n")
-                f.write(str(departure_path))
             destination_path = urllib.parse.unquote(os.path.join(settings.BASE_DIR, 'media','attached','reports',str(article.id)))
             if not os.path.exists(destination_path):
                 os.makedirs(destination_path)
