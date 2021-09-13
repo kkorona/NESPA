@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from reports.models import Post, Comment, Attach
 from reports.forms import CommentForm
 
-import os, shutil, glob
+import os, shutil, glob, urllib
 # Create your views here.
 
 class PostLV(ListView):
@@ -118,7 +118,7 @@ def edit(request, article_id):
         
         fs = FileSystemStorage()
         for file in files:
-            fname = file.name
+            fname = urllib.parse.unquote(file.name)
             filename = fs.save(fname,file)
             uploaded_file_url = fs.url(filename);
             departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
