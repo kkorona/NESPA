@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from reports.models import Post, Comment, Attach
 from reports.forms import CommentForm
 
-import os, shutil, glob, urllib
+import os, shutil, glob, urllib.parse
 # Create your views here.
 
 class PostLV(ListView):
@@ -164,11 +164,15 @@ def write(request):
         files = request.FILES.getlist('attach_files')
         fs = FileSystemStorage()
         for file in files:
-            fname = file.name
+            fname = urllib.parse.unquote(file.name)
             filename = fs.save(fname,file)
-            uploaded_file_url = fs.url(filename);
-            departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
-            destination_path = os.path.join(settings.BASE_DIR, 'media','attached','reports',str(article.id))
+            uploaded_file_url = fs.url(filename)
+            departure_path = urllib.parse.unquote(os.path.join(settings.BASE_DIR, uploaded_file_url[1:]))
+            with open("/opt/test.txt","w") as f:
+                f.write(str(file.name)+"\n")
+                f.write(str(fname)+"\n")
+                f.write(str(departure_path))
+            destination_path = urllib.parse.unquote(os.path.join(settings.BASE_DIR, 'media','attached','reports',str(article.id)))
             if not os.path.exists(destination_path):
                 os.makedirs(destination_path)
             destination_path = os.path.join(destination_path, fname)
