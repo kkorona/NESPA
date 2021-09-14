@@ -9,10 +9,10 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.utils import timezone
 
-from QnA.models import Post, Comment, Attach, urllib.parse
+from QnA.models import Post, Comment, Attach
 from QnA.forms import CommentForm
 
-import os, shutil, glob
+import os, shutil, glob, urllib.parse
 # Create your views here.
 
 class PostLV(ListView):
