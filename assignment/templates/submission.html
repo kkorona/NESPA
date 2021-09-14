@@ -16,15 +16,64 @@
         {% if request.session.logged_in and request.session.usertype != "unapproved" %}
         <form method="POST" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            <div class="form-row">
+            <label for="problem_id">문제 번호 / Problem No.</label>
+            <table class="table table-hover" id="problem_id">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" width="50px">#</th>
+                        <th scope="col">과제명</th>
+                        <th scope="col">제한크기</th>
+                        <th scope="col">제한시간</th>
+                        <th scope="col">제한횟수</th>
+                        <th scope="col">제출시작</th>
+                        <th scope="col">제출마감</th>
+                        <th scope="col">채점점수</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if request.session.usertype == "admin" %}
+                        {% for prob in full_prob_list %}
+                        <tr>
+                            <th score="row">{{ prob.prob_id }}</th>
+                            <td>{{ prob.prob_name }}</td>
+                            <td>{{ prob.size_limit}}</td>
+                            <td>{{ prob.time_limit }}</td>
+                            <td>{{ prob.try_limit }}</td>
+                            <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
+                            <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
+                            <td>{{ prob.eval }}</td>
+                            <td><input type="radio" class="btn-check" name="problem_id" value="{{ prob.prob_id }}" autocomplete="off" checked></td>
+                        </tr>
+                    {% endfor %}
+                    {% elif request.session.usertype == "normal" %}
+                        {% for prob in cur_prob_list %}
+                        <tr>
+                            <th score="row">{{ prob.prob_id }}</th>
+                            <td>{{ prob.prob_name }}</td>
+                            <td>{{ prob.size_limit}}</td>
+                            <td>{{ prob.time_limit }}</td>
+                            <td>{{ prob.try_limit }}</td>
+                            <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
+                            <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
+                            <td>{{ prob.eval }}</td>
+                            <td><input type="radio" class="btn-check" name="problem_id" value="{{ prob.prob_id }}" autocomplete>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+                <!--
                 <div class="form-group">
                     <label for="problem_id">문제 번호 / Problem No.</label>
+                    
                     <select id="problem_id" name="problem_id" class="form-control">
                         {% if request.session.usertype == "admin" %}
                             {% for prob in full_prob_list %}
                                 <option value="{{ prob.prob_id }}">{{ prob.prob_id }}. {{ prob.prob_name }} ( {{ prob.starts_at | date:"N j일, H:i" }} ~ {{ prob.ends_at | date:"N j일, H:i" }})</option>
                             {% endfor %}
-                            {% elif request.session.usertype == "normal" %}
+                        {% elif request.session.usertype == "normal" %}
                             {% for prob in cur_prob_list %}
                             <option value="{{ prob.prob_id }}">{{ prob.prob_id }}. {{ prob.prob_name }} ( {{ prob.starts_at | date:"N j일, H:i" }} ~ {{ prob.ends_at | date:"N j일, H:i" }})</option>
                             {% endfor %}
@@ -32,19 +81,20 @@
                         
                     </select>
                 </div>
+                -->
             </div>
             
             <div class="form-row">            
                 <div class="form-group">
                     <label for="language">언어 / Language</label>
-                    <select id="language" name="language" class="form-control">
-                        <option value="01">C++14</option>
-                        <option value="02">C11</option>
-                        <option value="03">Python3</option>
-                        {% if request.session.usertype == "admin" %}
-                        <option value="04">Java</option>
-                        {% endif %}
-                    </select>
+                    <div class="form-group" id="language">
+                    <input type="radio" class="btn-check" name="language" value="01" checked>C++14
+                    <input type="radio" class="btn-check" name="language" value="02" > C11
+                    <input type="radio" class="btn-check" name="language" value="03" > Python3
+                    {% if request.session.usertype == "admin" %}
+                    <input type="radio" class="btn-check" name="language" value="04" > Java
+                    {% endif %}
+                    </div>
                 </div>
             </div>
 
