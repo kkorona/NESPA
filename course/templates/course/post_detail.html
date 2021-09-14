@@ -122,7 +122,7 @@
                       {% if comment.deleted %}
                       <span class="action-icons" id={{comment.id}} content="deleted comment">
                       {% else %}
-                      <span class="action-icons" id={{comment.id}} content={{comment.text}}>
+                      <span class="action-icons" id={{comment.id}} content="{{comment.text}}">
                       {% endif %}
 
                         {% if comment.deleted %}
