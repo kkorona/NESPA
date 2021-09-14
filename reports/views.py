@@ -119,9 +119,6 @@ def edit(request, article_id):
         fs = FileSystemStorage()
         for file in files:
             fname = urllib.parse.unquote(file.name)
-            with open("/opt/test.txt","w") as f:
-                f.write(str(file.name)+"\n")
-                f.write(str(fname))
             filename = fs.save(fname,file)
             uploaded_file_url = fs.url(filename);
             departure_path = os.path.join(settings.BASE_DIR, uploaded_file_url[1:])
