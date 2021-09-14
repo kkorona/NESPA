@@ -12,6 +12,7 @@
         </a><br>
       </div>
       <hr>
+      {% if request.session.userid and request.session.usertype != "unapproved" %}
       <div>
         <table class="table table-hover" >
             <thead class="thead-dark">
@@ -45,6 +46,9 @@
       </div>
       </div>
       <span class="h5"> Problem / Sample data 행의 링크를 클릭하여 과제 내용과 샘플 데이터를 받을 수 있습니다.</span>
+      {% else %}
+      <span>로그인이 필요한 기능입니다. </span>
+      {% endif %}
     </main>
   </div>
 </div>

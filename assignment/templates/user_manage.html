@@ -28,6 +28,7 @@
                   <th>아이디</th>
                   <th>학년</th>
                   <th>전공</th>
+                  <th>이메일</th>
                   <th>전화번호</th>
                   <th>등록일자</th>
                   <th></th>
@@ -40,8 +41,9 @@
                   <td>{{ user.studentNumber }}</td>
                   <td>{{ user.username }}</td>
                   <td>{{ user.user_id }}</td>                      
-                  <td>{{ user.grade }}</td>                      
+                  <td>{{ user.grade }}</td>   
                   <td>{{ user.major }}</td>
+                  <td style="word-break:break-all;">{{ user.email }}</td>
                   <td>{{ user.phone }}</td>                      
                   <td>{{ user.created_at }}</td>
                   <td><button class="btn btn-outline-danger" name="delete_button" id="{{ user.id }}">삭제</button></td>
