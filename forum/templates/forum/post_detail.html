@@ -121,7 +121,7 @@
                       {% if comment.deleted %}
                       <span class="action-icons" id={{comment.id}} content="deleted comment">
                       {% else %}
-                      <span class="action-icons" id={{comment.id}} content={{comment.text}}>
+                      <span class="action-icons" id={{comment.id}} content="{{comment.text}}">
                       {% endif %}
 
                         {% if comment.deleted %}
@@ -272,6 +272,7 @@
     var content = ""
     if ($(this).attr('name') == 'display') {
       $(this).attr('name', 'modify');
+      //alert($(this).closest('span').attr('content'));
       $('form').remove();
       $(this).parent().parent().parent().parent().parent().siblings().find('div').empty();
       $(this).closest('div').parent().append(`<form name="comment_form" method="post" action="">
@@ -329,7 +330,6 @@
     if ($(this).attr('name') == 'display') {
       $(this).attr('name', 'modify');
       $('form').remove();
-      //$(this).parent().parent().parent().siblings().find('div').empty();
       $(this).closest('div').parent().parent().parent().append(`<form name="comment_form" method="post" action="">
                                               {% csrf_token %}
                                               <div id="comment_contents"></div>
