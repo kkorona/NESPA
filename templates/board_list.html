@@ -260,7 +260,7 @@
             {% block board_title %}
             {% endblock %}
           </div>
-    {% if request.session.usertype != "unapproved" %}
+    {% if request.session.userid and request.session.usertype != "unapproved" %}
     <div id="main_center" class="w-75 m-auto">
         <table class="table table-hover table-bordered border">
             <thead class="thead-light">
@@ -390,11 +390,12 @@
                 </ul>
             </nav>
         </div>
+        {% else %}
+        <span>로그인이 필요한 기능입니다. </span>
+        {% endif %}
       </div>
     </div>
-    {% else %}
-    <span>로그인이 필요한 기능입니다. </span>
-    {% endif %}
+    
     </main>
     </body>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
