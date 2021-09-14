@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 
-from course.models import Post, Comment, Attach
+from course.models import Post, Comment, Attach, urllib.parse
 from course.forms import CommentForm
 
 import os, shutil, glob
