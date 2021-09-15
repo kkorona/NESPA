@@ -68,7 +68,6 @@ def submission(request):
             
             request.session['problem_id'] = prob.prob_id
             request.session['language'] = LANGDICT[language]
-            request.session['code_size'] = len(request.FILES['source_code'].read())
 
             now = time.localtime()
             request.session['updated_time'] = "%04d/%02d/%02d %02d:%02d:%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
@@ -81,6 +80,7 @@ def submission(request):
             submission.code_size = submission.sub_file.size
             submission.save()
 
+            request.session['code_size'] = submission.code_size
             request.session['submission_id'] = submission.id
             return render(request, "submission_check.html")
         else:
