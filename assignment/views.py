@@ -50,7 +50,10 @@ def submission(request):
             source_code = request.FILES['source_code']
 
             user = vespaUser.objects.get(user_id=request.session['userid'])
-            prob = ProblemModel.objects.get(prob_id = request.POST.get('problem_id'))
+            try:
+                prob = ProblemModel.objects.get(prob_id = request.POST.get('problem_id'))
+            except:
+                return HttpResponse('문제가 선택되지 않았습니다.')            
             
             if request.session['usertype'] == 'normal':
 
