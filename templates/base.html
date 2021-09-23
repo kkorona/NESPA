@@ -62,7 +62,7 @@
           <button class="btn" onclick="location.href='/notice'">공지사항</button>
           <button class="btn" onclick="location.href='/forum'">자유게시판</button>
           <button class="btn" onclick="location.href='/qna'">질문게시판</button>
-          <button class="btn" onclick="location.href='/devs'">오류보고</button>
+          <button class="btn" onclick="location.href='/error_reports'">오류보고</button>
           {% if request.session.userid %}
             <button class="btn" onclick="location.href='/accounts/logout'">로그아웃</button>
             {% else %}
@@ -242,9 +242,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="sidebar_nespa_qna" href="/nespa_qna">
+            <a class="nav-link" id="sidebar_error_reports" href="/error_reports">
               <span data-feather="check-circle"></span>
-              NESPA Q&amp;A
+              오류보고
             </a>
           </li>
         </ul>

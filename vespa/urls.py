@@ -40,6 +40,7 @@ urlpatterns = [
     path('about/', dev2020.views.index, name='index'),
     path('devs/', dev2020.views.nespa_dev, name='nespa_dev'),
     path('course/', include('course.urls')),    
+    path('error_reports/', include('error_reports.urls')),
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     
