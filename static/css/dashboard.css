@@ -387,5 +387,16 @@ nav > span.gohwak {
   #f-table .wrap-table100 {
     width: 100% !important;
   }
-  
+  #moblie-hamburger {
+    display:inherit !important;
+    width: 20px;
+    height: 20px;
+  }
+  .sidebar {
+    max-width: 50%;
+    right : -50%;
+    left: inherit;
+    /* border-left: 3px solid black;*/
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  }
 }

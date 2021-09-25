@@ -121,7 +121,7 @@
                     <td> {{ submission.id }} </td>
                     <td> {{ submission.prob_name }} </td>
                     <td> {{ submission.lang }} </td>
-                    <td> {{ submission.created_at | date:"n/j | H:i" }} </td>
+                    <td> {{ submission.created_at | date:"n/j H:i" }} </td>
                     <td> {{ submission.exec_time|stringformat:".3f" }} </td>
                     <td> {{ submission.code_size }}</td>
                     <td style="color:blue"> {{ submission.score }} </td>
@@ -130,7 +130,7 @@
                     <td class="students"> {{ submission.client_number }} </td>
                     <td class="students bold"> {{ submission.client_ID }} </td>
                     <td class="students"> {{ submission.username }} </td>
-                    <td class="students"> {{ submission.created_at | date:"n/j | H:i" }} </td>
+                    <td class="students"> {{ submission.created_at | date:"n/j H:i" }} </td>
                     <td class="students"> {{ submission.lang }} </td>
                     {% if submission.score == 0 %}
                     <td class="students zero-score"> {{ submission.score }} </td>
