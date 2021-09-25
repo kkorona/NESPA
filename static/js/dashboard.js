@@ -103,11 +103,11 @@ $(document).ready( function() {
   });
 
   $('#moblie-hamburger').click(function() {
-    if($('#sidebarMenu').css("display") == "none"){
-      $('#sidebarMenu').css("display","block").animate({right : "0"}, 300);
+    if($('.sidebar').css("display") == "none"){
+      $('.sidebar').css("display","block").animate({right : "0"}, 300);
     } else {
-      $('#sidebarMenu').animate({right : "-50%"}, 300, function() {
-        $('#sidebarMenu').css("display","none");
+      $('.sidebar').animate({right : "-50%"}, 300, function() {
+        $('.sidebar').css("display","none");
       });
     }
   });
