@@ -195,9 +195,11 @@ main table {
 }
 
 th.table_title,
-td.table_title {
+td.table_title{
   max-width: 72% !important;
   width: 72% !important;
+}
+#board_list_table .table_title > div:first-child {
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -309,7 +311,7 @@ nav > span.gohwak {
 
 @media (max-width: 768px) {
   * {
-    font-size: 0.95rem;
+    font-size: 1em;
   }
   main[role="main"] {
     margin-left: 0 !important;
@@ -322,22 +324,51 @@ nav > span.gohwak {
     width: 100% !important;
     margin: 0 !important;
   }
-  .table_date, .table_hit {
+  .table_date, .table_hit, .table_idx, .table_author {
     display: none;
   }
-  th.table_idx,
-  td.table_idx {
-    width: 30px;
+  th.table_title {
+    text-align: center;
   }
-  .table_author {
-    width: 60px;
+  #board_list_table .table_title > div:first-child {
+    display: flex;
+    justify-content: space-between;
+  }
+  #board_list_table .table_title > div:first-child > a{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: calc(100% - 50px);
+  }
+  #board_list_table #mobile_info {
+    display: flex !important;
+    width: 50%;
+    justify-content: space-between;
+    font-size: 0.8em !important;
+    color: #999;
+  }
+  #board_list_table .feather-message-square{
+    display: inline !important;
+    margin-right: 5px;
+  }
+  #post.text-comment-info {
+    background-color: #eeeeee;
+    width: 46px;
+    height: 25px;
+    border-radius: 0.3em;
+    border: 1px solid rgb(201, 201, 201);
+    text-align: center;
+    vertical-align: middle;
+    color: rgb(109, 109, 109);
+  }
+  #post.text-comment-info .brace {
+    display: none;
   }
   li.topbar, .navbar-nav {
     width: 100%;
     display: flex;
     justify-content: space-around;
   }
-
+  
   li.topbar > button,
   li.topbar > button:hover {
     margin: 5px 0;
