@@ -341,10 +341,13 @@ nav > span.gohwak {
   }
   #board_list_table #mobile_info {
     display: flex !important;
-    width: 50%;
-    justify-content: space-between;
+    /* width: 100%; */
+    justify-content: start;
     font-size: 0.8em !important;
     color: #999;
+  }
+  #board_list_table #mobile_info span {
+    margin-right: 2rem;
   }
   #board_list_table .feather-message-square{
     display: inline !important;
