@@ -56,7 +56,7 @@
             <tbody>
                 <tr>
                     <th score="row">{{ prob.prob_id }}</th>
-                    <td>{{prob.prob_name}}</td>
+                    <td>{{ prob.prob_name }}</td>
                     <td>{{ prob.size_limit}}</td>
                     <td>{{ prob.time_limit }}</td>
                     <td>{{ prob.try_limit }}</td>
@@ -68,7 +68,6 @@
             </tbody>
         </table>
 
-        {% if request.session.usertype == "admin" or request.session.usertype == "normal" %}
         <table class="table table-bordered center">
             <thead class="thead-dark">
                 <tr>
@@ -87,7 +86,6 @@
                 </tr>
             </tbody>
         </table>
-        {% endif %}
                 
         <table class="table table-hover">
             <thead class="thead-dark center">
@@ -102,16 +100,16 @@
                     <th scope="col">파일크기</th>
                     <th scope="col">채점점수</th>
                     {% else %}
-                    <th scope="col">Std.No.</th>
+                    <th scope="col">학번</th>
                     <th scope="col">ID</th>
-                    <th scope="col">Problem</th>
-                    <th scope="col">Submitted at</th>
-                    <th scope="col">Language</th>
-                    <th scope="col">Score</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Size</th>
-                    <th scope="col">Try</th>
-                    <th scope="col">Code</th>
+                    <th scope="col">이름</th>
+                    <th scope="col">제출일자</th>
+                    <th scope="col">사용언어</th>
+                    <th scope="col">채점점수</th>
+                    <th scope="col">실행시간</th>
+                    <th scope="col">파일크기</th>
+                    <th scope="col">시도횟수</th>
+                    <th scope="col">코드</th>
                     {% endif %}
                 </tr>
             </thead>
@@ -131,7 +129,7 @@
                     {% else %}
                     <td class="students"> {{ submission.client_number }} </td>
                     <td class="students bold"> {{ submission.client_ID }} </td>
-                    <td class="students"> {{ submission.prob_name }} </td>
+                    <td class="students"> {{ submission.username }} </td>
                     <td class="students"> {{ submission.created_at | date:"n/j | H:i" }} </td>
                     <td class="students"> {{ submission.lang }} </td>
                     {% if submission.score == 0 %}

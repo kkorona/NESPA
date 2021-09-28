@@ -184,9 +184,10 @@ def watch_code(request):
                 code_content = f.read()
     return render(request, "watch_code.html", {'code_content' : code_content, 'lang': submission.lang, 'path':code_path})
     
-def sub_to_show(sub, count):
+def sub_to_show(sub, name, count):
     show = {}
     show['client_ID'] = sub.client_ID
+    show['username'] = name
     show['client_number'] = sub.client_number
     show['prob_ID'] = sub.prob_ID
     show['created_at'] = sub.created_at
@@ -217,7 +218,6 @@ def submission_detail(request):
                     recent_submission = recent_submission[0]
                 else:
                     recent_submission = SubmissionModel(client_ID = user.user_id, client_number = user.studentNumber, prob_ID = prob_ID, created_at = "-", score = 0, exec_time = 0.0, code_size = 0, lang = '-')
-                recent_submission.client_ID = user.username
 
                 if not recent_submission.score in scores:
                     scores[recent_submission.score] = 0
@@ -247,8 +247,7 @@ def submission_detail(request):
                         recent_submission = recent_submission[0]
                     else:
                         recent_submission = SubmissionModel(client_ID = user.user_id, client_number = user.studentNumber, prob_ID = prob_ID, created_at = "-", score = 0, exec_time = 0.0, code_size = 0, lang = '-')
-                    recent_submission.client_ID = user.username
-                    submission_table.append(sub_to_show(recent_submission, sub_count))
+                    submission_table.append(sub_to_show(recent_submission, user.username, sub_count))
                     if not recent_submission.score in scores:
                         scores[recent_submission.score] = 0
                     scores[recent_submission.score] += 1
