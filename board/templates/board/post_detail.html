@@ -73,7 +73,9 @@
         <button class="btn btn-primary btn-lg pull-right" onclick="location.href='{% url 'board:edit' object.id %}'"> 수정 </button>
         {% endif %}
         <button class="btn btn-secondary btn-lg pull-right ml-3" onclick="location.href='{% url 'board:post_list' %}'"> 목록으로 </button>      
-      </div>      
+      </div>   
+      
+      <!-- 
       <div class="">
         {% for comment in comments %}
             <div class="border-top border-dark pt-2 pb-2 pl-2">
@@ -99,6 +101,7 @@
       </div>
       {% endif %}
     </div>
+     -->
     </main>
   </div>
 </div>

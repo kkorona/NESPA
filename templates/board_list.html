@@ -49,7 +49,13 @@
     </head>
     <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-md-3 mr-0 px-3" href="/notice"><span data-feather="aperture"></span>NESPA 0.95 (beta)</a>
+      <span class="navbar-brand col-md-3 mr-0 px-3 d-flex justify-content-between">
+        <span>
+          <span data-feather="aperture"></span>
+          <a style="color: white;" href="/notice">NESPA 0.95 (beta)</a>
+        </span>
+        <span id="moblie-hamburger" data-feather="menu" class="d-none"></span>
+      </span>
       <span class="gohwak">
         <span data-feather="volume"></span>
         <a href="{{ latest_post.get_absolute_url }}"><span style="color: #E8A20C;">
@@ -262,12 +268,12 @@
           </div>
     <div id="main_center" class="w-75 m-auto">
         {% if request.session.userid and request.session.usertype != 'unapproved' %}
-        <table class="table table-hover table-bordered border">
-            <thead class="thead-light">
+        <table id="board_list_table" class="table table-hover table-bordered border">
+            <thead id="list-table-head" class="thead-light">
             <tr>
                 <th class="w-5 table_idx text-center">#</th>
                 <th class="w-50 table_title">제목</th>
-                <th class="w-10 table_info table-author text-center">작성자</th>
+                <th class="w-10 table_info table_author text-center">작성자</th>
                 <th class="w-10 table_info table_date text-center">게시날짜</th>
                 <th class="w-5 table_idx table_hit text-center">조회수</th>
             </tr>
@@ -276,18 +282,35 @@
                 {% for post in posts %}
                 <tr>
                 <td class="table_idx text-center">{{ post.id }}</td>
-                <td class="table_title"><a id="post-{{ post.id }}" href="{{ post.get_absolute_url }}">{{ post.title }}
-                {% if post.comments_count > 0 %}
-                <span id="post" class="text-comment-info">
-                [{{ post.comments_count }}]
-                </span>
-                {% endif %}
-                <script>
-                  if(Number(Date.parse(`{% now "c" %}`)) < Number(Date.parse(`{{ post.pub_date | date:'c' }}`)) + 259200000)
-                    document.getElementById(`post-{{ post.id }}`).innerHTML += "<span style='background-color:rgb(255,150,0);color:rgb(255, 255, 255);font-weight:800;font-size:8pt;'>&nbsp;N&nbsp;</span>";
-                    // pubdate로부터 3일이내의 게시글은 [N]를 달아줌
-                </script>
-                </a></td>
+                <td class="table_title">
+                  <div>
+                    <a id="post-{{ post.id }}" href="{{ post.get_absolute_url }}">
+                      <script>
+                        if(Number(Date.parse(`{% now "c" %}`)) < Number(Date.parse(`{{ post.pub_date | date:'c' }}`)) + 259200000)
+                          document.getElementById(`post-{{ post.id }}`).innerHTML += "<span style='background-color:rgb(255,150,0);color:rgb(255, 255, 255);font-weight:800;font-size:8pt;'>&nbsp;N&nbsp;</span>";
+                          // pubdate로부터 3일이내의 게시글은 [N]를 달아줌
+                      </script>
+                      {{ post.title }}
+                    </a>
+                    {% if post.comments_count > 0 %}
+                    <span id="post" class="text-comment-info">
+                    <span class="brace">[</span><span data-feather="message-square" class="d-none"></span>{{post.comments_count}}<span class="brace">]</span>
+                    </span>
+                      {% endif %}
+                  </div>
+                  <div id="mobile_info" class="d-none">
+                    <span class="text-center table_info">{{ post.author }}</span>
+                    <span class="text-center table_info">{{ post.pub_date | date:"H:i" }}</span>
+                    <span class="text-center">
+                      <span data-feather="eye"></span>
+                      {% if post.post_hit %}
+                      {{ post.post_hit }}
+                      {% else %}
+                      0
+                      {% endif %}
+                      </span>
+                  </div>
+                </td>
                 <td class="text-center table_author table_info">{{ post.author }}</td>
                 <td class="text-center table_date table_info">{{ post.pub_date|date:"N j일" }}</td>
                 <td class="text-center table_hit table_idx">
@@ -398,7 +421,7 @@
     
     </main>
     </body>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="/static/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/static/js/bootstrap.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="/static/js/dashboard.js"></script>

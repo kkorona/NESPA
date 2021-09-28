@@ -50,7 +50,13 @@
     </head>
     <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-md-3 mr-0 px-3" href="/notice"><span data-feather="aperture"></span>NESPA 0.95 (beta)</a>
+      <span class="navbar-brand col-md-3 mr-0 px-3 d-flex justify-content-between">
+        <span>
+          <span data-feather="aperture"></span>
+          <a style="color: white;" href="/notice">NESPA 0.95 (beta)</a>
+        </span>
+        <span id="moblie-hamburger" data-feather="menu" class="d-none"></span>
+      </span>
       <span class="gohwak">
         <span data-feather="volume"></span>
         <a href="{{ latest_post.get_absolute_url }}"><span style="color: #E8A20C;">
@@ -255,7 +261,7 @@
     
     {% endblock %}
     </body>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="/static/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/static/js/bootstrap.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>

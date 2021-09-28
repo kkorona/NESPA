@@ -101,6 +101,16 @@ $(document).ready( function() {
       }
     });
   });
+
+  $('#moblie-hamburger').click(function() {
+    if($('.sidebar').css("display") == "none"){
+      $('.sidebar').css("display","block").animate({right : "0"}, 300);
+    } else {
+      $('.sidebar').animate({right : "-50%"}, 300, function() {
+        $('.sidebar').css("display","none");
+      });
+    }
+  });
 });
 
 
