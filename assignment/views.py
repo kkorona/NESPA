@@ -15,6 +15,8 @@ from . import execute
 from assignment.models import SubmissionModel, ProblemModel, GradeModel
 from accounts.models import vespaUser
 from collections import OrderedDict
+import pandas as pd
+import numpy as np
 import shutil
 import os
 import time
@@ -257,7 +259,16 @@ def submission_detail(request):
                 for key,score in scores.items():
                     key_list.append(key)
                     score_list.append(score)
-                return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list, "prob":prob})
+                    
+                df = pd.DataFrame(submission_table)
+                score_table_path = '/media/assignment/sheets/'+prob_ID+'.xlsx'
+                full_table_path = '/opt/vespa' + score_table_path
+                if not os.path.isdir('/opt/vespa/media/assignment/sheets/'):
+                    os.mkdir('/opt/vespa/media/assignment/sheets/')
+                if os.path.isfile(full_table_path):
+                    os.remove(full_table_path)
+                df.to_excel(full_table_path)
+                return render(request, "submission_detail.html", {'submission_table' : submission_table, 'key_list':key_list, 'score_list':score_list, "prob":prob, "sheet_path" : score_table_path})
 
 
 

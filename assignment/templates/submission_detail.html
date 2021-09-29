@@ -149,6 +149,11 @@
             </tbody>
       </div>
       {% endif %}
+      {% if request.session.usertype == "admin" %}
+      <div>
+      <a class="btn btn-primary pull-right" href="{{ sheet_path }}">시트 다운로드</a>
+      </div>
+      {% endif %}
     </main>
   </div>
 </div>
