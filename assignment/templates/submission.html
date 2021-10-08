@@ -16,11 +16,11 @@
         {% if request.session.logged_in and request.session.usertype != "unapproved" %}
         <form method="POST" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            <label for="problem_id">문제 번호 / Problem No.</label>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label for="problem_id" class="h4">&gt;&nbsp;문제 번호 / Problem No.</label>
             <table class="table table-hover" id="problem_id">
                 <thead class="thead-dark">
                     <tr>
+                        <th scope="col" width="50px"></th>
                         <th scope="col" width="50px">#</th>
                         <th scope="col">과제명</th>
                         <th scope="col">제한크기</th>
@@ -28,42 +28,39 @@
                         <th scope="col">제한횟수</th>
                         <th scope="col">제출시작</th>
                         <th scope="col">제출마감</th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% if request.session.usertype == "admin" %}
                         {% for prob in full_prob_list %}
                         <tr class="">
-                            <th score="row">{{ prob.prob_id }}</th>
-                            <td>{{ prob.prob_name }}</td>
+                            <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="problem_id" value="{{ prob.prob_id }}" ></label></td>
+                            <td style="font-weight: bold;">{{ prob.prob_id }}</td>
+                            <td style="font-weight: bold;">{{ prob.prob_name }}</td>
                             <td>{{ prob.size_limit}}</td>
                             <td>{{ prob.time_limit }}</td>
                             <td>{{ prob.try_limit }}</td>
                             <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
                             <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
-                            <td><label class="btn btn-outline-dark"><input type="radio" name="problem_id" value="{{ prob.prob_id }}">&nbsp;선택</label>
                             </td>
                         </tr>
                     {% endfor %}
                     {% elif request.session.usertype == "normal" %}
                         {% for prob in cur_prob_list %}
                         <tr class="">
-                            <th score="row">{{ prob.prob_id }}</th>
-                            <td>{{ prob.prob_name }}</td>
+                            <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="problem_id" value="{{ prob.prob_id }}" ></label></td>
+                            <td style="font-weight: bold;">{{ prob.prob_id }}</td>
+                            <td style="font-weight: bold;">{{ prob.prob_name }}</td>
                             <td>{{ prob.size_limit}}</td>
                             <td>{{ prob.time_limit }}</td>
                             <td>{{ prob.try_limit }}</td>
                             <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
                             <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
-                            <td><label class="btn btn-outline-dark"><input type="radio" name="problem_id" value="{{ prob.prob_id }}" >&nbsp;선택</label>
-                            </td>
                         </tr>
                     {% endfor %}
                     {% endif %}
                 </tbody>
             </table>
-            </div>
                 <!--
                 <div class="form-group">
                     <label for="problem_id">문제 번호 / Problem No.</label>
@@ -82,27 +79,42 @@
                     </select>
                 </div>
                 -->
-            </div>
             
             
-            <span>언어 / Language</span>
-            <div class="form-row mb-3 mt-1" id="language">                    
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class = "btn btn-outline-dark">
-                <input type="radio" name="language" value="01" checked>C++14
-                </label>
-                <label class = "btn btn-outline-dark">
-                <input type="radio" name="language" value="02" > C11
-                </label>
-                <label class = "btn btn-outline-dark">
-                <input type="radio" name="language" value="03" > Python3
-                </label>
-                {% if request.session.usertype == "admin" %}
-                <label class = "btn btn-outline-dark">
-                <input type="radio" name="language" value="04" > Java
-                </label>
-                {% endif %}
-                </div>
+            <span class="h4">&gt;&nbsp;언어 / Language</span>
+            <div class="form-row mb-3 mt-1" id="language">    
+                <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" width="50px"></th>
+                        <th scope="col" width="100px">언어명</th>
+                        <th scope="col">버전</th>
+                        <th scope="col">채점 설정</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="01" checked></label></td>
+                        <td style="font-weight: bold;">C++14</td>
+                        <td>gcc version 8.3.1 (20190311) Red Hat 8.3.1-3</td>
+                        <td>g++ Main.c -o Main -O2 -Wall -lm -std=gnu++14</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="02" checked></label></td>
+                        <td style="font-weight: bold;">C11</td>
+                        <td>gcc version 8.3.1 (20190311) Red Hat 8.3.1-3</td>
+                        <td>gcc Main.c -o Main -O2 -Wall -lm -std=c11</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="03" checked></label></td>
+                        <td style="font-weight: bold;">Python3</td>
+                        <td>Python 3.6.8</td>
+                        <td>python3 -c "import py_compile; y_compile.compile(r'Main.py')"</td>
+                    </tr>
+                    {% if request.session.usertype == "admin" %}
+                    {% endif %}
+                </tbody>
+            </table>
             </div>
             
 
@@ -113,9 +125,10 @@
                     <input type="file" class="custom-file-input" id="source_code" name="source_code">
                     <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                   </div>
+                  <small id="major_help" class="form-text text-muted">제출 파일명은 영문이어야 합니다.</small>
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary" value="제출 / Submit">
+            <input type="submit" class="btn btn-dark" value="제출 / Submit">
         </form>
         {% elif not request.session.logged_in  %}
         <span>로그인이 필요한 기능입니다.</span>
