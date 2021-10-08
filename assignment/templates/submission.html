@@ -16,7 +16,7 @@
         {% if request.session.logged_in and request.session.usertype != "unapproved" %}
         <form method="POST" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            <label for="problem_id" class="h4">&gt;&nbsp;문제 번호 / Problem No.</label>
+            <label for="problem_id" class="h4" style="font-weight:bold;">&gt;&nbsp;문제 번호 / Problem No.</label>
             <table class="table table-hover" id="problem_id">
                 <thead class="thead-dark">
                     <tr>
@@ -81,7 +81,7 @@
                 -->
             
             
-            <span class="h4">&gt;&nbsp;언어 / Language</span>
+            <span class="h4" style="font-weight:bold;">&gt;&nbsp;언어 / Language</span>
             <div class="form-row mb-3 mt-1" id="language">    
                 <table class="table table-hover">
                 <thead class="thead-dark">
@@ -111,8 +111,34 @@
                         <td>Python 3.6.8</td>
                         <td>python3 -c "import py_compile; y_compile.compile(r'Main.py')"</td>
                     </tr>
+                    
                     {% if request.session.usertype == "admin" %}
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="04" checked></label></td>
+                        <td style="font-weight: bold;">Kotlin</td>
+                        <td>TBD</td>
+                        <td>TBD</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="05" checked></label></td>
+                        <td style="font-weight: bold;">Javascript</td>
+                        <td>TBD</td>
+                        <td>TBD</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="06" checked></label></td>
+                        <td style="font-weight: bold;">Rust</td>
+                        <td>TBD</td>
+                        <td>TBD</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="07" checked></label></td>
+                        <td style="font-weight: bold;">Go</td>
+                        <td>TBD</td>
+                        <td>TBD</td>
+                    </tr>
                     {% endif %}
+                    
                 </tbody>
             </table>
             </div>
