@@ -100,15 +100,15 @@
                     <th scope="col">파일크기</th>
                     <th scope="col">채점점수</th>
                     {% else %}
-                    <th scope="col" onclick="sortTable(0)">학번</th>
-                    <th scope="col" onclick="sortTable(0)">ID</th>
-                    <th scope="col" onclick="sortTable(0)">이름</th>
-                    <th scope="col" onclick="sortTable(0)">제출일자</th>
-                    <th scope="col" onclick="sortTable(0)">사용언어</th>
-                    <th scope="col" onclick="sortTable(0)">채점점수</th>
-                    <th scope="col" onclick="sortTable(0)">실행시간</th>
-                    <th scope="col" onclick="sortTable(0)">파일크기</th>
-                    <th scope="col" onclick="sortTable(0)">시도횟수</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(0)">학번</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(1)">ID</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(2)">이름</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(3)">제출일자</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(4)">사용언어</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(5)">채점점수</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(6)">실행시간</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(7)">파일크기</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(8)">시도횟수</th>
                     <th scope="col">코드</th>
                     {% endif %}
                 </tr>
@@ -165,7 +165,7 @@
 {% block scripts %}
 <script>
     $("#sidebar_result").attr('class','nav-link active'); 
-    function SortTable( table, n ) {
+    function sortTable( table, n ) {
         var table, rows, switching, i,x,y, shouldSwitch,dir,switchCount=0;
         table = document.getElementById("score_table");
         switching = true;
