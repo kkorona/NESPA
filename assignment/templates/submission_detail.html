@@ -87,7 +87,7 @@
             </tbody>
         </table>
                 
-        <table class="table table-hover">
+        <table class="table table-hover" id="score_table">
             <thead class="thead-dark center">
                 <tr>
                     {% if request.session.usertype == "normal" %}
@@ -165,6 +165,61 @@
 {% block scripts %}
 <script>
     $("#sidebar_result").attr('class','nav-link active'); 
+    function SortTable( table, n )
+  {
+   // table 에 tbody tag 가 반드시 존재한다고 가정한다.
+   var tbody = table.tBodies[0];
+   var rows = tbody.getElementsByTagName( "tr" );
+
+​
+
+   // 배열로 생성한 후, 배열로 정렬한다.
+   rows = Array.prototype.slice.call( rows, 0 );
+
+   rows.sort( function( row1, row2 )
+   {
+    var cell1 = row1.getElementsByTagName("td")[n];
+    var cell2 = row2.getElementsByTagName("td")[n];
+    var value1 = cell1.textContent || cell1.innerText;
+    var value2 = cell2.textContent || cell2.innerText;
+
+    if( value1 < value2 ) return -1;
+    if( value1 > value2 ) return 1;
+
+    return 0;
+   });
+
+
+
+   // 정렬된 배열로 row 를 다시 저장한다. 문서에 이미 존재하는 node 는 삽입하면 해당 node 는 자동으로 제거되고 새 위치에 저장된다.
+   for( var i = 0; i < rows.length; ++i )
+   {
+    tbody.appendChild( rows[i] );
+   }
+  }
+
+
+
+  $(document).ready( function()
+  {
+   // 모든 table 헤더에 클릭 이벤트를 설정한다.
+   var tables = document.getElementsByTagName("table");
+   for( var i = 0; i < tables.length; ++i )
+   {
+    var headers = tables[i].getElementsByTagName("th");
+    for( var j = 0; j < headers.length; ++j )
+    {
+     // 지역 유효범위에 생성할 중첩 함수
+     (function(table,n)
+     {
+      headers[j].onclick = function()
+      {
+       SortTable( table, n )
+      };
+     }( tables[i], j) );
+    }
+   }
+  } );
 </script>
 {% endblock %}
 
