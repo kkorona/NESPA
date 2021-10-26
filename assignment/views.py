@@ -276,6 +276,14 @@ def submission_detail(request):
 '''
     여기서부터 관리자 항목 함수
 '''
+
+def dos2unix_converting(prob_id):
+    path = os.path.join("/opt","vespa","data","assignment",str(prob_id),"eval")
+    filelist = [os.path.join(path, x) for x in os.listdir(path)]
+    for filename in filelist:
+        os.system("dos2unix " + filename)
+    
+    
 def assignment_registry(request):
     if request.session['usertype'] != 'admin':
             return HttpResponse('허용되지 않은 기능입니다.')
@@ -317,6 +325,7 @@ def assignment_registry(request):
                     gradeModel.grade_output = DjangoFile(zf.open(file_list[file_list.index(f"{i+1}.out")]), name=f"{i+1}.out")
 
                 gradeModel.save()
+            dos2unix_converting(prob_id)
         return render(request, "assignment_registry.html");
 
     return render(request, "assignment_registry.html");
