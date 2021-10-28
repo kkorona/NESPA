@@ -165,6 +165,7 @@
 {% block scripts %}
 <script>
     $("#sidebar_result").attr('class','nav-link active'); 
+    const numeric_sort_rows = [5,6,7,8];
     function sortTable( n ) {
         var table, rows, switching, i,x,y, shouldSwitch,dir,switchCount=0;
         table = document.getElementById("score_table");
@@ -177,19 +178,37 @@
             
             for(i=1; i<(rows.length - 1); i++) {
                 shouldSwitch = false;
-                x = rows[i].getElementsByTagName("TD")[n];
-                y = rows[i+1].getElementsByTagName("TD")[n];
-                
-                if(dir == "asc") {
-                    if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
+                if(numeric_sort_rows.include(n)) {
+                    x = parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML);
+                    y = parseFloat(rows[i+1].getElementsByTagName("TD")[n].innerHTML);
+                    if(dir == "asc") {
+                        if(x > y) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    else if(dir == "desc") {
+                        if(x < y) {
+                            shouldSwitch = true;
+                            break;
+                        }
                     }
                 }
-                else if(dir == "desc") {
-                    if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
+                else {
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i+1].getElementsByTagName("TD")[n];
+                    
+                    if(dir == "asc") {
+                        if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    else if(dir == "desc") {
+                        if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
                     }
                 }
             }
