@@ -96,7 +96,7 @@ def edit(request, article_id):
         
         fs = FileSystemStorage()
         for file in files:
-            fname = urllib.parse.unquote(file.name)
+            fname = urllib.parse.unquote(file.name.encode('utf-8'))
             filename = fs.save(fname,file)
             uploaded_file_url = fs.url(filename)
             departure_path = urllib.parse.unquote(os.path.join(settings.BASE_DIR, uploaded_file_url[1:]))
