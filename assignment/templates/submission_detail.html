@@ -164,23 +164,10 @@
 
 {% block scripts %}
 <script>
-    function exceptional_integer_sort(x,y,order) {
-        // default order = x < y
-        result = false;
-        if(x == 0) {
-            result = false;
-        }
-        else if(y == 0) {
-            result = true;
-        }
-        else {
-            result = x < y;
-        }
-        
-        if(order == "asc") {
-            result = !result;
-        }
-        return result;
+    function exceptional_numeric_transition(x) {
+        var q = x;
+        if(q == 0) q = Infinity;
+        return q;
     }
     $("#sidebar_result").attr('class','nav-link active'); 
     const numeric_sort_rows = [5,6,7,8];
@@ -196,12 +183,20 @@
             
             for(i=1; i<(rows.length - 1); i++) {
                 shouldSwitch = false;
-                if(numeric_sort_rows.includes(n)) {
-                    x = parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML);
-                    y = parseFloat(rows[i+1].getElementsByTagName("TD")[n].innerHTML);
-                    if(exceptional_integer_sort(x,y,dir)) {
-                        shouldSwitch = true;
-                        break;
+                if(numeric_sort_rows.include(n)) {
+                    x = exceptional_numeric_transition(parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML));
+                    y = exceptional_numeric_transition(parseFloat(rows[i+1].getElementsByTagName("TD")[n].innerHTML));
+                    if(dir == "asc") {
+                        if(x > y) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    else if(dir == "desc") {
+                        if(x < y) {
+                            shouldSwitch = true;
+                            break;
+                        }
                     }
                 }
                 else {
