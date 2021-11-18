@@ -164,9 +164,9 @@
 
 {% block scripts %}
 <script>
-    function exceptional_numeric_transition(x) {
+    function exceptional_numeric_transition(x, order) {
         var q = x;
-        if(q == 0) q = Infinity;
+        if(q == 0 && order == "asc") q = Infinity;
         return q;
     }
     $("#sidebar_result").attr('class','nav-link active'); 
