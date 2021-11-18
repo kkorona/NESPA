@@ -164,6 +164,24 @@
 
 {% block scripts %}
 <script>
+    function exceptional_integer_sort(x,y,order) {
+        // default order = x < y
+        result = false;
+        if(x == 0) {
+            result = false;
+        }
+        else if(y == 0) {
+            result = true;
+        }
+        else {
+            result = x < y;
+        }
+        
+        if(order == "asc") {
+            result = !result;
+        }
+        return result;
+    }
     $("#sidebar_result").attr('class','nav-link active'); 
     const numeric_sort_rows = [5,6,7,8];
     function sortTable( n ) {
@@ -181,17 +199,9 @@
                 if(numeric_sort_rows.includes(n)) {
                     x = parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML);
                     y = parseFloat(rows[i+1].getElementsByTagName("TD")[n].innerHTML);
-                    if(dir == "asc") {
-                        if(x > y) {
-                            shouldSwitch = true;
-                            break;
-                        }
-                    }
-                    else if(dir == "desc") {
-                        if(x < y) {
-                            shouldSwitch = true;
-                            break;
-                        }
+                    if(exceptional_integer_sort(x,y,dir) {
+                        shouldSwitch = true;
+                        break;
                     }
                 }
                 else {
