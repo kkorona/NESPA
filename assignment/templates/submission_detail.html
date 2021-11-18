@@ -184,8 +184,8 @@
             for(i=1; i<(rows.length - 1); i++) {
                 shouldSwitch = false;
                 if(numeric_sort_rows.includes(n)) {
-                    x = exceptional_numeric_transition(parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML));
-                    y = exceptional_numeric_transition(parseFloat(rows[i+1].getElementsByTagName("TD")[n].innerHTML));
+                    x = exceptional_numeric_transition(parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML), dir);
+                    y = exceptional_numeric_transition(parseFloat(rows[i+1].getElementsByTagName("TD")[n].innerHTML), dir);
                     if(dir == "asc") {
                         if(x > y) {
                             shouldSwitch = true;
