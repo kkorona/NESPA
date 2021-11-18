@@ -178,7 +178,7 @@
             
             for(i=1; i<(rows.length - 1); i++) {
                 shouldSwitch = false;
-                if(numeric_sort_rows.include(n)) {
+                if(numeric_sort_rows.includes(n)) {
                     x = parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML);
                     y = parseFloat(rows[i+1].getElementsByTagName("TD")[n].innerHTML);
                     if(dir == "asc") {
