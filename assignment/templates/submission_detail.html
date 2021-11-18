@@ -199,7 +199,7 @@
                 if(numeric_sort_rows.includes(n)) {
                     x = parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML);
                     y = parseFloat(rows[i+1].getElementsByTagName("TD")[n].innerHTML);
-                    if(exceptional_integer_sort(x,y,dir) {
+                    if(exceptional_integer_sort(x,y,dir)) {
                         shouldSwitch = true;
                         break;
                     }
