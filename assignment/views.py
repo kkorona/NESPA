@@ -184,6 +184,13 @@ def watch_code(request):
         except UnicodeDecodeError:
             with open(code_path, 'r', encoding="ISO-8859-1") as f:
                 code_content = f.read()
+        code_content = content.replace('\\n', '\\\n')
+        code_content = content.replace('\\t', '\\\t')
+        code_content = content.replace('\r\n', '\\n')
+        code_content = content.replace('\r', '\\n')
+        code_content = content.replace('\n', '\\n')
+        code_content = content.replace('\r\t', '\\t').replace('\r', '\\t').replace('\t', '\\t')
+        code_content = content.replace('\"', '\\\"')
     return render(request, "watch_code.html", {'code_content' : code_content, 'lang': submission.lang, 'path':code_path})
     
 def sub_to_show(sub, name, count):
