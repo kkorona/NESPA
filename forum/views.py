@@ -46,7 +46,8 @@ class PostDV(FormMixin, DetailView):
         context['attachments'] = self.object.attach_set.all()
         
         # Markdown Replacement
-        context['content'] = self.object.content
+        content = self.object.content
+        
         content = content.replace('\\n', '\\\n')
         content = content.replace('\\t', '\\\t')
         content = content.replace('\r\n', '\\n')
@@ -54,6 +55,7 @@ class PostDV(FormMixin, DetailView):
         content = content.replace('\n', '\\n')
         content = content.replace('\r\t', '\\t').replace('\r', '\\t').replace('\t', '\\t')
         content = content.replace('\"', '\\\"')
+        context['content'] = content
         
         return context
         
