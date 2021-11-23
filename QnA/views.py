@@ -43,11 +43,16 @@ class PostDV(FormMixin, DetailView):
         else:
             context['user'] = 'anonymous'
         context['comments'] = sorted(list(self.object.comment_set.all()), key=lambda x: x.pub_date, reverse=False)
-        context['attachments'] = self.object.attach_set.all()
+        
+        # Markdown Replacement
         context['content'] = self.object.content
-        context['content'] = self.object.content.replace('\\n', '\\\n')
-        context['content'] = context['content'].replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
-        context['content'] = context['content'].replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
+        content = content.replace('\\n', '\\\n')
+        content = content.replace('\\t', '\\\t')
+        content = content.replace('\r\n', '\\n')
+        content = content.replace('\r', '\\n')
+        content = content.replace('\n', '\\n')
+        content = content.replace('\r\t', '\\t').replace('\r', '\\t').replace('\t', '\\t')
+        content = content.replace('\"', '\\\"')
         return context
         
     def post(self, request, *args, **kwargs):
@@ -138,9 +143,11 @@ def edit(request, article_id):
     if request.method == "GET":
         content = article.content
         content = content.replace('\\n', '\\\n')
+        content = content.replace('\\t', '\\\t')
         content = content.replace('\r\n', '\\n').replace('\r', '\\n').replace('\n', '\\n')
-        content = content.replace("\"", "\\\"").replace('\'', '\\\'').replace('/', '\/')
-        return render(request, 'QnA/edit.html',{'article_content' : content, 'article_title' : article.title, 'attachments' : article.attach_set.all()})
+        content = content.replace('\r\t', '\\t').replace('\r', '\\t')
+        content = content.replace("\"", "\\\"").replace('\'', '\\\'')
+        return render(request, 'forum/edit.html',{'article_content' : content, 'article_title' : article.title, 'attachments' : article.attach_set.all()})
         
 def write(request):
     if request.method == "GET":
