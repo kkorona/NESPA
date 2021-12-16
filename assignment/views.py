@@ -412,7 +412,7 @@ def assignment_manage(request):
                                                             'end_date':end_date,
                                                             'end_time':end_time,
                                                             'grade_model_list':grade_model_list});
-    prob_list = ProblemModel.objects.all()
+    prob_list = ProblemModel.objects.all().order_by("-id")
     return render(request, "assignment_manage.html",  {'prob_list':prob_list});
 
 def user_approval(request):
