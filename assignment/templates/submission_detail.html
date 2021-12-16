@@ -20,6 +20,9 @@
     td.zero-score {
         color : gray;
     }
+    td.number {
+        text-align: right;
+    }
     .center th, .center td{
         text-align : center !important;
     }
@@ -100,15 +103,15 @@
                     <th scope="col">파일크기</th>
                     <th scope="col">채점점수</th>
                     {% else %}
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(0)">학번</th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(1)">ID</th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(2)">이름</th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(3)">제출일자</th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(4)">사용언어</th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(5)">채점점수</th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(6)">실행시간</th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(7)">파일크기</th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(8)">시도횟수</th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(0)">학번<span>▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(1)">ID<span>▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(2)">이름<span>▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(3)">제출일자<span>▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(4)">사용언어<span>▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(5)">채점점수<span>▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(6)">실행시간<span>▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(7)">파일크기<span>▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(8)">시도횟수<span>▲</span></th>
                     <th scope="col">코드</th>
                     {% endif %}
                 </tr>
@@ -133,13 +136,13 @@
                     <td class="students"> {{ submission.created_at}} </td>
                     <td class="students"> {{ submission.lang }} </td>
                     {% if submission.score == 0 %}
-                    <td class="students zero-score"> {{ submission.score }} </td>
+                    <td class="students zero-score number"> {{ submission.score }} </td>
                     {% else %}
-                    <td class="students bold score"> {{ submission.score }} </td>
+                    <td class="students bold score number"> {{ submission.score }} </td>
                     {% endif %}
-                    <td class="students"> {{ submission.exec_time|stringformat:".3f" }} </td>
-                    <td class="students"> {{ submission.code_size }}</td>
-                    <td class="students bold try"> {{ submission.count }}</td>
+                    <td class="students number"> {{ submission.exec_time|stringformat:".3f" }} </td>
+                    <td class="students number"> {{ submission.code_size }}</td>
+                    <td class="students bold try number"> {{ submission.count }}</td>
                     <td class="students"> 
                     <a href="/assignment/watch_code?prob_id={{submission.prob_ID}}&student_number={{submission.client_number}}&submission_id={{submission.id}}&ext={{submission.lang}}"><span data-feather="align-left"></span>
                     </a></td>
@@ -230,6 +233,7 @@
                 }
             }
         }
+        if dir
     }
 </script>
 {% endblock %}

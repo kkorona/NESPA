@@ -29,7 +29,11 @@
               {% for prob in prob_list %}
               <tr>
                   <th score="row" style="width: 50px;">{{ prob.prob_id }}
-                  <td class="pr-5"><a href="/assignment/submission_detail?prob_id={{prob.prob_id}}">{{prob.prob_name}}</a></td>
+                  <td class="pr-2"><a href="/assignment/submission_detail?prob_id={{prob.prob_id}}">{{prob.prob_name}}</a></td>
+                  <td class="pr-2">{{prob.starts_at | date:"m/j H:i"}}
+                  </td>
+                  <td class="pr=2">{{ prob.ends_at | date:"m/j H:i" }}
+                  </td>
                   <td class="d-flex justify-content-end">
                     <button class="btn btn-primary btn-sm mr-4" name="manage" id="{{ prob.id }}">수정</button>
                     <button class="btn btn-secondary btn-sm">삭제</button>
