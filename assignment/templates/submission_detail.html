@@ -103,15 +103,15 @@
                     <th scope="col">파일크기</th>
                     <th scope="col">채점점수</th>
                     {% else %}
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(0)">학번<span>▲</span></th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(1)">ID<span>▲</span></th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(2)">이름<span>▲</span></th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(3)">제출일자<span>▲</span></th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(4)">사용언어<span>▲</span></th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(5)">채점점수<span>▲</span></th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(6)">실행시간<span>▲</span></th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(7)">파일크기<span>▲</span></th>
-                    <th scope="col" style="cursor: pointer;" onclick="sortTable(8)">시도횟수<span>▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(0)">학번<span id="col1">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(1)">ID<span id="col2">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(2)">이름<span id="col3">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(3)">제출일자<span id="col4">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(4)">사용언어<span id="col5">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(5)">채점점수<span id="col6">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(6)">실행시간<span id="col7">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(7)">파일크기<span id="col8">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(8)">시도횟수<span id="col9">▲</span></th>
                     <th scope="col">코드</th>
                     {% endif %}
                 </tr>
@@ -233,7 +233,13 @@
                 }
             }
         }
-        if dir
+        var qid = "col" + String(n);
+        if(dir == "asc") {
+            document.getElementById(qid).innerHTML = "▲";
+        }
+        else {
+            document.getElementById(qid).innerHTML = "▼";
+        }
     }
 </script>
 {% endblock %}
