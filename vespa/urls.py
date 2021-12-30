@@ -29,7 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('board.urls')),
     path('notice/',include('board.urls')),
-    path('ds2021/', include('board.urls')),
+    path('winterschool2021/', include('board.urls')),
     path('syllabus/', dev2020.views.index, name='index'),
     path('accounts/', include('accounts.urls')),
     path('assignment/', include('assignment.urls')),
