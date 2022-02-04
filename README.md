@@ -1,5 +1,9 @@
 # NESPA(advaNced Evaluation System for Programming Assignment)
 
+PNU ALgorithm & Data Engineering Lab.(지도교수 조환규) 에서 강의에 사용하는 과제 채점 사이트입니다.
+
+프로그래밍 과제의 채점 및 관리를 지원합니다.
+
 ## Specifications
 |대상|특징|
 |---|---|
