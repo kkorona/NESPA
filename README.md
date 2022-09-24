@@ -1,5 +1,10 @@
 # NESPA(advaNced Evaluation System for Programming Assignment)
 
+!!! 비공개로 작업된 내용 정리하여 작성중입니다. (~9/25) !!!
+
+해당 revision 이후 커밋된 내용에 작업하시는 것을 추천드립니다.
+
+
 ## Specifications
 |대상|특징|
 |---|---|
