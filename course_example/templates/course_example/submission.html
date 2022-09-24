@@ -1,0 +1,185 @@
+<!doctype html>
+{% extends 'base_course_example.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div id="main_center" class="w-75 m-auto">
+        <div class="title-container">
+          <br>
+          <a class="title-box">
+            <span>과제물 제출 / Submission</span>
+          </a><br>
+        </div>
+        <hr>
+      <div>
+        {% if request.session.logged_in and request.session.usertype != "unapproved" %}
+        <form method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <label for="problem_id" class="h4" style="font-weight:bold;">&gt;&nbsp;문제 번호 / Problem No.</label>
+            <table class="table table-hover" id="problem_id">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" width="50px"></th>
+                        <th scope="col" width="50px">#</th>
+                        <th scope="col">과제명</th>
+                        <th scope="col">제한크기</th>
+                        <th scope="col">제한시간</th>
+                        <th scope="col">제한횟수</th>
+                        <th scope="col">제출시작</th>
+                        <th scope="col">제출마감</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if request.session.usertype == "admin" %}
+                        {% for prob in full_prob_list %}
+                        <tr class="">
+                            <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="problem_id" value="{{ prob.prob_id }}" ></label></td>
+                            <td style="font-weight: bold;">{{ prob.prob_id }}</td>
+                            <td style="font-weight: bold;">{{ prob.prob_name }}</td>
+                            <td>{{ prob.size_limit}}</td>
+                            <td>{{ prob.time_limit }}</td>
+                            <td>{{ prob.try_limit }}</td>
+                            <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
+                            <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% elif request.session.usertype == "normal" %}
+                        {% for prob in cur_prob_list %}
+                        <tr class="">
+                            <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="problem_id" value="{{ prob.prob_id }}" ></label></td>
+                            <td style="font-weight: bold;">{{ prob.prob_id }}</td>
+                            <td style="font-weight: bold;">{{ prob.prob_name }}</td>
+                            <td>{{ prob.size_limit}}</td>
+                            <td>{{ prob.time_limit }}</td>
+                            <td>{{ prob.try_limit }}</td>
+                            <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
+                            <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+                <!--
+                <div class="form-group">
+                    <label for="problem_id">문제 번호 / Problem No.</label>
+                    
+                    <select id="problem_id" name="problem_id" class="form-control">
+                        {% if request.session.usertype == "admin" %}
+                            {% for prob in full_prob_list %}
+                                <option value="{{ prob.prob_id }}">{{ prob.prob_id }}. {{ prob.prob_name }} ( {{ prob.starts_at | date:"N j일, H:i" }} ~ {{ prob.ends_at | date:"N j일, H:i" }})</option>
+                            {% endfor %}
+                        {% elif request.session.usertype == "normal" %}
+                            {% for prob in cur_prob_list %}
+                            <option value="{{ prob.prob_id }}">{{ prob.prob_id }}. {{ prob.prob_name }} ( {{ prob.starts_at | date:"N j일, H:i" }} ~ {{ prob.ends_at | date:"N j일, H:i" }})</option>
+                            {% endfor %}
+                        {% endif %}
+                        
+                    </select>
+                </div>
+                -->
+            
+            
+            <span class="h4" style="font-weight:bold;">&gt;&nbsp;언어 / Language</span>
+            <div class="form-row mb-3 mt-1" id="language">    
+                <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" width="50px"></th>
+                        <th scope="col" width="100px">언어명</th>
+                        <th scope="col">버전</th>
+                        <th scope="col">채점 설정</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="01" checked></label></td>
+                        <td style="font-weight: bold;">C++14</td>
+			<td>gcc version 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+                        <td>g++ Main.c -o Main -O2 -Wall -lm -std=gnu++14</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="02" checked></label></td>
+                        <td style="font-weight: bold;">C11</td>
+			<td>gcc version 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+                        <td>gcc Main.c -o Main -O2 -Wall -lm -std=c11</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="03" checked></label></td>
+                        <td style="font-weight: bold;">Python3</td>
+                        <td>Python 3.8.10</td>
+                        <td>python3 -c "import py_compile; y_compile.compile(r'Main.py')"</td>
+                    </tr>
+		    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="04" checked></label></td>
+                        <td style="font-weight: bold;">Java</td>
+                        <td>Java OpenJDK Runtime Environment (build 11.0.13+8-Ubuntu-0ubuntu1.20.04)</td>
+                        <td>javac -J-Xms1024m -J-Xmx1920m -J-Xss512m -encoding UTF-8 Main.java</td>
+                    </tr>
+                    
+                    {% if request.session.usertype == "admin" %}
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="101" checked></label></td>
+                        <td style="font-weight: bold;">Kotlin</td>
+                        <td>TBD</td>
+                        <td>TBD</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="102" checked></label></td>
+                        <td style="font-weight: bold;">Javascript</td>
+                        <td>TBD</td>
+                        <td>TBD</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="103" checked></label></td>
+                        <td style="font-weight: bold;">Rust</td>
+                        <td>TBD</td>
+                        <td>TBD</td>
+                    </tr>
+                    <tr class="">
+                        <td score="row"><label class="btn btn-outline-dark"><input type="radio" name="language" value="104" checked></label></td>
+                        <td style="font-weight: bold;">Go</td>
+                        <td>TBD</td>
+                        <td>TBD</td>
+                    </tr>
+                    {% endif %}
+                    
+                </tbody>
+            </table>
+            </div>
+            
+
+            <span>소스 코드 / Source Code</span>
+            <div class="form-row mb-3 mt-1">
+                <div class="form-group mb-3">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="source_code" name="source_code">
+                    <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                  </div>
+                  <small id="major_help" class="form-text text-muted">제출 파일명은 영문이어야 합니다. 소스코드 내에 한글 등의 Non-ASCII 문자 포함시 제출 에러가 발생할 수 있습니다.</small>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-dark" value="제출 / Submit">
+        </form>
+        {% elif not request.session.logged_in  %}
+        <span>로그인이 필요한 기능입니다.</span>
+        {% endif %}
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_submission").attr('class','nav-link active'); 
+    $("#source_code").on('change',function(e){
+        var fileName = e.target.files[0].name;
+        $(this).next('.custom-file-label').html(fileName);
+    });
+</script>
+{% endblock %}
+

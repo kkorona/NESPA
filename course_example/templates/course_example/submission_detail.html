@@ -1,0 +1,252 @@
+<!doctype html>
+{% extends 'base_course_example.html' %}
+{% block styles %}
+    tr {
+        text-align : center;
+    }
+    td.students {
+        padding : 0.1em !important;
+        text-align : center;
+    }
+    td.bold {
+        font-weight: bold;
+    }
+    td.score {
+        color: red;
+    }
+    td.try {
+        color : blue;
+    }
+    td.zero-score {
+        color : gray;
+    }
+    td.number {
+        text-align: right;
+    }
+    .center th, .center td{
+        text-align : center !important;
+    }
+{% endblock %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div class="title-container">
+        <br>
+        <a class="title-box">
+          <span>과제 제출 현황/ Submission list detail</span>
+        </a><br>
+      </div>
+      <hr>
+      {% if not request.session.logged_in  %}
+      <span>로그인이 필요한 기능입니다.</span>
+      {% else %}
+      <div class="w-100">
+        <table class="table">
+            <thead class="thead-dark center">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Problem</th>
+                    <th scope="col">Max Size</th>
+		    <th scope="col">Max Token</th>
+                    <th scope="col">Timeout</th>
+                    <th scope="col">Max Try</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Evaluation</th>
+                    <th scope="col">Sample data</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th score="row">{{ prob.prob_id }}</th>
+                    <td>{{ prob.prob_name }}</td>
+                    <td>{{ prob.size_limit }}</td>
+		    <td>{{ prob.token_limit }}</td>
+                    <td>{{ prob.time_limit }}</td>
+                    <td>{{ prob.try_limit }}</td>
+                    <td>{{ prob.starts_at | date:"m/j H:i" }}</td>
+                    <td>{{ prob.ends_at | date:"m/j H:i" }}</td>
+                    <td>{{ prob.eval }}</td>
+                    <td><a href="/media/course_example/assignment/sampledata/{{ prob.prob_id }}/open{{prob.prob_id}}.zip">{{prob.prob_name}}</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered center">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">Score</th>
+                {% for key in key_list %}
+                <th scope="col">{{key}}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="col">名</th>
+                {% for score in score_list %}
+                <td>{{score}}</td>
+                {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+                
+        <table class="table table-hover" id="score_table">
+            <thead class="thead-dark center">
+                <tr>
+                    {% if request.session.usertype == "normal" %}
+                    <th scope="col" width="50px">#</th>
+                    <th scope="col">제출번호</th>
+                    <th scope="col">과제명</th>
+                    <th scope="col">사용언어</th>
+                    <th scope="col">제출일자</th>
+                    <th scope="col">실행시간</th>
+                    <th scope="col">파일크기</th>
+		    <th scope="col">토큰크기</th>
+                    <th scope="col">채점점수</th>
+                    {% else %}
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(0)">학번<span id="col1">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(1)">ID<span id="col2">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(2)">이름<span id="col3">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(3)">제출일자<span id="col4">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(4)">사용언어<span id="col5">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(5)">채점점수<span id="col6">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(6)">실행시간<span id="col7">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(7)">파일크기<span id="col8">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(8)">토큰크기<span id="col9">▲</span></th>
+                    <th scope="col" style="cursor: pointer;" onclick="sortTable(9)">시도횟수<span id="col10">▲</span></th>
+                    <th scope="col">코드</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in submission_table %}
+                <tr>
+                    {% if request.session.usertype == "normal" %}
+                    <td> {{ forloop.revcounter }} </td>
+                    <td> {{ submission.id }} </td>
+                    <td> {{ submission.prob_name }} </td>
+                    <td> {{ submission.lang }} </td>
+                    <td> {{ submission.created_at|date:"n/j H:i"}} </td>
+                    <td> {{ submission.exec_time|stringformat:".3f" }} </td>
+                    <td> {{ submission.code_size }}</td>
+		    <td> {{ submission.token_size }}</td>
+                    <td style="color:blue"> {{ submission.score }} </td>
+                    </td>
+                    {% else %}
+                    <td class="students"> {{ submission.client_number }} </td>
+                    <td class="students bold"> {{ submission.client_ID }} </td>
+                    <td class="students"> {{ submission.username }} </td>
+                    <td class="students"> {{ submission.created_at}} </td>
+                    <td class="students"> {{ submission.lang }} </td>
+                    {% if submission.score == 0 %}
+                    <td class="students zero-score number"> {{ submission.score }} </td>
+                    {% else %}
+                    <td class="students bold score number"> {{ submission.score }} </td>
+                    {% endif %}
+                    <td class="students number"> {{ submission.exec_time|stringformat:".3f" }} </td>
+		    <td class="students number"> {{ submission.code_size }}</td>
+                    <td class="students number"> {{ submission.token_size }}</td>
+                    <td class="students bold try number"> {{ submission.count }}</td>
+                    <td class="students"> 
+                    <a href="/course_example/watch_code?prob_id={{submission.prob_ID}}&student_number={{submission.client_number}}&submission_id={{submission.id}}&ext={{submission.lang}}"><span data-feather="align-left"></span>
+                    </a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+	    </table>
+      </div>
+      {% endif %}
+          </main>
+  </div>
+  {% if request.session.usertype == "admin" %}
+<div>
+<a class="btn btn-success pull-right" href="{{ sheet_path }}">시트 다운로드</a>
+</div>
+{% endif %}
+
+</div>
+     
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function exceptional_numeric_transition(x, order) {
+        var q = x;
+        if(q == 0 && order == "asc") q = Infinity;
+        return q;
+    }
+    $("#sidebar_result").attr('class','nav-link active'); 
+    const numeric_sort_rows = [5,6,7,8,9];
+    function sortTable( n ) {
+        var table, rows, switching, i,x,y, shouldSwitch,dir,switchCount=0;
+        table = document.getElementById("score_table");
+        switching = true;
+        dir = "asc";
+        
+        while(switching) {
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+            
+            for(i=1; i<(rows.length - 1); i++) {
+                shouldSwitch = false;
+                if(numeric_sort_rows.includes(n)) {
+                    x = exceptional_numeric_transition(parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML), dir);
+                    y = exceptional_numeric_transition(parseFloat(rows[i+1].getElementsByTagName("TD")[n].innerHTML), dir);
+                    if(dir == "asc") {
+                        if(x > y) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    else if(dir == "desc") {
+                        if(x < y) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                else {
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i+1].getElementsByTagName("TD")[n];
+                    
+                    if(dir == "asc") {
+                        if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    else if(dir == "desc") {
+                        if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            if(shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i+1], rows[i]);
+                switching = true;
+                switchCount ++;
+            }
+            else {
+                if (switchCount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+        var qid = "col" + String(n+1);
+        if(dir == "asc") {
+            document.getElementById(qid).innerHTML = "▲";
+        }
+        else {
+            document.getElementById(qid).innerHTML = "▼";
+        }
+    }
+</script>
+{% endblock %}
+

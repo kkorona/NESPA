@@ -1,4 +1,4 @@
-from board.models import Post
+from test2021.models import Post
 
 def notification(request):
     posts = Post.objects.all().order_by('-pub_date')

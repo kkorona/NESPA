@@ -1,0 +1,75 @@
+<!doctype html>
+{% extends 'base_course_example.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div id="main_center" class="w-100 m-auto">
+        <div class="title-container">
+          <br>
+          <a class="title-box">
+            <span>사용자 승인/ User Approval</span>
+          </a><br>
+        </div>
+        <hr>
+      <div class="col">
+        <form method="post" action="" name="approve_user" style="display: none;">
+          {% csrf_token %}
+          <input type="hidden" name="approve_user" value="">
+        </form>
+
+        
+
+        <div class="col mt-5">
+            <table  class="table btn-sm nowrap">
+                <thead>
+                <tr class="bg-info" style="color: white">
+                  <th>#</th>
+                  <th>학번</th>
+                  <th>이름</th>
+                  <th>아이디</th>
+                  <th>학년</th>
+                  <th>전공</th>
+                  <th>전화번호</th>
+                  <th>등록일자</th>
+                  <th></th>
+                </tr>
+                </thead>
+              <tbody>
+                {% for newuser in newusers %}
+                <tr>
+                  <td># {{forloop.counter}}</td>
+                  <td>{{ newuser.studentNumber }}</td>
+                  <td>{{ newuser.username }}</td>
+                  <td>{{ newuser.user_id }}</td>                      
+                  <td>{{ newuser.grade }}</td>                      
+                  <td>{{ newuser.major }}</td>
+                  <td>{{ newuser.phone }}</td>                      
+                  <td>{{ newuser.created_at }}</td>
+                  <td><button class="btn btn-success" name="approve_button" id="{{ newuser.id }}">승인</button></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_user_approval").attr('class','nav-link active');
+    $('button[name="approve_button"]').on("click", function() {
+      if (confirm('선택하신 사용자를 승인하시겠습니까?')) {
+        $('input[name="approve_user"]').val($(this).attr('id'));
+        $('form[name="approve_user"]').submit();
+      }
+    })
+</script>
+{% endblock %}
+

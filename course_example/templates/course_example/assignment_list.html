@@ -1,0 +1,65 @@
+<!doctype html>
+{% extends 'base_course_example.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div id="main_center" class="w-100 m-auto">
+      <div class="title-container">
+        <br>
+        <a class="title-box">
+          <span>과제물 목록 / Assignment list</span>
+        </a><br>
+      </div>
+      <hr>
+      {% if request.session.userid and request.session.usertype != "unapproved" %}
+      <div>
+        <table class="table table-hover" >
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Problem</th>
+                    <th scope="col">Max Size</th>
+		    <th scope="col">Token Size</th>
+                    <th scope="col">Timeout</th>
+                    <th scope="col">Max Try</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Evaluation</th>
+                    <th scope="col">Sample Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prob in prob_list %}
+                <tr>
+                    <th scope="row">{{ prob.prob_id }}</th>
+                    <td><a href="{{ prob.document.url }}">{{prob.prob_name}}</a></td>
+                    <td>{{ prob.size_limit }}</td>
+		    <td>{{ prob.token_limit }}</td>
+                    <td>{{ prob.time_limit }}</td>
+                    <td>{{ prob.try_limit }}</td>
+                    <td style="color:blue;">{{ prob.starts_at | date:"m/j H:i" }}</td>
+                    <td style="color:red; font-weight:bold">{{ prob.ends_at | date:"m/j H:i" }}</td>
+                    <td>{{ prob.eval }}</td>
+                    <td><a href="{{ prob.sample_data.url }}">{{prob.prob_name}}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+      </div>
+      </div>
+      <span class="h5"> Problem / Sample data 행의 링크를 클릭하여 과제 내용과 샘플 데이터를 받을 수 있습니다.</span>
+      {% else %}
+      <span>로그인이 필요한 기능입니다. </span>
+      {% endif %}
+    </main>
+  </div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_list").attr('class','nav-link active'); 
+</script>
+{% endblock %}
+

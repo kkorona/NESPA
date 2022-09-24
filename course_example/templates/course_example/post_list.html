@@ -1,0 +1,27 @@
+<!doctype html>
+{% extends 'board_list_course_example.html' %}
+{% block board_title %}
+<div class="title-container">
+	<a href="/course_example/board/{{ board_info }}" class="title-box">
+	    <span>{{ board_title }}</span>
+    </a>
+</div>
+{% endblock %}
+
+{% block write_button %}
+{% if board_info == 'notice' and request.session.usertype == 'admin' %}
+<div align="right">
+	<a class="btn btn-primary pull-right" href="/course_example/board/{{ board_info }}/write">글쓰기</a>
+</div>
+{% elif board_info != 'notice' and request.session.logged_in == 'YES' and request.session.usertype != 'unapproved' %}
+<div align="right">
+	<a class="btn btn-primary pull-right" href="/course_example/board/{{ board_info }}/write">글쓰기</a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+	$("#sidebar_{{ board_info }}").attr('class','nav-link active'); 
+</script>
+{% endblock %}

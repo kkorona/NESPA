@@ -1,0 +1,1 @@
+changing "%couse_name%" will activate site templates on each course directories.

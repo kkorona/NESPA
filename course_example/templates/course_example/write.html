@@ -1,0 +1,108 @@
+<!doctype html>
+{% extends 'base_course_example.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <div id="main_center" class="w-75 m-auto">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom  border-dark">
+              <div class="title-container">
+		      <a href="/course_example/board/{{ board_info }}" class="title-box">
+			<span>{{ board_title }}</span>
+                </a>
+            </div>
+            </div>
+        <div class="w-100">
+            <form method='POST' enctype="multipart/form-data" name="write_form" action="">
+            {% csrf_token %}
+            <div class="form-row w-100">            
+                <div class="form-group w-100">
+                    <div class="mb-3">
+                        <label for="post_title" class="h4">제목</label>
+                        <input id="post_title" name="post_title" class="form-control" type="text">
+                    </div>
+
+                    <!-- new 에디터 부 -->
+                    <div id="post_contents"></div>
+                    <input id="post_content" name="post_contents" class="form-control" type="hidden">
+
+                    <br>
+                    <div id="f-table">
+                    <div class="w-100 d-inline-block">
+                        <!--<label for="attach_files" class="h4">첨부 파일</label>
+                        <input id="attach_files" name="attach_files" type="file" multiple />-->
+                        <div id="attach_file">
+                            <div class="wrap-table100">
+                                <div class="table100">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    첨부 파일(영문명 파일만 가능합니다.)
+                                                    <button data-feather="plus-circle" id="add_files" type="button"></button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="column1">
+                                                    <input name="attach_files" type="file"/>
+                                                    <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="float-sm-right">
+                <input type="button" class="btn btn-primary btn-lg" value="등록" onclick="writeArticle()">
+            <div>
+            </form>
+        </div>
+        </div>
+    </main>
+</div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+	$("#sidebar_{{ board_info }}").attr('class','nav-link active');
+    const { Editor } = toastui;
+    const { codeSyntaxHighlight } = Editor.plugin;
+    const { colorSyntax } = Editor.plugin;
+
+    const editor = new Editor({
+        el: document.querySelector('#post_contents'),
+        height: '600px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical',
+        plugins: [
+            [codeSyntaxHighlight, { highlighter: Prism }],
+            [colorSyntax]
+        ]
+    });
+
+    $("#add_files").click(function() {
+        $("table > tbody:last").append(`
+        <tr><td class="column1">
+            <input name="attach_files" type="file"/>
+            <button type="button" name='delete_button' class="btn btn-sm btn-danger">삭제</button>
+        </td>
+        `);
+    });
+
+    $('table').on('click', 'button[name="delete_button"]', function(e){
+        $(this).closest('tr').remove()
+    });
+
+</script>
+<script src="/static/js/editor.js"></script>
+{% endblock %}

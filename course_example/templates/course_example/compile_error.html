@@ -1,0 +1,33 @@
+<!doctype html>
+{% extends 'base_course_example.html' %}
+{% with error_content = "
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div id="main_center" class="w-75 m-auto">
+        <div class="title-container">
+          <br>
+          <a class="title-box">
+            <span>컴파일 에러 / Compile Error</span>
+          </a><br>
+        </div>
+        <hr>
+      
+      <div>
+      <pre>
+      {{ error_msg }}
+      </p>
+      </div>
+    </main>
+  </div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_submission").attr('class','nav-link active'); 
+</script>
+{% endblock %}
+

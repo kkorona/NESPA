@@ -1,0 +1,59 @@
+<!doctype html>
+{% extends 'base_course_example.html' %}
+{% block contents %}
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div class="title-container">
+        <br>
+        <a class="title-box">
+          <span>과제물 제출 / Submission</span>
+        </a><br>
+      </div>
+      <hr>
+      <div>
+        <form method="POST" action="{% url 'course_example:submission_check' %}" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="problem_id">문제 번호 / Problem No.</label>
+                    <input type="text" readonly class="form-control-plaintext" id="problem_id" name="problem_id" value="{{ request.session.problem_id }}">
+                </div>
+            </div>
+            
+            <div class="form-row">            
+                <div class="form-group">
+                    <label for="language">언어 / Language</label>
+                    <input type="text" readonly class="form-control-plaintext" id="language" name="language" value="{{ request.session.language }}">
+                </div>
+            </div>
+
+            <div class="form-row">            
+                <div class="form-group">
+                    <label for="language">제출 시각</label>
+                    <input type="text" readonly class="form-control-plaintext" id="submission_id" name="submission_id" value="{{ request.session.updated_time }}">
+                </div>
+            </div>
+            
+            <div class="form-row">            
+                <div class="form-group">
+                    <label for="language">파일 크기</label>
+                    <input type="text" readonly class="form-control-plaintext" id="file_size" name="code_size" value="{{ request.session.code_size }}">
+                </div>
+            </div>
+            
+            <input type="submit" class="btn btn-success" value="제출 확인 / Submit">
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $("#sidebar_submission").attr('class','nav-link active'); 
+</script>
+{% endblock %}
+

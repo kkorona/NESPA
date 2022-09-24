@@ -1,0 +1,39 @@
+<!doctype html>
+{% extends 'base.html' %}
+{% block styles %}
+    #background {
+		position: -webkit-sticky;
+		position: sticky;
+        background-image : url('https://user-images.githubusercontent.com/46425142/131215793-df413655-d12d-40a0-9ab5-1f0f7f4c6775.png');
+		background-size : 100% 100%;
+		width:100%;
+		padding-top : 25%;
+		bottom: 0px;
+    }	
+	#pnf > h1 {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 300px;
+		font-weight : 900;
+		margin-top: 200px;
+		text-shadow: 0px 0px 15px rgba(150, 150, 150, 0.5);
+	}
+	.pad {
+		height : 100%;
+	}
+{% endblock %}
+{% block contents %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div role="main" class="col-md-9 ml-sm-auto col-lg-10 ">
+		<div id="pnf" class="mt-5 text-center">
+			<h1>요청하신 페이지가 존재하지 않습니다</h1>
+		</div>
+		<div class="pad"></div>
+        <div id="background">
+        </div>
+    </div>    
+  </div>
+</div>
+{% endblock %}
