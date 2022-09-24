@@ -1,9 +1,14 @@
 # NESPA(advaNced Evaluation System for Programming Assignment)
 
-!!! 비공개로 작업된 내용 정리하여 작성중입니다. (~9/25) !!!
+!!! 비공개로 작업된 내용 커밋되었습니다 (9/24) !!!
 
-해당 revision 이후 커밋된 내용에 작업하시는 것을 추천드립니다.
+## Major goals until 2023.02.
 
+* course_example 폴더 내의 개별 프로젝트용 py 파일 리팩토링
+* python 파일 내 comment 대규모 추가 (doxygen은 계획에 없음)
+* installation document & utility 작성 및 구현
+* 새로운 언어 추가 기능의 구현
+* 보안 관련 이슈 QA 및 해결
 
 ## Specifications
 |대상|특징|
